@@ -1,0 +1,162 @@
+# depslib dependency file v1.0
+1604558180 source:h:\c\riscv\biubus.c
+
+1605165946 source:h:\c\riscv\decode.c
+	<stdio.h>
+	"opcode_define.h"
+	"fetch.h"
+	"decode.h"
+	"execu.h"
+	"memwb.h"
+
+1605164250 source:h:\c\riscv\decode_clked.c
+	"fetch.h"
+	"decode.h"
+
+1605158218 source:h:\c\riscv\execu.c
+	"execu.h"
+	"decode.h"
+
+1605149050 source:h:\c\riscv\execu_clked.c
+	"execu.h"
+	"decode.h"
+
+1605151436 source:h:\c\riscv\fetch.c
+	"reg.h"
+	"fetch.h"
+	"opcode_define.h"
+
+1604822302 source:h:\c\riscv\fetch_clked.c
+	"fetch.h"
+
+1605166452 source:h:\c\riscv\memwb.c
+	"memwb.h"
+	"execu.h"
+
+1605166234 source:h:\c\riscv\main.c
+	<stdio.h>
+	<stdlib.h>
+	"reg.h"
+	"fetch.h"
+	"opcode_define.h"
+	"codebus.h"
+
+1605163522 h:\c\riscv\reg.h
+
+1604558360 source:h:\c\riscv\memwb_clked.c
+
+1604725420 source:h:\c\riscv\memorybus.c
+	<stdio.h>
+	"mapping.h"
+	"memorybus.h"
+
+1604723800 source:h:\c\riscv\memorybus_clked.c
+	<stdio.h>
+	"reg.h"
+	"memorybus.h"
+
+1604723888 h:\c\riscv\memorybus.h
+	"reg.h"
+
+1604564058 h:\c\riscv\memorybus_clked.h
+
+1604811434 h:\c\riscv\fetch.h
+	"reg.h"
+
+1604574628 h:\c\riscv\memorybus_conn.h
+	"memorybus.h"
+	"fetch.h"
+
+1604633340 h:\c\riscv\opcode_define.h
+
+1604682650 source:h:\c\riscv\init_rom.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"reg.h"
+	"opcode_define.h"
+
+1604714026 h:\c\riscv\mapping.h
+
+1604715502 source:h:\c\riscv\memorybus_connect.c
+	"memorybus.h"
+	"fetch.h"
+
+1605164294 h:\c\riscv\decode.h
+	"reg.h"
+
+1605164402 h:\c\riscv\execu.h
+	"reg.h"
+
+1604983862 source:h:\c\riscv\rs1bus_connect.c
+	"regbus.h"
+	"decode.h"
+
+1604983840 h:\c\riscv\regbus.h
+	"reg.h"
+
+1604978612 source:h:\c\riscv\regwbus_clked.c
+	"regbus.h"
+	"decode.h"
+
+1604979032 source:h:\c\riscv\regwbus.c
+	<stdio.h>
+	"regbus.h"
+	"decode.h"
+
+1604984182 source:h:\c\riscv\rs2bus_connect.c
+	"regbus.h"
+	"decode.h"
+
+1604984064 source:h:\c\riscv\rs1bus.c
+	<stdio.h>
+	"regbus.h"
+	"decode.h"
+
+1604984158 source:h:\c\riscv\rs2bus.c
+	<stdio.h>
+	"regbus.h"
+	"decode.h"
+
+1605166504 source:h:\c\riscv\regwbus_connect.c
+	"regbus.h"
+	"execu.h"
+	"memwb.h"
+
+1605152006 source:h:\c\riscv\codebus_connect.c
+	"codebus.h"
+	"fetch.h"
+
+1605152182 h:\c\riscv\codebus.h
+	"reg.h"
+
+1605152326 source:h:\c\riscv\codebus.c
+	<stdio.h>
+	"mapping.h"
+	"codebus.h"
+
+1605152404 source:h:\c\riscv\codebus_clked.c
+	<stdio.h>
+	"reg.h"
+	"codebus.h"
+
+1605164112 source:h:\c\riscv\databus.c
+	<stdio.h>
+	"mapping.h"
+	"databus.h"
+
+1605166412 h:\c\riscv\databus.h
+	"reg.h"
+
+1605163600 source:h:\c\riscv\databus_clked.c
+	<stdio.h>
+	"reg.h"
+	"databus.h"
+
+1605154256 source:h:\c\riscv\databus_connect.c
+	"databus.h"
+	"execu.h"
+
+1605166416 h:\c\riscv\memwb.h
+	"reg.h"
+

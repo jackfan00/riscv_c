@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="riscv" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/riscv" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/riscv" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="biubus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codebus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codebus.h" />
+		<Unit filename="codebus_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="codebus_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="databus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="databus.h" />
+		<Unit filename="databus_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="databus_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="decode.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="decode.h" />
+		<Unit filename="decode_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="execu.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="execu.h" />
+		<Unit filename="execu_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fetch.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="fetch.h" />
+		<Unit filename="fetch_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="init_rom.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mapping.h" />
+		<Unit filename="memwb.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="memwb.h" />
+		<Unit filename="opcode_define.h" />
+		<Unit filename="reg.h" />
+		<Unit filename="regbus.h" />
+		<Unit filename="regwbus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="regwbus_clked.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="regwbus_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs1bus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs1bus_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs2bus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rs2bus_connect.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
