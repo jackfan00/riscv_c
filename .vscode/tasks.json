@@ -1,0 +1,27 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc.exe build active file",
+			"command": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gcc.exe",
+			"args": [
+				"-g",
+				"${workspaceFolder}\\*.c",
+				"-o",
+				"${workspaceFolder}\\bin\\myProgram.exe"
+			],
+			"options": {
+				"cwd": "C:\\Program Files\\CodeBlocks\\MinGW\\bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compiler: \"C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gcc.exe\""
+		}
+	]
+}
