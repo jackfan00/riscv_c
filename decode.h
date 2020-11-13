@@ -56,6 +56,7 @@ BIT   dec_aluop_sh_clked;
 BIT   dec_aluop_sw_clked;
 
 //output
+REG32 real_rs1v;
 REG32 real_rs2v;
 REG8 depfifo_wadr_clked;
 REG32 alu_opd1;

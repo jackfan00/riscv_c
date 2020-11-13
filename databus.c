@@ -42,7 +42,7 @@ int i,j;
         //
         //selected initiator
         if (i_databus_grt[i]){
-            printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+            //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             w_data_rspid = i;
             o_databus_cmd_valid = (!data_rspid_fifo_full_clked);
             o_databus_cmd_read = i_databus_cmd_read[i];
@@ -58,7 +58,7 @@ int i,j;
     rspid = data_rspid_fifo_empty_clked ? w_data_rspid : r_data_rspid;
     for(i=0; i<CODEARBIT_NUM; i++){
         if (i==rspid){
-             printf("INFO: rsp arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+            // printf("INFO: rsp arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             i_databus_rsp_valid[i] = o_databus_rsp_valid;
             i_databus_rsp_err[i] = o_databus_rsp_err;
             i_databus_rsp_rdata[i] = o_databus_rsp_rdata;

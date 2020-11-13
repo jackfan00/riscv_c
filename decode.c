@@ -47,7 +47,6 @@ void decode()
 //local
 BIT dec_raw_exe;
 BIT dec_raw_memwb;
-REG32 real_rs1v;
 REG8 opcode;
 REG8 func3;
 REG8 func7;
@@ -178,7 +177,7 @@ int s_j_imm;
         alusystem =1;
         break;
     default:
-        printf("Error: not supported opcode %d \n", opcode);
+        printf("decode Error: not supported opcode %d \n", opcode);
         break;
     }
     //
@@ -191,7 +190,7 @@ int s_j_imm;
         dec_ilg = aluop  & (!aluopimm) & (!func7_20) & (!func7_00);
         //
         if (dec_ilg){
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_SLL:
@@ -199,7 +198,7 @@ int s_j_imm;
         dec_ilg = (aluop| aluopimm) & (!func7_00);
 
         if (dec_ilg){
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_SLT:
@@ -208,7 +207,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_SLTU:
@@ -217,7 +216,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_XOR:
@@ -225,7 +224,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     //case ALU_SRL:
@@ -236,7 +235,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_OR:
@@ -244,7 +243,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
         break;
     case ALU_AND:
@@ -252,7 +251,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("Error: illogical opcode %08x \n", fetchIR_clked);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
         }
        break;
 
@@ -341,10 +340,12 @@ int s_j_imm;
                    dec_raw_memwb ? !memwb_valid :
                                      (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
 
-       real_rs1v = dec_raw_exe ? exe_res :
-                  dec_raw_memwb ? memwb_wdata : rs1v;
+       real_rs1v = !rs1en ? 0 :
+                    dec_raw_exe ? exe_res :
+                    dec_raw_memwb ? memwb_wdata : rs1v;
 
-       real_rs2v = dec_raw_exe ? exe_res :
-                  dec_raw_memwb ? memwb_wdata : rs2v;
+       real_rs2v = !rs2en ? 0 :
+                   dec_raw_exe ? exe_res :
+                   dec_raw_memwb ? memwb_wdata : rs2v;
 
 }

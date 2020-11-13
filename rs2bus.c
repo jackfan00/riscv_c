@@ -47,7 +47,7 @@ int i,j;
         //
         //selected initiator
         if (i_rs2bus_grt[i]){
-            printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+            //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             //w_rspid = i;
             rspid = i;
             o_rs2bus_cmd_valid = 1; //(!rspid_fifo_full_clked);

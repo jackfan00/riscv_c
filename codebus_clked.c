@@ -14,15 +14,18 @@ void codebus_clked()
 int i;
     //
     for (i=0;i<CODEARBIT_NUM;i++){
+        if (i_codebus_grt[i]){
+            printf("codebus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+        }
         i_codebus_grt_clked[i] = i_codebus_grt[i];
     }
 
 
     if (code_rspid_fifo_ren & code_rspid_fifo_empty_clked & (!code_rspid_fifo_wen)){
-        printf("Error:fifo read empty\n");
+        printf("codebus Error:fifo read empty\n");
     }
     if (code_rspid_fifo_wen & code_rspid_fifo_full_clked){
-        printf("Error:fifo write full\n");
+        printf("codebus Error:fifo write full\n");
     }
 
     if (code_rspid_fifo_wen){

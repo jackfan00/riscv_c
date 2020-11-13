@@ -33,7 +33,7 @@ REG32 coderam[MAXCODESIZE];
 REG8 dataram0[MAXCODESIZE], dataram1[MAXCODESIZE], dataram2[MAXCODESIZE], dataram3[MAXCODESIZE];
 REG8 depfifo[DEPFIFOSIZE];
 BIT depfifo_fg[DEPFIFOSIZE];
-REG32 regsarray[31];
+REG32 regsarray[32];
 
 
 BIT firstclk;

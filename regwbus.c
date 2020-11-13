@@ -20,6 +20,7 @@ REG32 o_regwbus_cmd_wdata;
 
 int i,j;
 
+    o_regwbus_cmd_valid = 0;
     regwbus_connect();
 
     // priority arbitor
@@ -46,7 +47,7 @@ int i,j;
         //
         //selected initiator
         if (i_regwbus_grt[i]){
-            printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+            //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             o_regwbus_cmd_valid = 1; //(!rspid_fifo_full_clked);
             //o_regwbus_cmd_read = 0; //i_regwbus_cmd_read[i];
             o_regwbus_cmd_adr = i_regwbus_cmd_adr[i];
@@ -54,6 +55,8 @@ int i,j;
             //o_regwbus_cmd_rwbyte = 0xf; //i_regwbus_cmd_rwbyte[i];
             i_regwbus_cmd_ready[i] = o_regwbus_cmd_ready ;//& (!rspid_fifo_full_clked);
         }
+        
+        
     }
 
     //

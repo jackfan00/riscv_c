@@ -4,11 +4,11 @@
 void execu()
 {
     //local
-    long long addsub_res, opd1_longlong;
+    long long addsub_res, opd1_longlong, exeop1, exeop2;
     BIT exeop_sub;
     BIT exeop_unsigned;
     REG8 shamt;
-    REG32 exeop2;
+    //REG32 exeop2;
     REG32 slt_res;
     REG32 xor_res;
     REG32 eq_res;
@@ -18,13 +18,22 @@ void execu()
     REG32 srl_res;
     REG32 sra_res;
 
+    int tmp1, tmp2;
+
 
 
 
     exeop_sub = dec_aluop_sub_clked | dec_aluop_slt_clked | dec_aluop_sltu_clked | dec_alubranch_clked;
     exeop_unsigned = dec_aluop_sltu_clked | dec_aluop_bltu_clked | dec_aluop_bgeu_clked;
-    exeop2 = exeop_sub ? ~dec_alu_opd2_clked : dec_alu_opd2_clked;
-    addsub_res = dec_alu_opd1_clked + exeop2 + exeop_sub;
+    //exeop2 = exeop_sub ? ~dec_alu_opd2_clked : dec_alu_opd2_clked;
+    //addsub_res = dec_alu_opd1_clked + exeop2 + exeop_sub;
+    //should change to hardware implementation method
+    tmp1 = (int) dec_alu_opd1_clked;
+    tmp2 = (int) dec_alu_opd2_clked;
+    exeop1 = exeop_unsigned ? dec_alu_opd1_clked : ((long long)tmp1);
+    exeop2 = exeop_unsigned ? dec_alu_opd2_clked : ((long long)tmp2);
+    exeop2 = exeop_sub ? ~exeop2 : exeop2;
+    addsub_res = exeop1 + exeop2 + exeop_sub ;
 
     slt_res = (addsub_res<0);
     xor_res = dec_alu_opd1_clked ^ dec_alu_opd2_clked;
@@ -42,7 +51,7 @@ void execu()
 
     //
     exe_res_valid = 1;
-    exe_res = (dec_aluop_sub_clked|dec_aluop_add_clked|dec_alujal_clked|dec_alujalr_clked|dec_alului_clked|dec_aluauipc_clked|dec_aluload_clked) ? addsub_res :
+    exe_res = (dec_aluop_sub_clked|dec_aluop_add_clked|dec_alujal_clked|dec_alujalr_clked|dec_alului_clked|dec_aluauipc_clked|dec_aluload_clked) ? (REG32)addsub_res :
               (dec_aluop_sll_clked) ? sll_res :
               (dec_aluop_srl_clked) ? srl_res :
               (dec_aluop_sra_clked) ? sra_res :
