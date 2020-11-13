@@ -19,6 +19,7 @@ int i,j;
     code_rspid_fifo_wadr = code_rspid_fifo_wadr_clked;
     code_rspid_fifo_radr = code_rspid_fifo_radr_clked;
     // priority arbitor
+    o_codebus_cmd_valid =0;
     for(i=0; i<CODEARBIT_NUM; i++){
 
         //
@@ -82,6 +83,8 @@ int i,j;
     if ((o_codebus_cmd_adr&0xff000000)==ITCM_ADDR_BASE){
         coderamctrl();
     }
+    o_codebus_rsp_rdata = coderam_rdat;
+    o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;
 
 }
 
@@ -95,9 +98,10 @@ void coderamctrl()
         coderam_wdat = o_codebus_cmd_wdata;
         coderam_bmask = o_codebus_cmd_rwbyte;
     }
+    else{
+        coderam_cs = 0;
+    }
     //
-    o_codebus_rsp_rdata = coderam_rdat;
-    o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;
 }
 
 

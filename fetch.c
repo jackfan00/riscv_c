@@ -1,6 +1,9 @@
 //
 #include "reg.h"
 #include "fetch.h"
+#include "decode.h"
+#include "execu.h"
+#include "memwb.h"
 #include "opcode_define.h"
 
 REG32 toir32 (REG16 ir16)
@@ -19,8 +22,14 @@ int s_b_imm;
 int s_j_imm;
 REG32 alu_opd1;
 int alu_opd2;
+BIT fet_raw_dec_rs1;
+BIT fet_raw_exe_rs1;
+BIT fet_raw_memwb_rs1;
+REG32 fet_real_rs1v;
+
 
     opcode = firstclk ? OPCODE_JAL : localIR & 0x7f;
+    fet_rs1idx = (localIR >> 15) & 0x1f;
     i_imm = (localIR >> 20) & 0xfff;  ///**< signed value */
     b_imm = (((localIR>>31)&0x1) << 12 ) +  (((localIR>>7)&0x1) << 11 ) + (((localIR>>25)&0x3f) << 5 ) + (((localIR>>8)&0xf) << 1 );
     j_imm = (((localIR>>31)&0x1) << 20 ) +  (((localIR>>12)&0xff) << 12 ) + (((localIR>>20)&0x1) << 11 ) + (((localIR>>21)&0x3ff) << 1 );
@@ -28,6 +37,7 @@ int alu_opd2;
     s_b_imm = (b_imm >=(1<<12)) ? b_imm - (1<<13) : b_imm;
     s_j_imm = (j_imm >=(1<<20)) ? j_imm - (1<<21) : j_imm;
 
+    fet_rs1en =0;
     switch(opcode)
     {
     case OPCODE_JAL:
@@ -37,9 +47,9 @@ int alu_opd2;
         branchjmp =1;
         break;
     case OPCODE_JALR:
-        alu_opd1 = rs1v;
+        alu_opd1 = fet_real_rs1v;
         alu_opd2 = s_i_imm;
-        rs1en =1;
+        fet_rs1en =1;
         //
         branchjmp =1;
         break;
@@ -54,7 +64,15 @@ int alu_opd2;
         break;
     }
 
+    fet_raw_dec_rs1   =   (rden             & (rdidx          ==fet_rs1idx && fet_rs1en));
+    fet_raw_exe_rs1   =   (dec_rden_clked   & (dec_rdidx_clked==fet_rs1idx && fet_rs1en));
+    fet_raw_memwb_rs1 =   (exe_rden_clked   & (exe_rdidx_clked==fet_rs1idx && fet_rs1en));
+
+    fet_real_rs1v =  
+                    fet_raw_exe_rs1   ? exe_res :
+                    fet_raw_memwb_rs1 ? memwb_wdata : fet_rs1v;
     branchjmp_pc = firstclk ? BOOTADDR : alu_opd1 + alu_opd2;
+    fetch_stall = (fet_rs1en & (!fet_rs1en_ack)) | fet_raw_dec_rs1;
 
 }
 
@@ -83,7 +101,8 @@ BIT new_midnxtpc_fg;
 
     //instruction from code-ram
     ifu2mem_rsp_ready = !fetch_stall;
-    memIR = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? ifu2mem_rsp_rdata : 0;
+    //memIR = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? ifu2mem_rsp_rdata : 0;
+    memIR = ifu2mem_rsp_rdata ;
     memIR_hi16 = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? (ifu2mem_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
     //mini deocde for branchjmp

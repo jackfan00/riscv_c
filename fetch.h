@@ -14,6 +14,8 @@ BIT ifu2mem_cmd_ready;
 REG32 rs1v;
 BIT branchjmp_hipart_clked;
 BIT new_midnxtpc_part2_fg_clked;
+BIT fet_rs1en_ack;
+REG32 fet_rs1v;
 
 //output
 BIT ifu2mem_rsp_ready;
@@ -28,7 +30,8 @@ BIT branchjmp;
 BIT predict_en;
 BIT predict_jmp;
 REG32 branchjmp_pc;
-BIT rs1en;
+BIT fet_rs1en;
+REG8 fet_rs1idx;
 BIT branchjmp_hipart;
 BIT new_midnxtpc_part2_fg;
 

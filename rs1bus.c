@@ -82,7 +82,10 @@ int i,j;
             i_rs1bus_rsp_err[i] = o_rs1bus_rsp_err;
             i_rs1bus_rsp_rdata[i] = o_rs1bus_rsp_rdata;
             //o_rs1bus_rsp_ready = i_rs1bus_rsp_ready[i];
-            break;
+            
+        }
+        else{
+            i_rs1bus_rsp_valid[i] =0;
         }
 
     }

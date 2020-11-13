@@ -61,6 +61,7 @@ int i,j;
 
     //
     o_regwbus_cmd_ready =1;
+    regw_cs =0;
     if (o_regwbus_cmd_valid & o_regwbus_cmd_ready){
         regw_adr = o_regwbus_cmd_adr;
         regw_cs = 1;

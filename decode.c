@@ -45,8 +45,10 @@ void decodeinit()
 void decode()
 {
 //local
-BIT dec_raw_exe;
-BIT dec_raw_memwb;
+BIT dec_raw_exe_rs1;
+BIT dec_raw_exe_rs2;
+BIT dec_raw_memwb_rs1;
+BIT dec_raw_memwb_rs2;
 REG8 opcode;
 REG8 func3;
 REG8 func7;
@@ -327,25 +329,24 @@ int s_j_imm;
        }
 
        //
-       dec_raw_exe =            (
-                                       (dec_rden_clked & (dec_rdidx_clked==rs1idx && rs1en)) |   //execu
-                                       (dec_rden_clked & (dec_rdidx_clked==rs2idx && rs2en))    //execu
-                                );
-       dec_raw_memwb =          (
-                                       (exe_rden_clked & (exe_rdidx_clked==rs1idx && rs1en)) |   //memwb
-                                       (exe_rden_clked & (exe_rdidx_clked==rs2idx && rs2en))     //memwb
-                                );
+       dec_raw_exe_rs1 =   (dec_rden_clked & (dec_rdidx_clked==rs1idx && rs1en));
+       dec_raw_exe_rs2 =   (dec_rden_clked & (dec_rdidx_clked==rs2idx && rs2en));
+                                      
+       dec_raw_memwb_rs1 =     (exe_rden_clked & (exe_rdidx_clked==rs1idx && rs1en));   //memwb
+       dec_raw_memwb_rs2 =     (exe_rden_clked & (exe_rdidx_clked==rs2idx && rs2en));   //memwb
+                                      
+       
 
-       dec_stall = dec_raw_exe ? !exe_res_valid :
-                   dec_raw_memwb ? !memwb_valid :
+       dec_stall = dec_raw_exe_rs1 | dec_raw_exe_rs2 ? !exe_res_valid :
+                   dec_raw_memwb_rs1 | dec_raw_memwb_rs2 ? !memwb_valid :
                                      (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
 
        real_rs1v = !rs1en ? 0 :
-                    dec_raw_exe ? exe_res :
-                    dec_raw_memwb ? memwb_wdata : rs1v;
+                    dec_raw_exe_rs1 ? exe_res :
+                    dec_raw_memwb_rs1 ? memwb_wdata : rs1v;
 
        real_rs2v = !rs2en ? 0 :
-                   dec_raw_exe ? exe_res :
-                   dec_raw_memwb ? memwb_wdata : rs2v;
+                   dec_raw_exe_rs2 ? exe_res :
+                   dec_raw_memwb_rs2 ? memwb_wdata : rs2v;
 
 }
