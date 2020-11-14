@@ -12,6 +12,8 @@ void decode_clked()
         depfifo_wadr_clked = depfifo_wadr_clked>=(DEPFIFOSIZE-1) ? 0 : depfifo_wadr_clked+1;
     }
 
+
+
     // for store address
  dec_rs2v_clked       = real_rs2v;
     //
@@ -63,6 +65,7 @@ void decode_clked()
  dec_ras_push_clked   = dec_ras_push;
 
  dec_predict_jmp_clked = fet_predict_jmp_clked;
- dec_branch_pdict_fail_pc_clked = dec_branch_pdict_fail_pc;
+ cti_pc_clked = cti_pc;
  
+ dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail;
 }

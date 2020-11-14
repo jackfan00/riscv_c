@@ -65,6 +65,9 @@ REG32 s_imm;
 REG32 b_imm;
 REG32 u_imm;
 REG32 j_imm;
+REG32 cti_pc_op1;
+REG32 cti_pc_op2;
+
 int s_i_imm;
 int s_s_imm;
 int s_b_imm;
@@ -73,7 +76,7 @@ int s_j_imm;
 //
     decodeinit();
     //
-    dec_flush = exe_branch_pdict_fail;
+    dec_flush = exe_branch_pdict_fail | exe_jalr_pdict_fail;
     dec_IR = dec_flush ? NOP : fetchIR_clked;
 
     opcode = dec_IR & 0x7f;
@@ -162,9 +165,9 @@ int s_j_imm;
     case OPCODE_JALR:
         alu_opd1 = decpc_clked;
         alu_opd2 = 4;
-        rs1en =!rs1x0;
+        rs1en =!rs1x0 ;
         rs2en =0;
-        rden = !rdx0;
+        rden = !rdx0 ;
         alujalr =1;
         //
         break;
@@ -358,7 +361,17 @@ int s_j_imm;
                (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx==1 || rs1idx==5)) ;
     //dec_ras_pop =  (opcode==OPCODE_JALR & (rdidx!=1 && rdidx!=5) & (rs1idx==1 || rs1idx==5)) |
     //     (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx==1 || rs1idx==5) & (rdidx!=rs1idx)) ;
-       dec_branch_pdict_fail_pc =  decpc_clked + (!fet_predict_jmp_clked ? s_b_imm : 
-                                                  fet_ir16_clked ? 2 : 4);
+
+    //   dec_branch_pdict_fail_pc =  decpc_clked + (!fet_predict_jmp_clked ? s_b_imm : 
+    //                                              fet_ir16_clked ? 2 : 4);
+    //   dec_jalr_tadr =  real_rs1v + s_i_imm;
+
+    //control transfer instrution, need a 32bit ADDER
+       cti_pc_op1 = alubranch ? decpc_clked : real_rs1v;
+       cti_pc_op2 = alubranch ? (!fet_predict_jmp_clked ? s_b_imm :  fet_ir16_clked ? 2 : 4) : s_i_imm;
+       cti_pc = cti_pc_op1 + cti_pc_op2;
+
+    //current-inst is JALR at decode stage, JALR target address is fetpc_clked at fetch stage
+       dec_jalr_pdict_fail = alujalr & (cti_pc!=fetpc_clked);
 
 }

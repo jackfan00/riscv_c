@@ -2,6 +2,7 @@
 
 void fetch_clked()
 {
+    int i;
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
     fetpc_clked = pc;
     fetchIR_clked = fetchIR;
@@ -16,8 +17,10 @@ void fetch_clked()
     else if (ifu2mem_cmd_valid & ifu2mem_cmd_ready)
         new_midnxtpc_part2_fg_clked = 0;
 
-    //
+    // ras stack pop
     if (fet_ras_pop){
-        ras_sp--;
+      for (i=0;i<(RASDEPTH-1);i++){
+         ras_stack[i] = ras_stack[i+1];
+       }
     }
 }

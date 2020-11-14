@@ -25,5 +25,7 @@
     BIT exe_branch_pdict_fail;
     BIT exe_rden;
     REG32 exe_branch_pdict_fail_pc;
+    BIT exe_jalr_pdict_fail;
+    REG32 exe_jalr_pc;
 
 #endif  //EXECU_H

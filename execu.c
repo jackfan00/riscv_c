@@ -51,7 +51,7 @@ void execu()
     sra_res = opd1_longlong >> shamt;
 
     //
-    exe_res_valid = !exe_branch_pdict_fail;
+    exe_res_valid = 1;//!exe_branch_pdict_fail;
     exe_res = (dec_aluop_sub_clked|dec_aluop_add_clked|dec_alujal_clked|dec_alujalr_clked|dec_alului_clked|dec_aluauipc_clked|dec_aluload_clked) ? (REG32)addsub_res :
               (dec_aluop_sll_clked) ? sll_res :
               (dec_aluop_srl_clked) ? srl_res :
@@ -82,10 +82,12 @@ void execu()
                        ((dec_aluop_bge_clked | dec_aluop_bgeu_clked) & (!slt_res));
     exe_branch_pdict_fail = exe_branch_taken ^ dec_predict_jmp_clked;  
 
-    exe_branch_pdict_fail_pc = dec_branch_pdict_fail_pc_clked ;
-                                                
-    
+    exe_branch_pdict_fail_pc = cti_pc_clked ;
 
-    exe_rden = exe_branch_pdict_fail ? 0 : dec_rden_clked;
+    exe_jalr_pc = cti_pc_clked;
+
+    exe_jalr_pdict_fail = dec_jalr_pdict_fail_clked;
+                                                
+    exe_rden =  dec_rden_clked;
 
 }

@@ -26,11 +26,14 @@ BIT fet_raw_dec_rs1;
 BIT fet_raw_exe_rs1;
 BIT fet_raw_memwb_rs1;
 REG32 fet_real_rs1v;
-
+BIT fet_rdlink;
+BIT fet_rs1link;
 
     opcode = firstclk ? OPCODE_JAL : localIR & 0x7f;
     fet_rdidx =  (localIR >> 7) & 0x1f;
     fet_rs1idx = (localIR >> 15) & 0x1f;
+    fet_rdlink = (fet_rdidx==1) || (fet_rdidx==5);
+    fet_rs1link = (fet_rs1idx==1) || (fet_rs1idx==5);
     i_imm = (localIR >> 20) & 0xfff;  ///**< signed value */
     b_imm = (((localIR>>31)&0x1) << 12 ) +  (((localIR>>7)&0x1) << 11 ) + (((localIR>>25)&0x3f) << 5 ) + (((localIR>>8)&0xf) << 1 );
     j_imm = (((localIR>>31)&0x1) << 20 ) +  (((localIR>>12)&0xff) << 12 ) + (((localIR>>20)&0x1) << 11 ) + (((localIR>>21)&0x3ff) << 1 );
@@ -47,13 +50,13 @@ REG32 fet_real_rs1v;
         //
         branchjmp =1;
         break;
-    //case OPCODE_JALR:
+    case OPCODE_JALR:
     //    alu_opd1 = fet_real_rs1v;
     //    alu_opd2 = s_i_imm;
     //    fet_rs1en =1;
         //
-    //    branchjmp =1;
-    //    break;
+        branchjmp =fet_ras_pop;
+        break;
     case OPCODE_BRANCH:
         alu_opd1 = fetpc_clked;
         alu_opd2 = s_b_imm;
@@ -72,16 +75,17 @@ REG32 fet_real_rs1v;
     //fet_real_rs1v =  
     //                fet_raw_exe_rs1   ? exe_res :
     //                fet_raw_memwb_rs1 ? memwb_wdata : fet_rs1v;
-    fetch_stall = (fet_rs1en & (!fet_rs1en_ack)) | fet_raw_dec_rs1;
+    //fetch_stall = (fet_rs1en & (!fet_rs1en_ack)) | fet_raw_dec_rs1;
 
     //ras_push = (opcode==OPCODE_JAL  & (fet_rdidx==1 || fet_rdidx==5)) |
     //           (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx!=1 && fet_rs1idx!=5)) |
     //           (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx==1 || fet_rs1idx==5)) ;
-    fet_ras_pop =  (opcode==OPCODE_JALR & (fet_rdidx!=1 && fet_rdidx!=5) & (fet_rs1idx==1 || fet_rs1idx==5)) |
-         (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx==1 || fet_rs1idx==5) & (fet_rdidx!=fet_rs1idx)) ;
+    fet_ras_pop =  (opcode==OPCODE_JALR & (!fet_rdlink) & (fet_rs1link)) |
+         (opcode==OPCODE_JALR & (fet_rdlink) & (fet_rs1link) & (fet_rdidx!=fet_rs1idx)) ;
 
     branchjmp_pc = firstclk ? BOOTADDR : 
-                   fet_ras_pop ? ras_stack[ras_sp] : alu_opd1 + alu_opd2;
+                   fet_ras_pop ? (ras_stack[0]&0x0fffffff)+ITCM_ADDR_BASE :  //ensure valid code address
+                   alu_opd1 + alu_opd2;
 
 }
 
@@ -105,6 +109,7 @@ BIT midnxtpc_fg;
 BIT new_midnxtpc_fg;
 
     //
+    fetch_stall=0;
     codebus_connect();
 
     //instruction from code-ram
@@ -130,6 +135,7 @@ BIT new_midnxtpc_fg;
 
     //
     nxtpc = exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
+            exe_jalr_pdict_fail ? exe_jalr_pc :
             branchjmp   ? branchjmp_pc : fetpc_clked + iroffset;
             //fetch_stall ? fetpc_clked : fetpc_clked + iroffset;
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
@@ -146,7 +152,7 @@ BIT new_midnxtpc_fg;
     pc = ifu2mem_cmd_valid & (!new_midnxtpc_part2_fg_clked) & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
 
     fetch_flush =!(  ifu2mem_rsp_valid & ifu2mem_rsp_ready &(!new_midnxtpc_part2_fg_clked) );
-    fetch_flush = fetch_flush | exe_branch_pdict_fail;
+    fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail;
     fetchIR =  fetch_flush ?  NOP : memIR32;
 
     //
