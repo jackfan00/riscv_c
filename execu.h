@@ -10,7 +10,7 @@
     REG32 exe_res_clked      ;
     BIT exe_rden_clked      ;
     BIT exe_rdidx_clked     ;
-    BIT exe_stall;
+    BIT lsu_stall;
     BIT lsu_misaligned;
     BIT lsu2mem_cmd_valid;
     BIT lsu2mem_cmd_ready;
@@ -22,5 +22,8 @@
     BIT lsu2mem_rsp_ready;
     BIT lsu2mem_rsp_err;
     REG32 lsu2mem_rsp_rdata;
+    BIT exe_branch_pdict_fail;
+    BIT exe_rden;
+    REG32 exe_branch_pdict_fail_pc;
 
 #endif  //EXECU_H

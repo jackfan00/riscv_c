@@ -15,7 +15,7 @@ int i;
     //
     for (i=0;i<CODEARBIT_NUM;i++){
         if (i_codebus_grt[i]){
-            printf("codebus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+           // printf("codebus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
         }
         i_codebus_grt_clked[i] = i_codebus_grt[i];
     }
@@ -57,15 +57,34 @@ int i;
 
 void coderamctrl_clked()
 {
+    //
+    if (coderam_wrsp_valid){
+        coderam_wrsp_per_clked = 0; 
+    }
+    if (coderam_rrsp_valid){
+        coderam_rrsp_per_clked = 0; 
+    }        
+    //
     if (coderam_cs){
         if (coderam_we){
             coderam[coderam_adr] = coderam_wdat;
+            coderam_wrsp_per_clked = 1;
         }
         else{
             coderam_rdat = coderam[coderam_adr];
+            coderam_rrsp_per_clked =1;
         }
+        // simulate multi-cycle ready case
+        ready_cycles_clked = 1;
+    }
+    else if (coderam_wrsp_per_clked | coderam_rrsp_per_clked){
+        ready_cycles_clked++;
     }
     coderam_cs_clked = coderam_cs;
     coderam_we_clked = coderam_we;
+
+
+
+//
 
 }

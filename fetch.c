@@ -29,6 +29,7 @@ REG32 fet_real_rs1v;
 
 
     opcode = firstclk ? OPCODE_JAL : localIR & 0x7f;
+    fet_rdidx =  (localIR >> 7) & 0x1f;
     fet_rs1idx = (localIR >> 15) & 0x1f;
     i_imm = (localIR >> 20) & 0xfff;  ///**< signed value */
     b_imm = (((localIR>>31)&0x1) << 12 ) +  (((localIR>>7)&0x1) << 11 ) + (((localIR>>25)&0x3f) << 5 ) + (((localIR>>8)&0xf) << 1 );
@@ -46,33 +47,41 @@ REG32 fet_real_rs1v;
         //
         branchjmp =1;
         break;
-    case OPCODE_JALR:
-        alu_opd1 = fet_real_rs1v;
-        alu_opd2 = s_i_imm;
-        fet_rs1en =1;
+    //case OPCODE_JALR:
+    //    alu_opd1 = fet_real_rs1v;
+    //    alu_opd2 = s_i_imm;
+    //    fet_rs1en =1;
         //
-        branchjmp =1;
-        break;
+    //    branchjmp =1;
+    //    break;
     case OPCODE_BRANCH:
         alu_opd1 = fetpc_clked;
         alu_opd2 = s_b_imm;
-        predict_jmp= s_b_imm<0 ? 1 : 0;
-        branchjmp =predict_jmp;
+        fet_predict_jmp= s_b_imm<0 ? 1 : 0;
+        branchjmp =fet_predict_jmp;
         break;
     default:
         branchjmp =0;
         break;
     }
 
-    fet_raw_dec_rs1   =   (rden             & (rdidx          ==fet_rs1idx && fet_rs1en));
-    fet_raw_exe_rs1   =   (dec_rden_clked   & (dec_rdidx_clked==fet_rs1idx && fet_rs1en));
-    fet_raw_memwb_rs1 =   (exe_rden_clked   & (exe_rdidx_clked==fet_rs1idx && fet_rs1en));
+    //fet_raw_dec_rs1   =   (rden             & (rdidx          ==fet_rs1idx && fet_rs1en));
+    //fet_raw_exe_rs1   =   (dec_rden_clked   & (dec_rdidx_clked==fet_rs1idx && fet_rs1en));
+    //fet_raw_memwb_rs1 =   (exe_rden_clked   & (exe_rdidx_clked==fet_rs1idx && fet_rs1en));
 
-    fet_real_rs1v =  
-                    fet_raw_exe_rs1   ? exe_res :
-                    fet_raw_memwb_rs1 ? memwb_wdata : fet_rs1v;
-    branchjmp_pc = firstclk ? BOOTADDR : alu_opd1 + alu_opd2;
+    //fet_real_rs1v =  
+    //                fet_raw_exe_rs1   ? exe_res :
+    //                fet_raw_memwb_rs1 ? memwb_wdata : fet_rs1v;
     fetch_stall = (fet_rs1en & (!fet_rs1en_ack)) | fet_raw_dec_rs1;
+
+    //ras_push = (opcode==OPCODE_JAL  & (fet_rdidx==1 || fet_rdidx==5)) |
+    //           (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx!=1 && fet_rs1idx!=5)) |
+    //           (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx==1 || fet_rs1idx==5)) ;
+    fet_ras_pop =  (opcode==OPCODE_JALR & (fet_rdidx!=1 && fet_rdidx!=5) & (fet_rs1idx==1 || fet_rs1idx==5)) |
+         (opcode==OPCODE_JALR & (fet_rdidx==1 || fet_rdidx==5) & (fet_rs1idx==1 || fet_rs1idx==5) & (fet_rdidx!=fet_rs1idx)) ;
+
+    branchjmp_pc = firstclk ? BOOTADDR : 
+                   fet_ras_pop ? ras_stack[ras_sp] : alu_opd1 + alu_opd2;
 
 }
 
@@ -84,7 +93,6 @@ REG32 memIR;
 REG32 memIR32;
 REG16 memIR16;
 REG8 irlsb10;
-BIT ir16;
 BIT nxtir16;
 REG8 iroffset;
 REG32 nxtpc;
@@ -111,17 +119,17 @@ BIT new_midnxtpc_fg;
     memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff :  (memIR>>16) & 0x0ffff;
     // calculate next pc
     irlsb10 = (fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
-    ir16 = irlsb10!=3;
-    if (ir16){
+    fet_ir16 = irlsb10!=3;
+    if (fet_ir16){
         memIR32 = toir32(memIR16);
     }
     else{
         memIR32 = (fetpc_clked&0x02) == 0 ? memIR : ((memIR&0x0ffff) << 16) + memIR_hi16_clked;
     }
-    iroffset = ir16 ? 2 : 4;
+    iroffset = fet_ir16 ? 2 : 4;
 
     //
-    nxtpc =
+    nxtpc = exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
             branchjmp   ? branchjmp_pc : fetpc_clked + iroffset;
             //fetch_stall ? fetpc_clked : fetpc_clked + iroffset;
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
@@ -138,6 +146,7 @@ BIT new_midnxtpc_fg;
     pc = ifu2mem_cmd_valid & (!new_midnxtpc_part2_fg_clked) & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
 
     fetch_flush =!(  ifu2mem_rsp_valid & ifu2mem_rsp_ready &(!new_midnxtpc_part2_fg_clked) );
+    fetch_flush = fetch_flush | exe_branch_pdict_fail;
     fetchIR =  fetch_flush ?  NOP : memIR32;
 
     //

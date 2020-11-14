@@ -54,6 +54,9 @@ BIT   dec_aluop_lhu_clked;
 BIT   dec_aluop_sb_clked;
 BIT   dec_aluop_sh_clked;
 BIT   dec_aluop_sw_clked;
+BIT   dec_ras_push_clked;
+BIT   dec_predict_jmp_clked;
+BIT   dec_branch_pdict_fail_pc_clked;
 
 //output
 REG32 real_rs1v;
@@ -104,6 +107,7 @@ BIT aluop_sb;
 BIT aluop_sh;
 BIT aluop_sw;
 BIT dec_stall;
-
+BIT dec_ras_push;
+BIT dec_branch_pdict_fail_pc;
 
 #endif // DECODE_H

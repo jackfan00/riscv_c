@@ -6,6 +6,16 @@
 #include "opcode_define.h"
 #include "codebus.h"
 
+void debug_cpuinfo(){
+    int i;
+    printf("clockcnt, pc--------, instrution, regs 1-31\n");
+    printf("%08d, 0x%08x, 0x%08x\n", clockcnt, fetpc_clked, fetchIR);
+    for (i=0;i<32;i++){
+        printf("0x%08x ", regsarray[i]);
+        if ((i%8)==7) printf("\n");
+    }
+}
+
 void setup()
 {
     init_rom();
@@ -13,7 +23,7 @@ void setup()
     //rspid_fifo_wadr_clked = RSPFIFOSIZE-1;
     code_rspid_fifo_empty_clked =1;
     fetchIR_clked = NOP;
-    fetpc_clked = 0x12345;  //ensure different address from BOOTADDR
+    fetpc_clked = 0x12345678;  //ensure different address from BOOTADDR
     fetch_flush =0;
 }
 
@@ -58,6 +68,8 @@ int main()
 
 
         //
+        debug_cpuinfo();
+
         // flipflop
 
        // memwb_clked();

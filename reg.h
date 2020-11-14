@@ -25,6 +25,7 @@ typedef unsigned char BIT;
 #define REGARBIT_NUM 2
 #define MAXCODESIZE 1024
 #define BOOTADDR ITCM_ADDR_BASE
+#define RASDEPTH 8
 
 REG8 code_rspid_fifo[RSPFIFOSIZE];
 REG8 data_rspid_fifo[RSPFIFOSIZE];
@@ -34,6 +35,8 @@ REG8 dataram0[MAXCODESIZE], dataram1[MAXCODESIZE], dataram2[MAXCODESIZE], datara
 REG8 depfifo[DEPFIFOSIZE];
 BIT depfifo_fg[DEPFIFOSIZE];
 REG32 regsarray[32];
+REG32 ras_stack[RASDEPTH];
+REG8 ras_sp;
 
 
 BIT firstclk;

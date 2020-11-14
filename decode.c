@@ -45,6 +45,8 @@ void decodeinit()
 void decode()
 {
 //local
+BIT dec_flush;
+REG32 dec_IR;
 BIT dec_raw_exe_rs1;
 BIT dec_raw_exe_rs2;
 BIT dec_raw_memwb_rs1;
@@ -71,18 +73,20 @@ int s_j_imm;
 //
     decodeinit();
     //
+    dec_flush = exe_branch_pdict_fail;
+    dec_IR = dec_flush ? NOP : fetchIR_clked;
 
-    opcode = fetchIR_clked & 0x7f;
-    func3 = (fetchIR_clked >> 12) & 0x07;
-    func7 = (fetchIR_clked >> 25) & 0x3f;
-    rs1idx = (fetchIR_clked >> 15) & 0x1f;
-    rs2idx = (fetchIR_clked >> 20) & 0x1f;
-    i_imm = (fetchIR_clked >> 20) & 0xfff;  //< signed value
-    s_imm = (((fetchIR_clked>>25)&0x7f) << 5 ) +  ((fetchIR_clked>>7)&0x1f)   ;
-    b_imm = (((fetchIR_clked>>31)&0x1) << 12 ) +  (((fetchIR_clked>>7)&0x1) << 11 ) + (((fetchIR_clked>>25)&0x3f) << 5 ) + (((fetchIR_clked>>8)&0xf) << 1 );
-    u_imm = (fetchIR_clked & 0xfffff000);  ///< msb[31:12]
-    j_imm = (((fetchIR_clked>>31)&0x1) << 20 ) +  (((fetchIR_clked>>12)&0xff) << 12 ) + (((fetchIR_clked>>20)&0x1) << 11 ) + (((fetchIR_clked>>21)&0x3ff) << 1 );
-    rdidx = (fetchIR_clked >> 7) & 0x1f;
+    opcode = dec_IR & 0x7f;
+    func3 = (dec_IR >> 12) & 0x07;
+    func7 = (dec_IR >> 25) & 0x3f;
+    rs1idx = (dec_IR >> 15) & 0x1f;
+    rs2idx = (dec_IR >> 20) & 0x1f;
+    i_imm = (dec_IR >> 20) & 0xfff;  //< signed value
+    s_imm = (((dec_IR>>25)&0x7f) << 5 ) +  ((dec_IR>>7)&0x1f)   ;
+    b_imm = (((dec_IR>>31)&0x1) << 12 ) +  (((dec_IR>>7)&0x1) << 11 ) + (((dec_IR>>25)&0x3f) << 5 ) + (((dec_IR>>8)&0xf) << 1 );
+    u_imm = (dec_IR & 0xfffff000);  ///< msb[31:12]
+    j_imm = (((dec_IR>>31)&0x1) << 20 ) +  (((dec_IR>>12)&0xff) << 12 ) + (((dec_IR>>20)&0x1) << 11 ) + (((dec_IR>>21)&0x3ff) << 1 );
+    rdidx = (dec_IR >> 7) & 0x1f;
     //shamt = rs2idx;
     rs1x0 = (rs1idx==0);
     rs2x0 = (rs2idx==0);
@@ -192,7 +196,7 @@ int s_j_imm;
         dec_ilg = aluop  & (!aluopimm) & (!func7_20) & (!func7_00);
         //
         if (dec_ilg){
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_SLL:
@@ -200,7 +204,7 @@ int s_j_imm;
         dec_ilg = (aluop| aluopimm) & (!func7_00);
 
         if (dec_ilg){
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_SLT:
@@ -209,7 +213,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_SLTU:
@@ -218,7 +222,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_XOR:
@@ -226,7 +230,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     //case ALU_SRL:
@@ -237,7 +241,7 @@ int s_j_imm;
 
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_OR:
@@ -245,7 +249,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
         break;
     case ALU_AND:
@@ -253,7 +257,7 @@ int s_j_imm;
             dec_ilg = aluop & (!aluopimm) & (!func7_00);
         if (dec_ilg){
 
-            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", fetchIR_clked, clockcnt);
+            printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
         }
        break;
 
@@ -348,5 +352,13 @@ int s_j_imm;
        real_rs2v = !rs2en ? 0 :
                    dec_raw_exe_rs2 ? exe_res :
                    dec_raw_memwb_rs2 ? memwb_wdata : rs2v;
+
+       dec_ras_push = (opcode==OPCODE_JAL  & (rdidx==1 || rdidx==5)) |
+               (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx!=1 && rs1idx!=5)) |
+               (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx==1 || rs1idx==5)) ;
+    //dec_ras_pop =  (opcode==OPCODE_JALR & (rdidx!=1 && rdidx!=5) & (rs1idx==1 || rs1idx==5)) |
+    //     (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx==1 || rs1idx==5) & (rdidx!=rs1idx)) ;
+       dec_branch_pdict_fail_pc =  decpc_clked + (!fet_predict_jmp_clked ? s_b_imm : 
+                                                  fet_ir16_clked ? 2 : 4);
 
 }

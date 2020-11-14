@@ -60,4 +60,9 @@ void decode_clked()
  dec_aluop_sh_clked   = aluop_sh;
  dec_aluop_sw_clked   = aluop_sw;
 
+ dec_ras_push_clked   = dec_ras_push;
+
+ dec_predict_jmp_clked = fet_predict_jmp_clked;
+ dec_branch_pdict_fail_pc_clked = dec_branch_pdict_fail_pc;
+ 
 }
