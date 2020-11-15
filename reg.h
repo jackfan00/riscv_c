@@ -18,8 +18,8 @@ typedef unsigned char BIT;
 
 
 
-#define DEPFIFOSIZE 4
-#define RSPFIFOSIZE 4
+//#define DEPFIFOSIZE 4
+#define RSPFIFOSIZE 2  //only support 2
 #define CODEARBIT_NUM 4
 #define DATAARBIT_NUM 4
 #define REGARBIT_NUM 2
@@ -28,12 +28,12 @@ typedef unsigned char BIT;
 #define RASDEPTH 8
 
 //normal sram parameter is  (1, 0), DATARAM_RREADY_CYCLES=0 is not supported
-#define DATARAM_RREADY_CYCLES 1
-#define DATARAM_WREADY_CYCLES 0
+#define DATARAM_RSPVALID_CYCLES 1
+#define DATARAM_CMDREADY_CYCLES 0
 
 //normal sram parameter is  (1, 0), CODERAM_RREADY_CYCLES=0 is not supported
-#define CODERAM_RREADY_CYCLES 1
-#define CODERAM_WREADY_CYCLES 0
+#define CODERAM_RSPVALID_CYCLES 1
+#define CODERAM_CMDREADY_CYCLES 0
 
 
 REG8 code_rspid_fifo[RSPFIFOSIZE];
@@ -48,7 +48,7 @@ REG32 ras_stack[RASDEPTH];
 REG8 ras_sp;
 
 
-BIT firstclk;
+//BIT firstclk;
 
 #endif // REG_H
 

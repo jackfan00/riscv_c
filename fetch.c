@@ -29,7 +29,7 @@ REG32 fet_real_rs1v;
 BIT fet_rdlink;
 BIT fet_rs1link;
 
-    opcode = firstclk ? OPCODE_JAL : localIR & 0x7f;
+    opcode = firstinst_clked ? OPCODE_JAL : localIR & 0x7f;
     fet_rdidx =  (localIR >> 7) & 0x1f;
     fet_rs1idx = (localIR >> 15) & 0x1f;
     fet_rdlink = (fet_rdidx==1) || (fet_rdidx==5);
@@ -86,7 +86,7 @@ BIT fet_rs1link;
          (opcode==OPCODE_JALR & (fet_rdlink) & (fet_rs1link) & (fet_rdidx!=fet_rs1idx)) ;
 
     // need a one ADDER to predict BRANCH and JAL address
-    branchjmp_pc = firstclk ? BOOTADDR : 
+    branchjmp_pc = firstinst_clked ? BOOTADDR : 
                    fet_ras_pop ? (ras_stack[0]&0x0fffffff)+ITCM_ADDR_BASE :  //ensure valid code address
                    alu_opd1 + alu_opd2;
 
@@ -112,6 +112,7 @@ BIT midnxtpc_fg;
 BIT new_midnxtpc_fg;
 
     //
+
     fetch_stall=0;
     codebus_connect();
 

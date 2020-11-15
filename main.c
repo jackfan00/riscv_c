@@ -35,6 +35,7 @@ void setup()
     fetchIR_clked = NOP;
     fetpc_clked = 0x12345678;  //ensure different address from BOOTADDR
     fetch_flush =0;
+    firstinst_clked=1;
 }
 
 int main()
@@ -49,7 +50,7 @@ int main()
     while(1)
     {
 
-        firstclk = (clockcnt==0);
+        //firstclk = (clockcnt==0);
         //
         // 4-pipeline stage
 

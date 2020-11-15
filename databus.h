@@ -49,6 +49,8 @@ BIT dataram_we;
 REG8 dataram_bmask;
 BIT dataram_wrsp_valid;
 BIT dataram_rrsp_valid;
+REG8 dataram_rspvalid_cycles_clked;
+REG8 dataram_cmdready_cycles_clked;
 
 // for simulate purpose, not hardware requirement
 int dataram_ready_cycles_clked;

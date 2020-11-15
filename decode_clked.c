@@ -1,6 +1,7 @@
 #include "fetch.h"
 #include "decode.h"
 #include "execu.h"
+#include "memwb.h"
 
 void decode_clked()
 {
@@ -13,7 +14,7 @@ void decode_clked()
     //}
 
 
-if (!lsu_stall){
+if ((!lsu_stall) && (!memwb_stall)){
  decpc_clked = fetpc_clked;
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
@@ -25,7 +26,7 @@ if (!lsu_stall){
  dec_rdidx_clked      = rdidx;
  dec_rs1en_clked      = rs1en;
  dec_rs2en_clked      = rs2en;
- dec_rden_clked       = rden;
+ dec_rden_clked       = rden     & (!dec_stall);
  dec_aluop_sub_clked  = aluop_sub;
  dec_aluop_add_clked  = aluop_add;
  dec_aluop_sll_clked  = aluop_sll;
@@ -36,16 +37,16 @@ if (!lsu_stall){
  dec_aluop_srl_clked  = aluop_srl;
  dec_aluop_or_clked   = aluop_or;
  dec_aluop_and_clked  = aluop_and;
- dec_dec_ilg_clked    = dec_ilg;
+ dec_dec_ilg_clked    = dec_ilg  & (!dec_stall);
  dec_aluopimm_clked   = aluopimm;
  dec_aluop_clked      = aluop;
- dec_aluload_clked    = aluload;
- dec_alustore_clked   = alustore;
+ dec_aluload_clked    = aluload  & (!dec_stall);
+ dec_alustore_clked   = alustore & (!dec_stall);
  dec_alujal_clked     = alujal;
  dec_alujalr_clked    = alujalr;
  dec_alului_clked     = alului;
  dec_aluauipc_clked   = aluauipc;
- dec_alubranch_clked  = alubranch;
+ dec_alubranch_clked  = alubranch & (!dec_stall);
  dec_alumiscmem_clked = alumiscmem;
  dec_alusystem_clked  = alusystem;
  dec_aluop_beq_clked  = aluop_beq;
@@ -65,7 +66,7 @@ if (!lsu_stall){
  dec_ras_push_clked   = dec_ras_push;
  dec_predict_jmp_clked = fet_predict_jmp_clked;
  cti_pc_clked          = cti_pc;
- dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail;
+ dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail & (!dec_stall);
 }
 
 }

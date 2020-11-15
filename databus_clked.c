@@ -9,7 +9,8 @@ void databus_clked()
 {
 
 //local
-
+REG8 nxt_wadr;
+REG8 nxt_radr;
 
 int i;
     //
@@ -24,7 +25,7 @@ int i;
     if (data_rspid_fifo_ren & data_rspid_fifo_empty_clked & (!data_rspid_fifo_wen)){
         printf("databus Error:fifo read empty\n");
     }
-    if (data_rspid_fifo_wen & data_rspid_fifo_full_clked){
+    if (data_rspid_fifo_wen & data_rspid_fifo_full_clked  & (!data_rspid_fifo_ren)){
         printf("databus Error:fifo write full\n");
     }
 
@@ -42,14 +43,14 @@ int i;
     }
 
     //
-    data_rspid_fifo_wadr = data_rspid_fifo_wadr_clked;
-    data_rspid_fifo_radr = data_rspid_fifo_radr_clked;
-    if (data_rspid_fifo_wen){
-        data_rspid_fifo_full_clked = (data_rspid_fifo_wadr_clked==data_rspid_fifo_radr);
-    }
-    if (data_rspid_fifo_ren){
-        data_rspid_fifo_empty_clked = (data_rspid_fifo_wadr==data_rspid_fifo_radr_clked);
-    }
+    nxt_wadr = data_rspid_fifo_wadr_clked >= RSPFIFOSIZE-1 ? 0 : data_rspid_fifo_wadr_clked+1;
+    nxt_radr = data_rspid_fifo_radr_clked >= RSPFIFOSIZE-1 ? 0 : data_rspid_fifo_radr_clked+1;
+    //if (data_rspid_fifo_wen){
+        data_rspid_fifo_full_clked = (nxt_wadr==data_rspid_fifo_radr_clked);
+    //}
+    //if (data_rspid_fifo_ren){
+        data_rspid_fifo_empty_clked = (nxt_radr==data_rspid_fifo_wadr_clked);
+    //}
 
     //
     dataramctrl_clked();
@@ -69,13 +70,22 @@ void dataramctrl_clked()
     REG32 adr01;
 
 //
-    if (dataram_wrsp_valid){
-        dataram_wrsp_per_clked = 0; 
-    }
-    if (dataram_rrsp_valid){
+    //if (dataram_wrsp_valid){
+    //    dataram_wrsp_per_clked = 0; 
+    //}
+    if (o_databus_rsp_valid){
         dataram_rrsp_per_clked = 0; 
     }        
     //
+    if (o_databus_cmd_valid & o_databus_cmd_ready){
+        dataram_cmdready_cycles_clked=0;
+    }
+    else if (o_databus_cmd_valid){
+        dataram_cmdready_cycles_clked++;
+    }
+    else{
+        dataram_cmdready_cycles_clked=0;
+    }    
 
     //
     adr = (dataram_adr & 0x00ffffff);
@@ -120,14 +130,14 @@ void dataramctrl_clked()
             //dataram_rdat = (dataram_bmask==0x1) ? dataram_rdat & 0x0ff :
             //               (dataram_bmask==0x3) ? dataram_rdat & 0x0ffff : dataram_rdat;           
         }
-        dataram_ready_cycles_clked = 1;
+        dataram_rspvalid_cycles_clked = 1;
 
     }
-    else if (dataram_wrsp_per_clked | dataram_rrsp_per_clked){
-        dataram_ready_cycles_clked++;
+    else if (dataram_rrsp_per_clked){
+        dataram_rspvalid_cycles_clked++;
     }
 
-    dataram_cs_clked = dataram_cs;
-    dataram_we_clked = dataram_we;
+    //dataram_cs_clked = dataram_cs;
+    //dataram_we_clked = dataram_we;
 
 }

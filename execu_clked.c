@@ -1,10 +1,12 @@
 #include "execu.h"
 #include "decode.h"
+#include "memwb.h"
 
 void execu_clked()
 {
     int i;
 
+if (!memwb_stall){
  exe_res_clked        = exe_res;
  exe_res_valid_clked  = exe_res_valid;
  exe_rden_clked       = exe_rden;
@@ -25,5 +27,7 @@ void execu_clked()
      }
      ras_stack[0] = exe_res;
  }
+
+}
 
 }

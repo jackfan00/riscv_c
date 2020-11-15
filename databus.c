@@ -87,24 +87,28 @@ int i,j;
 
     //
     o_databus_rsp_rdata = dataram_rdat;
-    //o_codebus_rsp_valid = dataram_cs_clked & !dataram_we_clked;   
+    //o_databus_rsp_valid = dataram_cs_clked & !dataram_we_clked;   
 
 
     //o_databus_rsp_valid = dataram_wrsp_valid | dataram_rrsp_valid ;
     //only reply read-request response
-    o_databus_rsp_valid =  dataram_rrsp_valid ;
+    //o_databus_rsp_valid =  dataram_rrsp_valid ;
+    o_databus_rsp_valid =  DATARAM_RSPVALID_CYCLES==0 ? o_databus_cmd_valid & o_databus_cmd_read : 
+                      dataram_rrsp_per_clked & (dataram_rspvalid_cycles_clked>=DATARAM_RSPVALID_CYCLES) ;
 
 
 }
 
 void dataramctrl()
 {
-    BIT dataram_busy;
-    dataram_busy = dataram_wrsp_per_clked | dataram_rrsp_per_clked ;
-    o_databus_cmd_ready = DATARAM_WREADY_CYCLES==0 & (!o_databus_cmd_read) ? 1 :
-                          DATARAM_RREADY_CYCLES==0 & o_databus_cmd_read ? 1 :
-                          dataram_wrsp_valid | dataram_rrsp_valid | (!dataram_busy);
-    //o_databus_cmd_ready =1;
+    // cmd_ready consider the larger latency one of cmdready and rspvalid
+    o_databus_cmd_ready = DATARAM_CMDREADY_CYCLES==0 ? (!data_rspid_fifo_full_clked) |
+                                (data_rspid_fifo_full_clked & o_databus_rsp_valid & o_databus_rsp_ready) : 
+                          (dataram_cmdready_cycles_clked>=DATARAM_CMDREADY_CYCLES) & (
+                 (!data_rspid_fifo_full_clked) | (data_rspid_fifo_full_clked & o_databus_rsp_valid & o_databus_rsp_ready)
+                              );
+
+
     if (o_databus_cmd_valid & o_databus_cmd_ready){
         dataram_adr = (o_databus_cmd_adr); // & 0x00ffffff) >>2;
         dataram_cs =1;
@@ -116,10 +120,10 @@ void dataramctrl()
         dataram_cs = 0;
     }    
     //
-    dataram_wrsp_valid = //DATARAM_WREADY_CYCLES==0 ? dataram_cs & dataram_we :
-                         dataram_wrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_WREADY_CYCLES);
-    dataram_rrsp_valid = //DATARAM_RREADY_CYCLES==0 ? dataram_cs & (!dataram_we):
-                         dataram_rrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_RREADY_CYCLES);
+    //dataram_wrsp_valid = //DATARAM_WREADY_CYCLES==0 ? dataram_cs & dataram_we :
+    //                     dataram_wrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_CMDREADY_CYCLES);
+    //dataram_rrsp_valid = //DATARAM_RREADY_CYCLES==0 ? dataram_cs & (!dataram_we):
+    //                     dataram_rrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_RSPVALID_CYCLES);
     //
     o_databus_rsp_err =0;
 }

@@ -1,12 +1,15 @@
 #include "fetch.h"
 #include "execu.h"
+#include "decode.h"
+#include "memwb.h"
 
 void fetch_clked()
 {
     int i;
 
-    if (!lsu_stall){
+    if ((!lsu_stall) && (!dec_stall) && (!memwb_stall)){
 
+    firstinst_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? 0 : firstinst_clked;
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
     fetpc_clked = pc;
     fetchIR_clked = fetchIR;

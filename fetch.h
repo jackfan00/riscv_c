@@ -18,6 +18,7 @@ BIT fet_rs1en_ack;
 REG32 fet_rs1v;
 BIT fet_predict_jmp_clked;
 BIT fet_ir16_clked;
+BIT firstinst_clked;
 
 //output
 BIT ifu2mem_rsp_ready;

@@ -90,18 +90,23 @@ int i,j;
    
     //o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
     //only reply read-request response
-    o_codebus_rsp_valid =  coderam_rrsp_valid ;
+    //o_codebus_rsp_valid =  coderam_rrsp_valid ;
+    o_codebus_rsp_valid =  CODERAM_RSPVALID_CYCLES==0 ? o_codebus_cmd_valid & o_codebus_cmd_read : 
+                      coderam_rrsp_per_clked & (coderam_rspvalid_cycles_clked>=CODERAM_RSPVALID_CYCLES) ;
     
 
 }
 
 void coderamctrl()
 {
-    BIT coderam_busy;
-    coderam_busy = coderam_wrsp_per_clked | coderam_rrsp_per_clked ;
-    o_codebus_cmd_ready = CODERAM_WREADY_CYCLES==0 & !o_codebus_cmd_read ? 1 :
-                          CODERAM_RREADY_CYCLES==0 & o_codebus_cmd_read ? 1 :
-                          coderam_wrsp_valid | coderam_rrsp_valid | (!coderam_busy);
+    //
+    // cmd_ready consider the larger latency one of cmdready and rspvalid
+    o_codebus_cmd_ready = CODERAM_CMDREADY_CYCLES==0 ? (!code_rspid_fifo_full_clked) |
+                                (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready) : 
+                          (coderam_cmdready_cycles_clked>=CODERAM_CMDREADY_CYCLES) & (
+                 (!code_rspid_fifo_full_clked) | (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready)
+                              );
+
     if (o_codebus_cmd_valid & o_codebus_cmd_ready){
         coderam_adr = (o_codebus_cmd_adr & 0x00ffffff) >>2;
         coderam_cs =1;
@@ -114,10 +119,10 @@ void coderamctrl()
     }
     //
     
-    coderam_wrsp_valid = //CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
-                         coderam_wrsp_per_clked & (ready_cycles_clked==CODERAM_WREADY_CYCLES);
-    coderam_rrsp_valid = //CODERAM_RREADY_CYCLES==0 ? coderam_cs & (!coderam_we):
-                         coderam_rrsp_per_clked & (ready_cycles_clked==CODERAM_RREADY_CYCLES);
+    //coderam_wrsp_valid = //CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
+    //                     coderam_wrsp_per_clked & (ready_cycles_clked==CODERAM_WREADY_CYCLES);
+    //coderam_rrsp_valid = //CODERAM_RREADY_CYCLES==0 ? coderam_cs & (!coderam_we):
+    //                     coderam_rrsp_per_clked & (ready_cycles_clked==CODERAM_RREADY_CYCLES);
 
 }
 

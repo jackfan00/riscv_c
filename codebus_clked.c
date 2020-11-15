@@ -9,6 +9,8 @@ void codebus_clked()
 {
 
 //local
+REG8 nxt_wadr;
+REG8 nxt_radr;
 
 
 int i;
@@ -24,7 +26,7 @@ int i;
     if (code_rspid_fifo_ren & code_rspid_fifo_empty_clked & (!code_rspid_fifo_wen)){
         printf("codebus Error:fifo read empty\n");
     }
-    if (code_rspid_fifo_wen & code_rspid_fifo_full_clked){
+    if (code_rspid_fifo_wen & code_rspid_fifo_full_clked & (!code_rspid_fifo_ren)){
         printf("codebus Error:fifo write full\n");
     }
 
@@ -42,14 +44,14 @@ int i;
     }
 
     //
-    code_rspid_fifo_wadr = code_rspid_fifo_wadr_clked;
-    code_rspid_fifo_radr = code_rspid_fifo_radr_clked;
-    if (code_rspid_fifo_wen){
-        code_rspid_fifo_full_clked = (code_rspid_fifo_wadr_clked==code_rspid_fifo_radr);
-    }
-    if (code_rspid_fifo_ren){
-        code_rspid_fifo_empty_clked = (code_rspid_fifo_wadr==code_rspid_fifo_radr_clked);
-    }
+    nxt_wadr = code_rspid_fifo_wadr_clked >= RSPFIFOSIZE-1 ? 0 : code_rspid_fifo_wadr_clked+1;
+    nxt_radr = code_rspid_fifo_radr_clked >= RSPFIFOSIZE-1 ? 0 : code_rspid_fifo_radr_clked+1;
+    //if (code_rspid_fifo_wen){
+        code_rspid_fifo_full_clked = (nxt_wadr==code_rspid_fifo_radr_clked);
+    //}
+    //if (code_rspid_fifo_ren){
+        code_rspid_fifo_empty_clked = (nxt_radr==code_rspid_fifo_wadr_clked);
+    //}
 
     //
     coderamctrl_clked();
@@ -58,12 +60,26 @@ int i;
 void coderamctrl_clked()
 {
     //
-    if (coderam_wrsp_valid){
-        coderam_wrsp_per_clked = 0; 
-    }
-    if (coderam_rrsp_valid){
+    //if (coderam_wrsp_valid){
+    //    coderam_wrsp_per_clked = 0; 
+    //}
+    //if (coderam_rrsp_valid){
+    //    coderam_rrsp_per_clked = 0; 
+    //}        
+    if (o_codebus_rsp_valid){
         coderam_rrsp_per_clked = 0; 
+        //coderam_rspvalid_cycles_clked =0;
     }        
+    //
+    if (o_codebus_cmd_valid & o_codebus_cmd_ready){
+        coderam_cmdready_cycles_clked=0;
+    }
+    else if (o_codebus_cmd_valid){
+        coderam_cmdready_cycles_clked++;
+    }
+    else{
+        coderam_cmdready_cycles_clked=0;
+    }    
     //
     if (coderam_cs){
         if (coderam_we){
@@ -75,13 +91,13 @@ void coderamctrl_clked()
             coderam_rrsp_per_clked =1;
         }
         // simulate multi-cycle ready case
-        ready_cycles_clked = 1;
+        coderam_rspvalid_cycles_clked = 1;
     }
-    else if (coderam_wrsp_per_clked | coderam_rrsp_per_clked){
-        ready_cycles_clked++;
+    else if (coderam_rrsp_per_clked){
+        coderam_rspvalid_cycles_clked++;
     }
-    coderam_cs_clked = coderam_cs;
-    coderam_we_clked = coderam_we;
+    //coderam_cs_clked = coderam_cs;
+    //coderam_we_clked = coderam_we;
 
 
 

@@ -49,6 +49,9 @@ BIT coderam_wrsp_per_clked;
 BIT coderam_rrsp_per_clked;
 BIT coderam_wrsp_valid;
 BIT coderam_rrsp_valid;
+REG8 coderam_cmdready_cycles_clked;
+REG8 coderam_rspvalid_cycles_clked;
+
 
 // for simulate purpose, not hardware requirement
 int ready_cycles_clked;
