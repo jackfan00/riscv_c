@@ -45,18 +45,19 @@ int i,j;
         if (i_codebus_grt[i]){
             //printf("codebus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             w_code_rspid = i;
-            o_codebus_cmd_valid = (!code_rspid_fifo_full_clked);
+            o_codebus_cmd_valid = 1; //(!code_rspid_fifo_full_clked);
             o_codebus_cmd_read = i_codebus_cmd_read[i];
             o_codebus_cmd_adr = i_codebus_cmd_adr[i];
             o_codebus_cmd_wdata = i_codebus_cmd_wdata[i];
             o_codebus_cmd_rwbyte = i_codebus_cmd_rwbyte[i];
-            i_codebus_cmd_ready[i] = o_codebus_cmd_ready & (!code_rspid_fifo_full_clked);
+            i_codebus_cmd_ready[i] = o_codebus_cmd_ready ; //& (!code_rspid_fifo_full_clked);
         }
     }
 
 
-
-    rspid = code_rspid_fifo_empty_clked ? w_code_rspid : r_code_rspid;
+    r_code_rspid = code_rspid_fifo[code_rspid_fifo_radr];
+    //rspid = code_rspid_fifo_empty_clked ? w_code_rspid : r_code_rspid;
+    rspid = r_code_rspid;
     for(i=0; i<CODEARBIT_NUM; i++){
         if (i==rspid){
             // printf("codebus: rsp arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
@@ -64,18 +65,18 @@ int i,j;
             i_codebus_rsp_err[i] = o_codebus_rsp_err;
             i_codebus_rsp_rdata[i] = o_codebus_rsp_rdata;
             o_codebus_rsp_ready = i_codebus_rsp_ready[i];
-            break;
+            //break;
         }
-        //else{
-        //    i_codebus_rsp_valid[i] = 0;
+        else{
+            i_codebus_rsp_valid[i] = 0;
         //    i_codebus_rsp_err[i] = 0;
         //    i_codebus_rsp_rdata[i] = 0;
         //    o_codebus_rsp_ready = 0;
-        //}
+        }
     }
 
-
-    code_rspid_fifo_wen = o_codebus_cmd_valid & o_codebus_cmd_ready;
+    //only read-request need to write rspid_fifo
+    code_rspid_fifo_wen = o_codebus_cmd_valid & o_codebus_cmd_ready & o_codebus_cmd_read;
     code_rspid_fifo_ren = o_codebus_rsp_valid & o_codebus_rsp_ready;
 
 
@@ -86,7 +87,10 @@ int i,j;
     //
     o_codebus_rsp_rdata = coderam_rdat;
     //o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;   
-    o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
+   
+    //o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
+    //only reply read-request response
+    o_codebus_rsp_valid =  coderam_rrsp_valid ;
     
 
 }
@@ -95,7 +99,9 @@ void coderamctrl()
 {
     BIT coderam_busy;
     coderam_busy = coderam_wrsp_per_clked | coderam_rrsp_per_clked ;
-    o_codebus_cmd_ready = coderam_wrsp_valid | coderam_rrsp_valid | (!coderam_busy);
+    o_codebus_cmd_ready = CODERAM_WREADY_CYCLES==0 & !o_codebus_cmd_read ? 1 :
+                          CODERAM_RREADY_CYCLES==0 & o_codebus_cmd_read ? 1 :
+                          coderam_wrsp_valid | coderam_rrsp_valid | (!coderam_busy);
     if (o_codebus_cmd_valid & o_codebus_cmd_ready){
         coderam_adr = (o_codebus_cmd_adr & 0x00ffffff) >>2;
         coderam_cs =1;
@@ -108,9 +114,9 @@ void coderamctrl()
     }
     //
     
-    coderam_wrsp_valid = CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
+    coderam_wrsp_valid = //CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
                          coderam_wrsp_per_clked & (ready_cycles_clked==CODERAM_WREADY_CYCLES);
-    coderam_rrsp_valid = CODERAM_RREADY_CYCLES==0 ? coderam_cs & (!coderam_we):
+    coderam_rrsp_valid = //CODERAM_RREADY_CYCLES==0 ? coderam_cs & (!coderam_we):
                          coderam_rrsp_per_clked & (ready_cycles_clked==CODERAM_RREADY_CYCLES);
 
 }

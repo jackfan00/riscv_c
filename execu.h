@@ -10,6 +10,13 @@
     REG32 exe_res_clked      ;
     BIT exe_rden_clked      ;
     BIT exe_rdidx_clked     ;
+    BIT exe_aluload_clked;
+    BIT exe_lh_clked;
+    BIT exe_lhu_clked;
+    BIT exe_lb_clked;
+    BIT exe_lbu_clked;
+    BIT exe_lw_clked;
+    BIT exe_dec_ilg_clked;
     BIT lsu_stall;
     BIT lsu_misaligned;
     BIT lsu2mem_cmd_valid;

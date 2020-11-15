@@ -22,6 +22,8 @@ REG32 data_rspid_fifo_radr_clked;
 REG32 dataram_rdat;
 BIT dataram_cs_clked;
 BIT dataram_we_clked;
+BIT dataram_wrsp_per_clked;
+BIT dataram_rrsp_per_clked;
 
 // output
 BIT i_databus_grt[CODEARBIT_NUM];
@@ -45,5 +47,11 @@ BIT dataram_cs;
 REG32 dataram_wdat;
 BIT dataram_we;
 REG8 dataram_bmask;
+BIT dataram_wrsp_valid;
+BIT dataram_rrsp_valid;
+
+// for simulate purpose, not hardware requirement
+int dataram_ready_cycles_clked;
+
 
 #endif // MEMORYBUS_H

@@ -5,11 +5,21 @@
 #include "fetch.h"
 #include "opcode_define.h"
 #include "codebus.h"
+#include "decode.h"
+#include "execu.h"
 
 void debug_cpuinfo(){
     int i;
     printf("clockcnt, pc--------, instrution, regs 1-31\n");
-    printf("%08d, 0x%08x, 0x%08x\n", clockcnt, fetpc_clked, fetchIR);
+    printf("%08d, 0x%08x, 0x%08x", clockcnt, fetpc_clked, fetchIR);
+    if (fet_ras_pop){
+        printf(", fetch ras pop 0x%08x", branchjmp_pc);
+    }
+    if (dec_ras_push_clked){
+        printf(", execu ras push 0x%08x", exe_res);
+    }
+    printf("\n");
+
     for (i=0;i<32;i++){
         printf("0x%08x ", regsarray[i]);
         if ((i%8)==7) printf("\n");
@@ -69,6 +79,12 @@ int main()
 
         //
         debug_cpuinfo();
+
+        //check execption
+        if (exe_dec_ilg_clked){
+            printf("STOP by detect illigal instruction\n");
+            return(1);
+        }
 
         // flipflop
 

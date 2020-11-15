@@ -15,7 +15,7 @@ BIT or_grt, or_grt_clked;
 int i,j;
 
     databus_connect();
-
+    o_databus_cmd_valid =0;
     data_rspid_fifo_wadr = data_rspid_fifo_wadr_clked;
     data_rspid_fifo_radr = data_rspid_fifo_radr_clked;
     // priority arbitor
@@ -44,18 +44,20 @@ int i,j;
         if (i_databus_grt[i]){
             //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             w_data_rspid = i;
-            o_databus_cmd_valid = (!data_rspid_fifo_full_clked);
+            o_databus_cmd_valid = 1; //(!data_rspid_fifo_full_clked);
             o_databus_cmd_read = i_databus_cmd_read[i];
             o_databus_cmd_adr = i_databus_cmd_adr[i];
             o_databus_cmd_wdata = i_databus_cmd_wdata[i];
             o_databus_cmd_rwbyte = i_databus_cmd_rwbyte[i];
-            i_databus_cmd_ready[i] = o_databus_cmd_ready & (!data_rspid_fifo_full_clked);
+            i_databus_cmd_ready[i] = o_databus_cmd_ready ;//& (!data_rspid_fifo_full_clked);
         }
     }
 
 
+    r_data_rspid = data_rspid_fifo[data_rspid_fifo_radr];
+    //rspid = data_rspid_fifo_empty_clked ? w_data_rspid : r_data_rspid;
+    rspid = r_data_rspid;
 
-    rspid = data_rspid_fifo_empty_clked ? w_data_rspid : r_data_rspid;
     for(i=0; i<CODEARBIT_NUM; i++){
         if (i==rspid){
             // printf("INFO: rsp arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
@@ -63,18 +65,18 @@ int i,j;
             i_databus_rsp_err[i] = o_databus_rsp_err;
             i_databus_rsp_rdata[i] = o_databus_rsp_rdata;
             o_databus_rsp_ready = i_databus_rsp_ready[i];
-            break;
+            //break;
         }
-        //else{
-        //    i_databus_rsp_valid[i] = 0;
+        else{
+            i_databus_rsp_valid[i] = 0;
         //    i_databus_rsp_err[i] = 0;
         //    i_databus_rsp_rdata[i] = 0;
         //    o_databus_rsp_ready = 0;
-        //}
+        }
     }
 
-
-    data_rspid_fifo_wen = o_databus_cmd_valid & o_databus_cmd_ready;
+    //only read-request need to write rspid_fifo
+    data_rspid_fifo_wen = o_databus_cmd_valid & o_databus_cmd_ready & o_databus_cmd_read;
     data_rspid_fifo_ren = o_databus_rsp_valid & o_databus_rsp_ready;
 
 
@@ -83,11 +85,26 @@ int i,j;
         dataramctrl();
     }
 
+    //
+    o_databus_rsp_rdata = dataram_rdat;
+    //o_codebus_rsp_valid = dataram_cs_clked & !dataram_we_clked;   
+
+
+    //o_databus_rsp_valid = dataram_wrsp_valid | dataram_rrsp_valid ;
+    //only reply read-request response
+    o_databus_rsp_valid =  dataram_rrsp_valid ;
+
+
 }
 
 void dataramctrl()
 {
-    o_databus_cmd_ready =1;
+    BIT dataram_busy;
+    dataram_busy = dataram_wrsp_per_clked | dataram_rrsp_per_clked ;
+    o_databus_cmd_ready = DATARAM_WREADY_CYCLES==0 & (!o_databus_cmd_read) ? 1 :
+                          DATARAM_RREADY_CYCLES==0 & o_databus_cmd_read ? 1 :
+                          dataram_wrsp_valid | dataram_rrsp_valid | (!dataram_busy);
+    //o_databus_cmd_ready =1;
     if (o_databus_cmd_valid & o_databus_cmd_ready){
         dataram_adr = (o_databus_cmd_adr); // & 0x00ffffff) >>2;
         dataram_cs =1;
@@ -95,9 +112,14 @@ void dataramctrl()
         dataram_wdat = o_databus_cmd_wdata;
         dataram_bmask = o_databus_cmd_rwbyte;
     }
+    else{
+        dataram_cs = 0;
+    }    
     //
-    o_databus_rsp_rdata = dataram_rdat;
-    o_databus_rsp_valid = dataram_cs_clked & !dataram_we_clked;
+    dataram_wrsp_valid = //DATARAM_WREADY_CYCLES==0 ? dataram_cs & dataram_we :
+                         dataram_wrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_WREADY_CYCLES);
+    dataram_rrsp_valid = //DATARAM_RREADY_CYCLES==0 ? dataram_cs & (!dataram_we):
+                         dataram_rrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_RREADY_CYCLES);
     //
     o_databus_rsp_err =0;
 }

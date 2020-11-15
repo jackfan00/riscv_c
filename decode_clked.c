@@ -1,20 +1,21 @@
 #include "fetch.h"
 #include "decode.h"
+#include "execu.h"
 
 void decode_clked()
 {
-    decpc_clked = fetpc_clked;
     //
     // dependence RAW check
-    if (rden){
-        depfifo[depfifo_wadr_clked]    = rdidx;
-        depfifo_fg[depfifo_wadr_clked] = 1;
-        depfifo_wadr_clked = depfifo_wadr_clked>=(DEPFIFOSIZE-1) ? 0 : depfifo_wadr_clked+1;
-    }
+    //if (rden){
+    //    depfifo[depfifo_wadr_clked]    = rdidx;
+    //    depfifo_fg[depfifo_wadr_clked] = 1;
+    //    depfifo_wadr_clked = depfifo_wadr_clked>=(DEPFIFOSIZE-1) ? 0 : depfifo_wadr_clked+1;
+    //}
 
 
-
-    // for store address
+if (!lsu_stall){
+ decpc_clked = fetpc_clked;
+    // for store command, need
  dec_rs2v_clked       = real_rs2v;
     //
  dec_alu_opd1_clked   = alu_opd1;
@@ -61,11 +62,10 @@ void decode_clked()
  dec_aluop_sb_clked   = aluop_sb;
  dec_aluop_sh_clked   = aluop_sh;
  dec_aluop_sw_clked   = aluop_sw;
-
  dec_ras_push_clked   = dec_ras_push;
-
  dec_predict_jmp_clked = fet_predict_jmp_clked;
- cti_pc_clked = cti_pc;
- 
+ cti_pc_clked          = cti_pc;
  dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail;
+}
+
 }

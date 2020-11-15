@@ -35,7 +35,7 @@ int i;
         code_rspid_fifo_empty_clked =0;
     }
     if (code_rspid_fifo_ren){
-        r_code_rspid = code_rspid_fifo[code_rspid_fifo_radr];
+        //r_code_rspid = code_rspid_fifo[code_rspid_fifo_radr];
         code_rspid_fifo_radr_clked = code_rspid_fifo_radr >= RSPFIFOSIZE-1 ? 0 :code_rspid_fifo_radr+1;
         //code_rspid_fifo_empty_clked = (code_rspid_fifo_wadr==code_rspid_fifo_radr_clked);
         code_rspid_fifo_full_clked =0;

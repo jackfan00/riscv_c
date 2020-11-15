@@ -20,6 +20,7 @@ REG32 o_regwbus_cmd_wdata;
 
 int i,j;
 
+    o_regwbus_cmd_ready =1;
     o_regwbus_cmd_valid = 0;
     regwbus_connect();
 
@@ -53,14 +54,14 @@ int i,j;
             o_regwbus_cmd_adr = i_regwbus_cmd_adr[i];
             o_regwbus_cmd_wdata = i_regwbus_cmd_wdata[i];
             //o_regwbus_cmd_rwbyte = 0xf; //i_regwbus_cmd_rwbyte[i];
-            i_regwbus_cmd_ready[i] = o_regwbus_cmd_ready ;//& (!rspid_fifo_full_clked);
+            //i_regwbus_cmd_ready[i] = o_regwbus_cmd_ready ;
         }
-        
+        //
+        i_regwbus_cmd_ready[i] = 1 ;  //should always ready
         
     }
 
     //
-    o_regwbus_cmd_ready =1;
     regw_cs =0;
     if (o_regwbus_cmd_valid & o_regwbus_cmd_ready){
         regw_adr = o_regwbus_cmd_adr;

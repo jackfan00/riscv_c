@@ -9,6 +9,13 @@ void execu_clked()
  exe_res_valid_clked  = exe_res_valid;
  exe_rden_clked       = exe_rden;
  exe_rdidx_clked      = dec_rdidx_clked;
+ exe_aluload_clked    = dec_aluload_clked;
+ exe_lh_clked        = dec_aluop_lh_clked;
+ exe_lhu_clked        = dec_aluop_lhu_clked;
+ exe_lb_clked        = dec_aluop_lb_clked;
+ exe_lbu_clked        = dec_aluop_lbu_clked;
+ exe_lw_clked        = dec_aluop_lw_clked;
+ exe_dec_ilg_clked   = dec_dec_ilg_clked;
 
  //ras stack push
  //JAL/JALR can not back-to-back, must seprate 3 instruction apart, because of pipeline issue.

@@ -39,6 +39,14 @@ void decodeinit()
  aluop_bge=0;
  aluop_bltu=0;
  aluop_bgeu=0;
+ aluop_lb=0;
+ aluop_lbu=0;
+ aluop_lh=0;
+ aluop_lhu=0;
+ aluop_lw=0;
+ aluop_sb=0;
+ aluop_sh=0;
+ aluop_sw=0;
 
 }
 
@@ -186,6 +194,7 @@ int s_j_imm;
         alusystem =1;
         break;
     default:
+        dec_ilg =1;
         printf("decode Error: not supported opcode %d \n", opcode);
         break;
     }

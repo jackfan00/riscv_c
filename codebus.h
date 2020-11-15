@@ -53,8 +53,4 @@ BIT coderam_rrsp_valid;
 // for simulate purpose, not hardware requirement
 int ready_cycles_clked;
 
-//normal sram parameter is  (1, 0)
-#define CODERAM_RREADY_CYCLES 3
-#define CODERAM_WREADY_CYCLES 0
-
 #endif // MEMORYBUS_H

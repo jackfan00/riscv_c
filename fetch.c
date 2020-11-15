@@ -50,6 +50,8 @@ BIT fet_rs1link;
         //
         branchjmp =1;
         break;
+    //JALR target address predict by RAS stack pop    
+    //not calculate actual address, reduce hardware complexity and cost
     case OPCODE_JALR:
     //    alu_opd1 = fet_real_rs1v;
     //    alu_opd2 = s_i_imm;
@@ -83,6 +85,7 @@ BIT fet_rs1link;
     fet_ras_pop =  (opcode==OPCODE_JALR & (!fet_rdlink) & (fet_rs1link)) |
          (opcode==OPCODE_JALR & (fet_rdlink) & (fet_rs1link) & (fet_rdidx!=fet_rs1idx)) ;
 
+    // need a one ADDER to predict BRANCH and JAL address
     branchjmp_pc = firstclk ? BOOTADDR : 
                    fet_ras_pop ? (ras_stack[0]&0x0fffffff)+ITCM_ADDR_BASE :  //ensure valid code address
                    alu_opd1 + alu_opd2;
