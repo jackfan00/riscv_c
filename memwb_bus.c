@@ -3,9 +3,13 @@
 void memwb_bus()
 {
 //local
+int i, j;
 BIT or_grt, or_grt_clked;
 
     o_memwb_bus_cmd_valid =0;
+
+    memwb_bus_connect();
+
     for(i=0; i<WBARBIT_NUM; i++){
 
         //

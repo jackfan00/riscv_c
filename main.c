@@ -71,6 +71,8 @@ int main()
 
             databus();
 
+            memwb_bus();
+
             rs1bus();
 
             rs2bus();
@@ -97,6 +99,7 @@ int main()
 //
         codebus_clked();
         databus_clked();
+        memwb_bus_clked();
 
 
         //

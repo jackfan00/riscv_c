@@ -1,5 +1,6 @@
 #ifndef MUL_H
 #define MUL_H
+#include "reg.h"
 
 //input 
 BIT mul_enable_clked;

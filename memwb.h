@@ -21,9 +21,4 @@ BIT mul_rsp_ready;
 REG32 mul_rsp_rdata;
 REG8 mul_rsp_adr;
 
-BIT lsu2mem_rsp_valid;
-BIT lsu2mem_rsp_ready;
-REG32 lsu2mem_rsp_rdata;
-REG8 lsu2mem_rsp_adr;
-
 #endif // MEMWB_H
