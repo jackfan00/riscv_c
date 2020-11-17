@@ -63,6 +63,14 @@ if ((!lsu_stall) && (!memwb_stall)){
  dec_aluop_sb_clked   = aluop_sb;
  dec_aluop_sh_clked   = aluop_sh;
  dec_aluop_sw_clked   = aluop_sw;
+ dec_aluop_mul_clked   = aluop_mul;
+ dec_aluop_mulh_clked   = aluop_mulh;
+ dec_aluop_mulhsu_clked   = aluop_mulhsu;
+ dec_aluop_mulhu_clked   = aluop_mulhu;
+ dec_aluop_div_clked   = aluop_div;
+ dec_aluop_divu_clked   = aluop_divu;
+ dec_aluop_rem_clked   = aluop_rem;
+ dec_aluop_remu_clked   = aluop_remu;
  dec_ras_push_clked   = dec_ras_push;
  dec_predict_jmp_clked = fet_predict_jmp_clked;
  cti_pc_clked          = cti_pc;

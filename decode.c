@@ -4,6 +4,8 @@
 #include "decode.h"
 #include "execu.h"
 #include "memwb.h"
+#include "lif.h"
+#include "memwb_bus.h"
 
 
 void decodeinit()
@@ -47,16 +49,28 @@ void decodeinit()
  aluop_sb=0;
  aluop_sh=0;
  aluop_sw=0;
+ aluop_mul=0;
+ aluop_mulh=0;
+ aluop_mulhsu=0;
+ aluop_mulhu=0;
+ aluop_div=0;
+ aluop_divu=0;
+ aluop_rem=0;
+ aluop_remu=0;
 
 }
 
 void decode()
 {
 //local
+int i;
 BIT dec_flush;
 REG32 dec_IR;
 BIT dec_raw_exe_rs1;
 BIT dec_raw_exe_rs2;
+BIT dec_rwaw_lif_rs1;
+BIT dec_rwaw_lif_rs2;
+BIT dec_rwaw_lif_rd;
 BIT dec_raw_memwb_rs1;
 BIT dec_raw_memwb_rs2;
 REG8 opcode;
@@ -76,6 +90,7 @@ REG32 u_imm;
 REG32 j_imm;
 REG32 cti_pc_op1;
 REG32 cti_pc_op2;
+BIT lifbuffull;
 
 int s_i_imm;
 int s_s_imm;
@@ -366,12 +381,33 @@ int s_j_imm;
        dec_raw_exe_rs1 =   (dec_rden_clked & (dec_rdidx_clked==rs1idx && rs1en) );
        dec_raw_exe_rs2 =   (dec_rden_clked & (dec_rdidx_clked==rs2idx && rs2en) );
                                       
-       dec_raw_memwb_rs1 =     (exe_rden_clked & (exe_rdidx_clked==rs1idx && rs1en));   //memwb
-       dec_raw_memwb_rs2 =     (exe_rden_clked & (exe_rdidx_clked==rs2idx && rs2en));   //memwb
-                                      
-       
+       dec_raw_memwb_rs1 =     (memwb_valid & memwb_ready & (memwb_idx==rs1idx && rs1en));   //memwb
+       dec_raw_memwb_rs2 =     (memwb_valid & memwb_ready & (memwb_idx==rs2idx && rs2en));   //memwb
 
-       dec_stall = dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked :
+       //lif:long command flag rwaw(read/write-after-write) check      
+       dec_rwaw_lif_rs1 =0; 
+       dec_rwaw_lif_rs2 =0; 
+       dec_rwaw_lif_rd =0; 
+       for (i=0;i<LIFSIZE;i++){
+            dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked));
+            dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked));
+            dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked));
+       }                        
+
+       //long instuction command definition: take 2 or more clock cycles to complete
+       //for now only div is long instuction command, 
+       //MUL is optional , can take 1/2 or more cycles to complete depend on hardware implementation
+       dec_lif_cmd = aluop_div | aluop_divu | aluop_rem | aluop_remu |
+                     //aluload |
+                     (aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES>1)
+                     ;
+       dec_lif_id = aluop_div | aluop_divu | aluop_rem | aluop_remu ? DIVBUSID :
+                    aluload ? LSUBUSID :
+                    aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu ? MULBUSID : EXEBUSID;
+
+       dec_stall = dec_rwaw_lif_rs1 | dec_rwaw_lif_rs2 | dec_rwaw_lif_rd | (dec_lif_cmd & lifbuffull) ? 1 :
+                    dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
+                     ((aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                   // dec_raw_memwb_rs1 | dec_raw_memwb_rs2 ? !memwb_valid :
                                      (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
 

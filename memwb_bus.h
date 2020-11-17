@@ -17,6 +17,12 @@ BIT o_memwb_bus_cmd_valid;
 BIT o_memwb_bus_cmd_ready;
 REG8 o_memwb_bus_cmd_adr;
 REG32 o_memwb_bus_cmd_wdata;
+REG8 o_memwb_bus_cmd_id;
 
+//memwb_bus arbitor priority
+#define DIVBUSID 0  //1st priority
+#define LSUBUSID 1
+#define MULBUSID 2
+#define EXEBUSID 3
 
 #endif  //MEMWB_BUS_H

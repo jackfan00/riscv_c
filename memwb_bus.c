@@ -34,7 +34,7 @@ BIT or_grt, or_grt_clked;
         //selected initiator
         if (i_memwb_bus_grt[i]){
             //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
-            //w_data_rspid = i;
+            o_memwb_bus_cmd_id = i;
             o_memwb_bus_cmd_valid = 1; //(!data_rspid_fifo_full_clked);
             //o_memwb_bus_cmd_read = i_memwb_bus_cmd_read[i];
             o_memwb_bus_cmd_adr = i_memwb_bus_cmd_adr[i];

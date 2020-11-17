@@ -15,7 +15,7 @@ BIT o_regwbus_cmd_valid;
 BIT o_regwbus_cmd_ready;
 REG32 o_regwbus_cmd_adr;
 REG32 o_regwbus_cmd_wdata;
-
+REG8 o_regwbus_cmd_id;
 
 
 int i,j;
@@ -50,7 +50,7 @@ int i,j;
         if (i_regwbus_grt[i]){
             //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
             o_regwbus_cmd_valid = 1; //(!rspid_fifo_full_clked);
-            //o_regwbus_cmd_read = 0; //i_regwbus_cmd_read[i];
+            o_regwbus_cmd_id = i_regwbus_cmd_id[i]; //i_regwbus_cmd_read[i];
             o_regwbus_cmd_adr = i_regwbus_cmd_adr[i];
             o_regwbus_cmd_wdata = i_regwbus_cmd_wdata[i];
             //o_regwbus_cmd_rwbyte = 0xf; //i_regwbus_cmd_rwbyte[i];
@@ -68,6 +68,7 @@ int i,j;
         regw_cs = 1;
         regw_we = 1; //!o_regwbus_cmd_read;
         regw_wdat = o_regwbus_cmd_wdata;
+        regw_id = o_regwbus_cmd_id;
     }
     //
     //regwctrl();

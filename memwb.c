@@ -29,7 +29,7 @@ void memwb()
     memwb_idx = o_memwb_bus_cmd_adr; //exe_rdidx_clked;
     o_memwb_bus_cmd_ready = memwb_ready;
     memwb_valid = exe_rden_clked & o_memwb_bus_cmd_valid ;
-
+    memwb_id = o_memwb_bus_cmd_id;
     //
     //memwb_stall = exe_rden_clked & (  (!memwb_ready) || 
     //                                   !(exe_aluload_clked ? lsu2mem_rsp_valid : exe_res_valid_clked ) ||

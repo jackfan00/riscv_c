@@ -20,5 +20,6 @@ BIT mul_rsp_valid;
 BIT mul_rsp_ready;
 REG32 mul_rsp_rdata;
 REG8 mul_rsp_adr;
+REG8 memwb_id;
 
 #endif // MEMWB_H

@@ -81,7 +81,7 @@ int i,j;
 
 
     //address demux
-    if ((o_codebus_cmd_adr&0xff000000)==ITCM_ADDR_BASE){
+    if (1){//1 for debug, (o_codebus_cmd_adr&0xff000000)==ITCM_ADDR_BASE){
         coderamctrl();
     }
     //

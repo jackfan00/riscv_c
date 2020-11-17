@@ -6,9 +6,9 @@ void mul()
     int tmp1, tmp2;
     BIT op1signed;
     BIT op2signed;
+    BIT mul_busy;
     long long mul_opd1, mul_opd2;
 
-    mul_cmd_ready =1;
 
 
     tmp1 = (int) mul_cmd_opd1;
@@ -38,6 +38,8 @@ void mul()
     }
     mul64 = mul_opd1 * mul_opd2;
 
+    mul_busy = (mul_enable_clked & (!mul_rsp_valid));
+    mul_cmd_ready = !mul_busy;
     if (mul_cmd_valid & mul_cmd_ready){
         mul_enable =1;
     }

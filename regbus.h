@@ -6,6 +6,7 @@
 //input
 BIT i_regwbus_grt_clked[REGARBIT_NUM];
 BIT i_regwbus_cmd_valid[REGARBIT_NUM];
+REG8 i_regwbus_cmd_id[REGARBIT_NUM];
 REG32 i_regwbus_cmd_adr[REGARBIT_NUM];
 REG32 i_regwbus_cmd_wdata[REGARBIT_NUM];
 BIT i_regwbus_cmd_ready[REGARBIT_NUM];
@@ -31,6 +32,7 @@ BIT regw_cs;
 BIT regw_we;
 REG32 regw_wdat;
 REG32 regw_adr;
+REG8 regw_id;
 BIT i_rs1bus_grt[REGARBIT_NUM];
 BIT i_rs1bus_rsp_valid[REGARBIT_NUM];
 REG32 i_rs1bus_rsp_rdata[REGARBIT_NUM];

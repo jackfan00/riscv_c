@@ -63,6 +63,8 @@ int main()
 
             execu();
 
+            mul();
+
             memwb();  // memory access and write-back at the same stage
 
             regwbus();
@@ -92,14 +94,18 @@ int main()
         // flipflop
 
        // memwb_clked();
+       // order is important
         regwbus_clked();
         execu_clked();
         decode_clked();
         fetch_clked();
 //
+       //order is not important
         codebus_clked();
         databus_clked();
         memwb_bus_clked();
+        mul_clked();
+        
 
 
         //

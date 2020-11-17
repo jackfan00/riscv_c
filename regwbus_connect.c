@@ -7,7 +7,7 @@
 void regwbus_connect(){
 
 i_regwbus_cmd_valid[0]= memwb_valid;
-//i_regwbus_cmd_read[0]= 1;
+i_regwbus_cmd_id[0]= memwb_id;
 i_regwbus_cmd_adr[0]  = memwb_idx;
 i_regwbus_cmd_wdata[0]=memwb_wdata;
 //i_regwbus_cmd_rwbyte[0]= 0xf;
