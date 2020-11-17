@@ -1,0 +1,42 @@
+#include "memwb_bus.h"
+
+void memwb_bus()
+{
+//local
+BIT or_grt, or_grt_clked;
+
+    o_memwb_bus_cmd_valid =0;
+    for(i=0; i<WBARBIT_NUM; i++){
+
+        //
+        //implement (|i_memwb_bus_grt_clked[i+1:ARBIT_NUM-1])
+        or_grt_clked=0;
+        for (j=i+1; j<WBARBIT_NUM; j++){
+            or_grt_clked |= i_memwb_bus_grt_clked[j];
+        }
+        //
+        if (i==0){
+            i_memwb_bus_grt[i] = i_memwb_bus_cmd_valid[i] & (!or_grt_clked);//!(|i_memwb_bus_grt_clked[i+1:ARBIT_NUM-1]);
+        }
+        else{
+            //implement (|i_memwb_bus_grt[i-1:0])
+            or_grt=0;
+            for (j=0; j<i; j++){
+                or_grt |= i_memwb_bus_grt[j];
+            }
+            i_memwb_bus_grt[i] = (!or_grt) & i_memwb_bus_cmd_valid[i] & (!or_grt_clked);//~(|i_memwb_bus_grt[i-1:0]), !(|i_memwb_bus_grt_clked[i+1:ARBIT_NUM-1]);
+        }
+        //
+        //selected initiator
+        if (i_memwb_bus_grt[i]){
+            //printf("INFO: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
+            //w_data_rspid = i;
+            o_memwb_bus_cmd_valid = 1; //(!data_rspid_fifo_full_clked);
+            //o_memwb_bus_cmd_read = i_memwb_bus_cmd_read[i];
+            o_memwb_bus_cmd_adr = i_memwb_bus_cmd_adr[i];
+            o_memwb_bus_cmd_wdata = i_memwb_bus_cmd_wdata[i];
+            //o_memwb_bus_cmd_rwbyte = i_memwb_bus_cmd_rwbyte[i];
+            i_memwb_bus_cmd_ready[i] = o_memwb_bus_cmd_ready ;//& (!data_rspid_fifo_full_clked);
+        }
+    }    
+}

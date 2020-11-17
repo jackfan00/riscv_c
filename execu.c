@@ -1,5 +1,6 @@
 #include "execu.h"
 #include "decode.h"
+#include "mul.h"
 
 void execu()
 {
@@ -63,9 +64,11 @@ void execu()
               (dec_aluop_beq_clked) ? eq_res :
               (dec_aluop_bne_clked) ? !eq_res :
               (dec_aluop_blt_clked | dec_aluop_bltu_clked) ? slt_res :
-              (dec_aluop_bge_clked | dec_aluop_bgeu_clked) ? !slt_res : 0;
+              (dec_aluop_bge_clked | dec_aluop_bgeu_clked) ? !slt_res : 
+              (mul_cmd_valid & (MUL_RSPVALID_CYCLES==0)) ? mulres :   //single cycle multiple hardware
+              0;
 
-    //
+    //LSU generation
     lsu2mem_cmd_valid = (dec_aluload_clked | dec_alustore_clked) & exe_res_valid & (!lsu_misaligned);
     lsu2mem_cmd_read = dec_aluload_clked;
     lsu2mem_cmd_adr = exe_res;
@@ -77,17 +80,29 @@ void execu()
     lsu_misaligned = (dec_aluload_clked | dec_alustore_clked) & (
                      (((lsu2mem_cmd_adr&0x03)!=0) & lsu2mem_cmd_rwbyte==0xf) | (((lsu2mem_cmd_adr&0x03)==3) & lsu2mem_cmd_rwbyte!=0x1)
                     );
+
+    //branch/jalr judgement                
     exe_branch_taken = (dec_aluop_beq_clked & eq_res) | (dec_aluop_bne_clked & (!eq_res)) | 
                        ((dec_aluop_blt_clked | dec_aluop_bltu_clked) & slt_res) |
                        ((dec_aluop_bge_clked | dec_aluop_bgeu_clked) & (!slt_res));
     exe_branch_pdict_fail = dec_alubranch_clked & (exe_branch_taken ^ dec_predict_jmp_clked);  
-
     exe_branch_pdict_fail_pc = cti_pc_clked ;
-
     exe_jalr_pc = cti_pc_clked;
+    exe_jalr_pdict_fail = dec_jalr_pdict_fail_clked;        
 
-    exe_jalr_pdict_fail = dec_jalr_pdict_fail_clked;
-                                                
+    //stall case                                        
     exe_rden =  lsu_stall ? 0 : dec_rden_clked;
 
+    //RV32M
+    mul_cmd_valid = dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked;
+    mul_cmd_opd1 = dec_alu_opd1_clked;
+    mul_cmd_opd2 = dec_alu_opd2_clked;
+    mul_cmd_opmode = dec_aluop_mul_clked + (dec_aluop_mulh_clked<<1) + (dec_aluop_mulhsu_clked<<2)+(dec_aluop_mulhu_clked<<3);
+    div_cmd_valid = dec_aluop_div_clked | dec_aluop_divu_clked | dec_aluop_rem_clked | dec_aluop_remu_clked;
+    div_cmd_opd1 = dec_alu_opd1_clked;
+    div_cmd_opd2 = dec_alu_opd2_clked;
+    div_cmd_opmode = dec_aluop_div_clked + (dec_aluop_divu_clked<<1) + (dec_aluop_rem_clked<<2)+(dec_aluop_remu_clked<<3);
+
+    
+    
 }

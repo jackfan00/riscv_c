@@ -1,5 +1,6 @@
 #ifndef REG_H
 #define REG_H
+typedef unsigned long long REG64;
 typedef unsigned int REG32;
 typedef unsigned short REG16;
 typedef unsigned char REG8;
@@ -22,6 +23,7 @@ typedef unsigned char BIT;
 #define RSPFIFOSIZE 2  //only support 2
 #define CODEARBIT_NUM 4
 #define DATAARBIT_NUM 4
+#define WBARBIT_NUM 4
 #define REGARBIT_NUM 2
 #define MAXCODESIZE 1024
 #define BOOTADDR ITCM_ADDR_BASE
@@ -34,6 +36,9 @@ typedef unsigned char BIT;
 //normal sram parameter is  (1, 0), CODERAM_RREADY_CYCLES=0 is not supported
 #define CODERAM_RSPVALID_CYCLES 1
 #define CODERAM_CMDREADY_CYCLES 0
+
+//MUL cycles
+#define MUL_RSPVALID_CYCLES 1
 
 
 REG8 code_rspid_fifo[RSPFIFOSIZE];
