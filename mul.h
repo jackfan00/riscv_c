@@ -6,6 +6,7 @@
 BIT mul_enable_clked;
 REG8 mul_cycles_clked;
 BIT mul_low_clked;
+BIT mul_rsp_ready;
 
 //output
 BIT mul_cmd_ready;

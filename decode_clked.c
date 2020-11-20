@@ -14,7 +14,7 @@ void decode_clked()
     //}
 
 
-if ((!lsu_stall) && (!memwb_stall)){
+if ((!exe_stall) && (!memwb_stall)){
  decpc_clked = fetpc_clked;
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
@@ -75,6 +75,8 @@ if ((!lsu_stall) && (!memwb_stall)){
  dec_predict_jmp_clked = fet_predict_jmp_clked;
  cti_pc_clked          = cti_pc;
  dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail & (!dec_stall);
+ dec_mulh_fuse_clked = dec_mulh_fuse  & (!dec_stall);
+
 }
 
 }

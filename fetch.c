@@ -117,7 +117,7 @@ BIT new_midnxtpc_fg;
     codebus_connect();
 
     //instruction from code-ram
-    ifu2mem_rsp_ready = !fetch_stall;
+    ifu2mem_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
     //memIR = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? ifu2mem_rsp_rdata : 0;
     memIR = ifu2mem_rsp_rdata ;
     memIR_hi16 = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? (ifu2mem_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
@@ -149,7 +149,8 @@ BIT new_midnxtpc_fg;
     new_midnxtpc_fg = newir_fg & midnxtpc_fg ;
     new_midnxtpc_part2_fg = new_midnxtpc_fg & ifu2mem_cmd_ready;
 
-    ifu2mem_cmd_valid = (newir_fg | midnxtpc_fg | new_midnxtpc_part2_fg_clked) & (!fetch_stall);
+    ifu2mem_cmd_valid = (newir_fg | midnxtpc_fg | new_midnxtpc_part2_fg_clked) & 
+                                  (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
     ifu2mem_cmd_adr = newir_fg | new_midnxtpc_fg ? nxtpc :
                       midnxtpc_fg | new_midnxtpc_part2_fg_clked ? nxtpc + 0x02 : 0;
 

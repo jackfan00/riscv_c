@@ -1,6 +1,8 @@
 #include "execu.h"
 #include "mul.h"
+#include "decode.h"
 
+//same pipe as execu
 void mul()
 {
     int tmp1, tmp2;
@@ -36,26 +38,35 @@ void mul()
         mul_opd2 = mul_cmd_opd2;
         break;
     }
-    mul64 = mul_opd1 * mul_opd2;
 
-    mul_busy = (mul_enable_clked & (!mul_rsp_valid));
+    mul_busy = (mul_enable_clked & (!mul_rsp_valid))  | (mul_rsp_valid & (!mul_rsp_ready));
     mul_cmd_ready = !mul_busy;
     if (mul_cmd_valid & mul_cmd_ready){
         mul_enable =1;
+        mul64 = mul_opd1 * mul_opd2;
     }
     else{
         mul_enable =0;
+        mul64 =mul64_clked;
     }
 
-    if (MUL_RSPVALID_CYCLES==0){
-        mul_rsp_valid = mul_enable;
-        mulres = mul_low ? mul64 & 0x0ffffffff : (mul64>>32) & 0x0ffffffff ;
-    }
-    else if (mul_enable_clked & (mul_cycles_clked==MUL_RSPVALID_CYCLES)){
+    // not support MUL_RSPVALID_CYCLES==0
+    //if (MUL_RSPVALID_CYCLES==0){
+    //    mul_rsp_valid = 1;
+    //    mulres = dec_mulh_fuse_clked ? mul64_clked & 0x0ffffffff : 
+    //             mul_low ? mul64 & 0x0ffffffff : (mul64>>32) & 0x0ffffffff ;
+    //}
+    //else 
+    if (mul_enable_clked & (mul_cycles_clked>=MUL_RSPVALID_CYCLES)){
         mul_rsp_valid = 1;
         mulres = mul_low_clked ? mul64_clked & 0x0ffffffff : (mul64_clked>>32) & 0x0ffffffff ;
     }
+    else if (exe_mulh_fuse_clked){
+        mul_rsp_valid = 1;
+        mulres = mul64_clked & 0x0ffffffff;
+    }
     else{
+        mulres =0;  //not necessary, just for easy debug
         mul_rsp_valid = 0;
     }
 

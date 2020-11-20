@@ -14,11 +14,11 @@ REG32 lsu2mem_rsp_rdata;
 REG8 lsu2mem_rsp_adr;
 BIT div_rsp_valid;
 BIT div_rsp_ready;
-REG32 div_rsp_rdata;
+//REG32 div_rsp_rdata;
 REG8 div_rsp_adr;
 BIT mul_rsp_valid;
 BIT mul_rsp_ready;
-REG32 mul_rsp_rdata;
+//REG32 mul_rsp_rdata;
 REG8 mul_rsp_adr;
 REG8 memwb_id;
 

@@ -18,7 +18,7 @@ int i;
         if (i_databus_grt[i]){
             //printf("databus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
         }
-        i_databus_grt_clked[i] = i_databus_grt[i];
+        i_databus_grt_clked[i] = i_databus_cmd_ready[i] ? 0 : i_databus_grt[i];
     }
 
 
@@ -73,7 +73,7 @@ void dataramctrl_clked()
     //if (dataram_wrsp_valid){
     //    dataram_wrsp_per_clked = 0; 
     //}
-    if (o_databus_rsp_valid){
+    if (o_databus_rsp_valid & o_databus_rsp_ready){
         dataram_rrsp_per_clked = 0; 
     }        
     //
@@ -107,10 +107,10 @@ void dataramctrl_clked()
                            
             dataram_wdat = (adr01==1) ? (dataram_bmask==0x01 ? rdat3+rdat2+(wdat0<<8)+rdat0 :
                                          dataram_bmask==0x03 ? rdat3+(wdat1<<16)+(wdat0<<8)+rdat0 : 
-                                         wdat2+wdat1+wdat0+rdat0) :  //invalid case
+                                         (wdat2<<24)+(wdat1<<16)+wdat0+rdat0) :  //invalid case
                            (adr01==2) ? (dataram_bmask==0x01 ? rdat3+(wdat0<<16)+rdat1+rdat0 :
                                          dataram_bmask==0x03 ? (wdat1<<24)+(wdat0<<16)+rdat1+rdat0 : 
-                                         wdat1+wdat0+rdat1+rdat0) :  //invalid case
+                                         (wdat1<<24)+(wdat0<<16)+rdat1+rdat0) :  //invalid case
                            (adr01==3) ? (wdat0<<24)+rdat2+rdat1+rdat0 :  //only dataram_bmask==0x01 is valid case
                                         //(adr01==0) all valid case
                                         (dataram_bmask==0x01 ? rdat3+rdat2+rdat1+wdat0 :

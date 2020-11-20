@@ -42,5 +42,8 @@ BIT or_grt, or_grt_clked;
             //o_memwb_bus_cmd_rwbyte = i_memwb_bus_cmd_rwbyte[i];
             i_memwb_bus_cmd_ready[i] = o_memwb_bus_cmd_ready ;//& (!data_rspid_fifo_full_clked);
         }
+        else{
+            i_memwb_bus_cmd_ready[i] = 0;
+        }
     }    
 }

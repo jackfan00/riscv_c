@@ -2,9 +2,12 @@
 #include "execu.h"
 #include "mul.h"
 #include "memwb_bus.h"
+#include "lif.h"
 
 void memwb()
 {
+    BIT exeres2regw_stall;
+    int i;
     //write-back arbitor
     /*
     if (lsu2mem_rsp_valid & exe_aluload_clked){
@@ -26,15 +29,22 @@ void memwb()
 
     //
     memwb_wdata = o_memwb_bus_cmd_wdata;
-    memwb_idx = o_memwb_bus_cmd_adr; //exe_rdidx_clked;
+    //memwb_idx = o_memwb_bus_cmd_adr; //exe_rdidx_clked;
     o_memwb_bus_cmd_ready = memwb_ready;
-    memwb_valid = exe_rden_clked & o_memwb_bus_cmd_valid ;
+    memwb_valid = o_memwb_bus_cmd_valid ;
     memwb_id = o_memwb_bus_cmd_id;
     //
     //memwb_stall = exe_rden_clked & (  (!memwb_ready) || 
     //                                   !(exe_aluload_clked ? lsu2mem_rsp_valid : exe_res_valid_clked ) ||
     //                                   !(exe_muldiv_clked ? mul_rsp_valid : exe_res_valid_clked ) 
     //                            );
+    memwb_idx = lifvalid_clked[memwb_id] ? lifrdidx_clked[memwb_id] : exe_rdidx_clked;
+    
+    //normal exe result is low priority to write regs
+    //if regw conflicts with other reqs(mul/div/lsu)
+    //pipeline will be stalled
+    //if (mul/div/lsu) conflicts with others, stall-controll code at execu stage
+    exeres2regw_stall = i_memwb_bus_cmd_valid[EXEBUSID] & (!i_memwb_bus_cmd_ready[EXEBUSID]);
 
-    memwb_stall = memwb_valid & (!memwb_ready);
+    memwb_stall = (memwb_valid & (!memwb_ready)) | exeres2regw_stall;
 }

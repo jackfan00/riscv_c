@@ -19,7 +19,7 @@ int i;
         if (i_codebus_grt[i]){
            // printf("codebus: cmd arbitor select =%d=, at clock counter =%d= \n", i, clockcnt);
         }
-        i_codebus_grt_clked[i] = i_codebus_grt[i];
+        i_codebus_grt_clked[i] = i_codebus_cmd_ready[i] ? 0 : i_codebus_grt[i];
     }
 
 
@@ -66,7 +66,7 @@ void coderamctrl_clked()
     //if (coderam_rrsp_valid){
     //    coderam_rrsp_per_clked = 0; 
     //}        
-    if (o_codebus_rsp_valid){
+    if (o_codebus_rsp_valid & o_codebus_rsp_ready){
         coderam_rrsp_per_clked = 0; 
         //coderam_rspvalid_cycles_clked =0;
     }        

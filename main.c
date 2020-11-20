@@ -105,6 +105,7 @@ int main()
         databus_clked();
         memwb_bus_clked();
         mul_clked();
+        lif_clked();
         
 
 

@@ -90,7 +90,6 @@ REG32 u_imm;
 REG32 j_imm;
 REG32 cti_pc_op1;
 REG32 cti_pc_op2;
-BIT lifbuffull;
 
 int s_i_imm;
 int s_s_imm;
@@ -389,9 +388,9 @@ int s_j_imm;
        dec_rwaw_lif_rs2 =0; 
        dec_rwaw_lif_rd =0; 
        for (i=0;i<LIFSIZE;i++){
-            dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked));
-            dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked));
-            dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked));
+            dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked[i]));
+            dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs2idx==lifrdidx_clked[i]));
+            dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked[i]));
        }                        
 
        //long instuction command definition: take 2 or more clock cycles to complete
@@ -405,7 +404,7 @@ int s_j_imm;
                     aluload ? LSUBUSID :
                     aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu ? MULBUSID : EXEBUSID;
 
-       dec_stall = dec_rwaw_lif_rs1 | dec_rwaw_lif_rs2 | dec_rwaw_lif_rd | (dec_lif_cmd & lifbuffull) ? 1 :
+       dec_stall = dec_rwaw_lif_rs1 | dec_rwaw_lif_rs2 | dec_rwaw_lif_rd  ? 1 :
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
                      ((aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                   // dec_raw_memwb_rs1 | dec_raw_memwb_rs2 ? !memwb_valid :
@@ -436,5 +435,12 @@ int s_j_imm;
 
     //current-inst is JALR at decode stage, JALR target address is fetpc_clked at fetch stage
        dec_jalr_pdict_fail = alujalr & (cti_pc!=fetpc_clked);
+
+    //mulh fuse condition:
+    //MULH[S][U] rdh, rs1, rs2; MUL rdl, rs1, rs2
+    //rdh can not be the same as rs1 or rs2   
+    dec_mulh_fuse = aluop_mul & (dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & 
+                   (dec_rdidx_clked!=rs1idx) & (dec_rdidx_clked!=rs2idx) & (dec_rs1idx_clked==rs1idx) & 
+                     (dec_rs2idx_clked==rs2idx);
 
 }

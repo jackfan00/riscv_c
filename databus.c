@@ -51,6 +51,9 @@ int i,j;
             o_databus_cmd_rwbyte = i_databus_cmd_rwbyte[i];
             i_databus_cmd_ready[i] = o_databus_cmd_ready ;//& (!data_rspid_fifo_full_clked);
         }
+        else{
+            i_databus_cmd_ready[i] = 0;
+        }
     }
 
 

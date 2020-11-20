@@ -68,6 +68,7 @@ BIT   dec_predict_jmp_clked;
 //BIT   dec_branch_pdict_fail_pc_clked;
 REG32 cti_pc_clked;
 BIT dec_jalr_pdict_fail_clked;
+BIT dec_mulh_fuse_clked;
 
 //output
 REG32 real_rs1v;
@@ -132,5 +133,6 @@ BIT dec_ras_push;
 //BIT dec_branch_pdict_fail_pc;
 REG32 cti_pc;
 BIT dec_jalr_pdict_fail;
+BIT dec_mulh_fuse;
 
 #endif // DECODE_H

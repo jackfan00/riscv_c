@@ -19,11 +19,12 @@
     BIT lsu2mem_rsp_ready;
     BIT lsu2mem_rsp_err;
     REG32 lsu2mem_rsp_rdata;
+    BIT exe_mulh_fuse_clked;
 
     //output 
     BIT exe_res_valid;
     REG32 exe_res           ;
-    BIT lsu_stall;
+    BIT exe_stall;
     BIT lsu_misaligned;
     BIT lsu2mem_cmd_valid;
     BIT lsu2mem_cmd_ready;
@@ -44,5 +45,7 @@
     REG32 div_cmd_opd1;
     REG32 div_cmd_opd2;
     REG8 div_cmd_opmode;
+    BIT div_cmd_ready;
+    REG32 div_rsp_rdata;
 
 #endif  //EXECU_H

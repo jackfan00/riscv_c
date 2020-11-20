@@ -28,7 +28,7 @@ typedef unsigned char BIT;
 #define MAXCODESIZE 1024
 #define BOOTADDR ITCM_ADDR_BASE
 #define RASDEPTH 8
-#define LIFSIZE 1
+#define LIFSIZE 4
 
 //normal sram parameter is  (1, 0), DATARAM_RREADY_CYCLES=0 is not supported
 #define DATARAM_RSPVALID_CYCLES 1
@@ -38,7 +38,7 @@ typedef unsigned char BIT;
 #define CODERAM_RSPVALID_CYCLES 1
 #define CODERAM_CMDREADY_CYCLES 0
 
-//MUL cycles
+//MUL cycles, MUL_RSPVALID_CYCLES=0 is not supportted
 #define MUL_RSPVALID_CYCLES 5
 
 

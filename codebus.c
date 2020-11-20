@@ -52,6 +52,9 @@ int i,j;
             o_codebus_cmd_rwbyte = i_codebus_cmd_rwbyte[i];
             i_codebus_cmd_ready[i] = o_codebus_cmd_ready ; //& (!code_rspid_fifo_full_clked);
         }
+        else{
+            i_codebus_cmd_ready[i] = 0;
+        }
     }
 
 
