@@ -38,7 +38,7 @@ void memwb()
     //                                   !(exe_aluload_clked ? lsu2mem_rsp_valid : exe_res_valid_clked ) ||
     //                                   !(exe_muldiv_clked ? mul_rsp_valid : exe_res_valid_clked ) 
     //                            );
-    memwb_idx = lifvalid_clked[memwb_id] ? lifrdidx_clked[memwb_id] : exe_rdidx_clked;
+    memwb_idx = lifvalid_clked[memwb_id*2] ? lifrdidx_clked[memwb_id*2] : exe_rdidx_clked;
     
     //normal exe result is low priority to write regs
     //if regw conflicts with other reqs(mul/div/lsu)

@@ -28,7 +28,7 @@ typedef unsigned char BIT;
 #define MAXCODESIZE 1024
 #define BOOTADDR ITCM_ADDR_BASE
 #define RASDEPTH 8
-#define LIFSIZE 4
+#define LIFSIZE 8
 
 //normal sram parameter is  (1, 0), DATARAM_RREADY_CYCLES=0 is not supported
 #define DATARAM_RSPVALID_CYCLES 1

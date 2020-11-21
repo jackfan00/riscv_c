@@ -42,7 +42,7 @@ void mul()
     mul_busy = (mul_enable_clked & (!mul_rsp_valid))  | (mul_rsp_valid & (!mul_rsp_ready));
     mul_cmd_ready = !mul_busy;
     if (mul_cmd_valid & mul_cmd_ready){
-        mul_enable =1;
+        mul_enable = !dec_mulh_fuse_clked; //1;
         mul64 = mul_opd1 * mul_opd2;
     }
     else{
