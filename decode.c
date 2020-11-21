@@ -223,7 +223,7 @@ int s_j_imm;
         aluop_add = aluopimm | (aluop & func7_00);
         aluop_sub = (aluop & func7_20);
         aluop_mul = (aluop & func7_01);
-        dec_ilg = aluop  & (!aluopimm) & (!func7_20) & (!func7_00)  & (!func7_01);
+        dec_ilg = dec_ilg| (aluop  & (!aluopimm) & (!func7_20) & (!func7_00)  & (!func7_01));
         //
         if (dec_ilg){
             //printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
@@ -233,7 +233,7 @@ int s_j_imm;
     case ALU_SLL:
         aluop_mulh = (aluop & func7_01);
         aluop_sll = (aluop| aluopimm) & func7_00 ;
-        dec_ilg = ((aluop| aluopimm) & (!func7_00) & (!func7_01)) ;
+        dec_ilg = dec_ilg| (((aluop| aluopimm) & (!func7_00) & (!func7_01))) ;
 
         if (dec_ilg){
             //printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
@@ -243,7 +243,7 @@ int s_j_imm;
     case ALU_SLT:
         aluop_mulhsu = (aluop & func7_01);
         aluop_slt =(aluop & func7_00) | aluopimm;
-        dec_ilg = aluop & (!aluopimm) & (!func7_00) & (!func7_01);
+        dec_ilg = dec_ilg| (aluop & (!aluopimm) & (!func7_00) & (!func7_01));
 
         if (dec_ilg){
 
@@ -254,7 +254,7 @@ int s_j_imm;
     case ALU_SLTU:
         aluop_mulhu = (aluop & func7_01);
         aluop_sltu =(aluop & func7_00) | aluopimm;
-        dec_ilg = aluop & (!aluopimm) & (!func7_00) & (!func7_01);
+        dec_ilg = dec_ilg| (aluop & (!aluopimm) & (!func7_00) & (!func7_01));
 
         if (dec_ilg){
 
@@ -265,7 +265,7 @@ int s_j_imm;
     case ALU_XOR:
         aluop_div = (aluop & func7_01);
         aluop_xor =(aluop & func7_00) | aluopimm;
-        dec_ilg = aluop & (!aluopimm) & (!func7_00) & (!func7_01);
+        dec_ilg = dec_ilg| (aluop & (!aluopimm) & (!func7_00) & (!func7_01));
         if (dec_ilg){
 
             //printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
@@ -277,7 +277,7 @@ int s_j_imm;
         aluop_divu = (aluop & func7_01);
         aluop_sra =(aluop|aluopimm) & func7_20;
         aluop_srl =(aluop|aluopimm) & func7_00;
-        dec_ilg = ((aluop|aluopimm) & (!func7_20) & (!func7_00) & (!func7_01));
+        dec_ilg = dec_ilg| (((aluop|aluopimm) & (!func7_20) & (!func7_00) & (!func7_01)));
 
         if (dec_ilg){
 
@@ -288,7 +288,7 @@ int s_j_imm;
     case ALU_OR:
         aluop_rem = (aluop & func7_01);
         aluop_or =(aluop & func7_00) | aluopimm;
-        dec_ilg = aluop & (!aluopimm) & (!func7_00) & (!func7_01);
+        dec_ilg = dec_ilg| (aluop & (!aluopimm) & (!func7_00) & (!func7_01));
         if (dec_ilg){
 
             //printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
@@ -298,7 +298,7 @@ int s_j_imm;
     case ALU_AND:
         aluop_remu = (aluop & func7_01);
         aluop_and =(aluop & func7_00) | aluopimm;
-        dec_ilg = aluop & (!aluopimm) & (!func7_00) & (!func7_01);
+        dec_ilg = dec_ilg| (aluop & (!aluopimm) & (!func7_00) & (!func7_01));
         if (dec_ilg){
 
             //printf("decode Error: illogical opcode %08x, at clockcnt =%d= \n", dec_IR, clockcnt);
@@ -333,7 +333,7 @@ int s_j_imm;
 
             break;
          default:
-            dec_ilg =alubranch;
+            dec_ilg = dec_ilg | alubranch;
 
             break;
        }
@@ -356,7 +356,7 @@ int s_j_imm;
             aluop_lhu =aluload;
             break; 
          default:
-            dec_ilg =aluload;
+            dec_ilg = dec_ilg | aluload;
             break;
        }
 
@@ -372,8 +372,12 @@ int s_j_imm;
             aluop_sw =alustore;
             break;
          default:
-            dec_ilg =alustore;
+            dec_ilg = dec_ilg | alustore;
             break;
+       }
+
+       if (dec_ilg){
+           printf("err\n");
        }
 
        //

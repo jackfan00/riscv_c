@@ -39,7 +39,7 @@ typedef unsigned char BIT;
 #define CODERAM_CMDREADY_CYCLES 0
 
 //MUL cycles, MUL_RSPVALID_CYCLES=0 is not supportted
-#define MUL_RSPVALID_CYCLES 5
+#define MUL_RSPVALID_CYCLES 1
 
 
 REG8 code_rspid_fifo[RSPFIFOSIZE];
