@@ -407,7 +407,7 @@ int s_j_imm;
 
        dec_stall = dec_rwaw_lif_rs1 | dec_rwaw_lif_rs2 | dec_rwaw_lif_rd  ? 1 :
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
-                     ((aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
+                     ((dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                   // dec_raw_memwb_rs1 | dec_raw_memwb_rs2 ? !memwb_valid :
                                      (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
 
