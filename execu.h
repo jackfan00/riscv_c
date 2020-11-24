@@ -7,7 +7,7 @@
     BIT exe_res_valid_clked;
     REG32 exe_res_clked      ;
     BIT exe_rden_clked      ;
-    BIT exe_rdidx_clked     ;
+    REG8 exe_rdidx_clked     ;
     BIT exe_aluload_clked;
     BIT exe_lh_clked;
     BIT exe_lhu_clked;
@@ -47,5 +47,9 @@
     REG8 div_cmd_opmode;
     BIT div_cmd_ready;
     REG32 div_rsp_rdata;
+    BIT exe_branch_taken;
+    BIT lsu_stall;
+    BIT mul_stall;
+    BIT div_stall;
 
 #endif  //EXECU_H

@@ -36,17 +36,23 @@ void setup()
     fetpc_clked = 0x12345678;  //ensure different address from BOOTADDR
     fetch_flush =0;
     firstinst_clked=1;
+    clockcnt=0;
+
 }
 
 int main()
 {
     int i;
+    FILE *vcdfp = fopen("riscv.vcd", "w");
+
     //printf("Hello world!\n");
     //initilize
     setup();
+    //
+    dumpvcdheader(vcdfp);
+    //dumpvars(clockcnt, vcdfp);
 
 
-    clockcnt=0;
     while(1)
     {
 
@@ -55,7 +61,7 @@ int main()
         // 4-pipeline stage
 
         //for settle down the combination signal
-        for (i=0;i<7;i++){
+        for (i=0;i<15;i++){
 
             fetch();
 
@@ -84,10 +90,12 @@ int main()
 
         //
         debug_cpuinfo();
+        dumpvars(clockcnt, vcdfp);
 
         //check execption
         if (exe_dec_ilg_clked){
             printf("STOP by detect illigal instruction\n");
+            fclose(vcdfp);
             return(1);
         }
 
@@ -111,7 +119,7 @@ int main()
 
         //
         clockcnt++;
-
+        //
 
     }
 

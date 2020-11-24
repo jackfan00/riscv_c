@@ -57,6 +57,9 @@ void decodeinit()
  aluop_divu=0;
  aluop_rem=0;
  aluop_remu=0;
+ dec_rwaw_lif_rs1=0;
+ dec_rwaw_lif_rs2=0;
+ dec_rwaw_lif_rd=0;
 
 }
 
@@ -66,13 +69,7 @@ void decode()
 int i;
 BIT dec_flush;
 REG32 dec_IR;
-BIT dec_raw_exe_rs1;
-BIT dec_raw_exe_rs2;
-BIT dec_rwaw_lif_rs1;
-BIT dec_rwaw_lif_rs2;
-BIT dec_rwaw_lif_rd;
-BIT dec_raw_memwb_rs1;
-BIT dec_raw_memwb_rs2;
+
 REG8 opcode;
 REG8 func3;
 REG8 func7;

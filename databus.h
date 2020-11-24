@@ -1,5 +1,5 @@
-#ifndef MEMORYBUS_H
-#define MEMORYBUS_H
+#ifndef DATABUS_H
+#define DATABUS_H
 #include "reg.h"
 
 //input
@@ -56,4 +56,4 @@ REG8 dataram_cmdready_cycles_clked;
 int dataram_ready_cycles_clked;
 
 
-#endif // MEMORYBUS_H
+#endif // DATABUS_H

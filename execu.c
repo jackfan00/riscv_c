@@ -18,10 +18,6 @@ void execu()
     REG32 sll_res;
     REG32 srl_res;
     REG32 sra_res;
-    BIT exe_branch_taken;
-    BIT lsu_stall;
-    BIT mul_stall;
-    BIT div_stall;
 
     int tmp1, tmp2;
 

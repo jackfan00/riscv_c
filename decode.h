@@ -134,5 +134,12 @@ BIT dec_ras_push;
 REG32 cti_pc;
 BIT dec_jalr_pdict_fail;
 BIT dec_mulh_fuse;
+BIT dec_raw_exe_rs1;
+BIT dec_raw_exe_rs2;
+BIT dec_rwaw_lif_rs1;
+BIT dec_rwaw_lif_rs2;
+BIT dec_rwaw_lif_rd;
+BIT dec_raw_memwb_rs1;
+BIT dec_raw_memwb_rs2;
 
 #endif // DECODE_H
