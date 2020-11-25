@@ -5,152 +5,156 @@
 //
 void divrem()
 {
-  BIT qbit;
-  REG32 newminued;
-  REG32 nxt_minued;
+  REG32 divisor;
+  BIT result_signed;
   
 
-  if (divrem_cmd_valid & divrem_cmd_ready){
+  if (div_cmd_valid & div_cmd_ready){
     //
-    dividend = divrem_opd1;
-    divisor = divrem_opd2;
-    diven_p =1;
-    divorrem = dec_aluop_div_clked | dec_aluop_divu_clked;
+    divsigned = (div_cmd_opmode==1) | (div_cmd_opmode==4);  //div/rem
+    dividend = div_cmd_opd1;
+    divisor = div_cmd_opd2;
     div0 = (divisor==0);
-    divsigned = dec_aluop_div_clked | dec_aluop_rem_clked;
     ovflow = (divisor==1) & (dividend==0x80000000) & divsigned;
+    divisor_signed = divsigned & (divisor>>31);
+    dividend_signed = divsigned & (dividend>>31);
+    divisor_undivsigned  = divisor_signed  ? ~(divisor)+1  : divisor;
+    dividend_undivsigned = dividend_signed ?~(dividend)+1 : dividend;
 //
-  if (((divisor>>31)&0x01) | div0 | ovflow)  //div0 
+    diven_p =1;
+    divorrem = (div_cmd_opmode==1) | (div_cmd_opmode==2);  //div/divu
+//
+  if (((divisor_undivsigned>>31)&0x01) | div0 | ovflow)  //div0 
     inik = 31;
-  else if ((divisor>>30)&0x01)
+  else if ((divisor_undivsigned>>30)&0x01)
     inik = 30;
-  else if ((divisor>>29)&0x01)
+  else if ((divisor_undivsigned>>29)&0x01)
     inik = 29;
-  else if ((divisor>>28)&0x01)
+  else if ((divisor_undivsigned>>28)&0x01)
     inik = 28;
-  else if ((divisor>>27)&0x01)
+  else if ((divisor_undivsigned>>27)&0x01)
     inik = 27;
-  else if ((divisor>>26)&0x01)
+  else if ((divisor_undivsigned>>26)&0x01)
     inik = 26;
-  else if ((divisor>>25)&0x01)
+  else if ((divisor_undivsigned>>25)&0x01)
     inik = 25;
-  else if ((divisor>>24)&0x01)
+  else if ((divisor_undivsigned>>24)&0x01)
     inik = 24;
-  else if ((divisor>>23)&0x01)
+  else if ((divisor_undivsigned>>23)&0x01)
     inik = 23;
-  else if ((divisor>>22)&0x01)
+  else if ((divisor_undivsigned>>22)&0x01)
     inik = 22;
-  else if ((divisor>>21)&0x01)
+  else if ((divisor_undivsigned>>21)&0x01)
     inik = 21;
-  else if ((divisor>>20)&0x01)
+  else if ((divisor_undivsigned>>20)&0x01)
     inik = 20;
-  else if ((divisor>>19)&0x01)
+  else if ((divisor_undivsigned>>19)&0x01)
     inik = 19;  
-  else if ((divisor>>18)&0x01)
+  else if ((divisor_undivsigned>>18)&0x01)
     inik = 18;  
-  else if ((divisor>>17)&0x01)
+  else if ((divisor_undivsigned>>17)&0x01)
     inik = 17;  
-  else if ((divisor>>16)&0x01)
+  else if ((divisor_undivsigned>>16)&0x01)
     inik = 16;  
-  else if ((divisor>>15)&0x01)
+  else if ((divisor_undivsigned>>15)&0x01)
     inik = 15;  
-  else if ((divisor>>14)&0x01)
+  else if ((divisor_undivsigned>>14)&0x01)
     inik = 14;  
-  else if ((divisor>>13)&0x01)
+  else if ((divisor_undivsigned>>13)&0x01)
     inik = 13;  
-  else if ((divisor>>12)&0x01)
+  else if ((divisor_undivsigned>>12)&0x01)
     inik = 12;  
-  else if ((divisor>>11)&0x01)
+  else if ((divisor_undivsigned>>11)&0x01)
     inik = 11;  
-  else if ((divisor>>10)&0x01)
+  else if ((divisor_undivsigned>>10)&0x01)
     inik = 10;
-  else if ((divisor>>9)&0x01)
+  else if ((divisor_undivsigned>>9)&0x01)
     inik = 9;  
-  else if ((divisor>>8)&0x01)
+  else if ((divisor_undivsigned>>8)&0x01)
     inik = 8;  
-  else if ((divisor>>7)&0x01)
+  else if ((divisor_undivsigned>>7)&0x01)
     inik = 7;  
-  else if ((divisor>>6)&0x01)
+  else if ((divisor_undivsigned>>6)&0x01)
     inik = 6;  
-  else if ((divisor>>5)&0x01)
+  else if ((divisor_undivsigned>>5)&0x01)
     inik = 5;  
-  else if ((divisor>>4)&0x01)
+  else if ((divisor_undivsigned>>4)&0x01)
     inik = 4;  
-  else if ((divisor>>3)&0x01)
+  else if ((divisor_undivsigned>>3)&0x01)
     inik = 3;  
-  else if ((divisor>>2)&0x01)
+  else if ((divisor_undivsigned>>2)&0x01)
     inik = 2;  
-  else if ((divisor>>1)&0x01)
+  else if ((divisor_undivsigned>>1)&0x01)
     inik = 1;  
   else //if (divisor>>0])
     inik = 0;    
   //
   //
   //
-  if ((divisor>>31)&0x01)
-    iniminued = dividend>>0;
-  else if ((divisor>>30)&0x01)
-    iniminued = (dividend>>1);
-  else if ((divisor>>29)&0x01)
-    iniminued = (dividend>>2);
-  else if ((divisor>>28)&0x01)
-    iniminued = (dividend>>3);
-  else if ((divisor>>27)&0x01)
-    iniminued = (dividend>>4);
-  else if ((divisor>>26)&0x01)
-    iniminued = (dividend>>5);
-  else if ((divisor>>25)&0x01)
-    iniminued = (dividend>>6);
-  else if ((divisor>>24)&0x01)
-    iniminued = (dividend>>7);
-  else if ((divisor>>23)&0x01)
-    iniminued = (dividend>>8);
-  else if ((divisor>>22)&0x01)
-    iniminued = (dividend>>9);
-  else if ((divisor>>21)&0x01)
-    iniminued = (dividend>>10);
-  else if ((divisor>>20)&0x01)
-    iniminued = (dividend>>11);
-  else if ((divisor>>19)&0x01)
-    iniminued = (dividend>>12);  
-  else if ((divisor>>18)&0x01)
-    iniminued = (dividend>>13);  
-  else if ((divisor>>17)&0x01)
-    iniminued =(dividend>>14);  
-  else if ((divisor>>16)&0x01)
-    iniminued = (dividend>>15);  
-  else if ((divisor>>15)&0x01)
-    iniminued =(dividend>>16);  
-  else if ((divisor>>14)&0x01)
-    iniminued = (dividend>>17);  
-  else if ((divisor>>13)&0x01)
-    iniminued = (dividend>>18);  
-  else if ((divisor>>12)&0x01)
-    iniminued = (dividend>>19);  
-  else if ((divisor>>11)&0x01)
-    iniminued = (dividend>>20);  
-  else if ((divisor>>10)&0x01)
-    iniminued =(dividend>>21);
-  else if ((divisor>>9)&0x01)
-    iniminued =(dividend>>22);  
-  else if ((divisor>>8)&0x01)
-    iniminued = (dividend>>23);  
-  else if ((divisor>>7)&0x01)
-    iniminued = (dividend>>24);  
-  else if ((divisor>>6)&0x01)
-    iniminued = (dividend>>25);  
-  else if ((divisor>>5)&0x01)
-    iniminued = (dividend>>26);  
-  else if ((divisor>>4)&0x01)
-    iniminued = (dividend>>27);  
-  else if ((divisor>>3)&0x01)
-    iniminued = (dividend>>28);  
-  else if ((divisor>>2)&0x01)
-    iniminued = (dividend>>29);  
-  else if ((divisor>>1)&0x01)
-    iniminued = (dividend>>30);  
-  else if ((divisor>>0)&0x01)
-    iniminued = (dividend>>31);    
+  if ((divisor_undivsigned>>31)&0x01)
+    iniminued = dividend_undivsigned>>0;
+  else if ((divisor_undivsigned>>30)&0x01)
+    iniminued = (dividend_undivsigned>>1);
+  else if ((divisor_undivsigned>>29)&0x01)
+    iniminued = (dividend_undivsigned>>2);
+  else if ((divisor_undivsigned>>28)&0x01)
+    iniminued = (dividend_undivsigned>>3);
+  else if ((divisor_undivsigned>>27)&0x01)
+    iniminued = (dividend_undivsigned>>4);
+  else if ((divisor_undivsigned>>26)&0x01)
+    iniminued = (dividend_undivsigned>>5);
+  else if ((divisor_undivsigned>>25)&0x01)
+    iniminued = (dividend_undivsigned>>6);
+  else if ((divisor_undivsigned>>24)&0x01)
+    iniminued = (dividend_undivsigned>>7);
+  else if ((divisor_undivsigned>>23)&0x01)
+    iniminued = (dividend_undivsigned>>8);
+  else if ((divisor_undivsigned>>22)&0x01)
+    iniminued = (dividend_undivsigned>>9);
+  else if ((divisor_undivsigned>>21)&0x01)
+    iniminued = (dividend_undivsigned>>10);
+  else if ((divisor_undivsigned>>20)&0x01)
+    iniminued = (dividend_undivsigned>>11);
+  else if ((divisor_undivsigned>>19)&0x01)
+    iniminued = (dividend_undivsigned>>12);  
+  else if ((divisor_undivsigned>>18)&0x01)
+    iniminued = (dividend_undivsigned>>13);  
+  else if ((divisor_undivsigned>>17)&0x01)
+    iniminued =(dividend_undivsigned>>14);  
+  else if ((divisor_undivsigned>>16)&0x01)
+    iniminued = (dividend_undivsigned>>15);  
+  else if ((divisor_undivsigned>>15)&0x01)
+    iniminued =(dividend_undivsigned>>16);  
+  else if ((divisor_undivsigned>>14)&0x01)
+    iniminued = (dividend_undivsigned>>17);  
+  else if ((divisor_undivsigned>>13)&0x01)
+    iniminued = (dividend_undivsigned>>18);  
+  else if ((divisor_undivsigned>>12)&0x01)
+    iniminued = (dividend_undivsigned>>19);  
+  else if ((divisor_undivsigned>>11)&0x01)
+    iniminued = (dividend_undivsigned>>20);  
+  else if ((divisor_undivsigned>>10)&0x01)
+    iniminued =(dividend_undivsigned>>21);
+  else if ((divisor_undivsigned>>9)&0x01)
+    iniminued =(dividend_undivsigned>>22);  
+  else if ((divisor_undivsigned>>8)&0x01)
+    iniminued = (dividend_undivsigned>>23);  
+  else if ((divisor_undivsigned>>7)&0x01)
+    iniminued = (dividend_undivsigned>>24);  
+  else if ((divisor_undivsigned>>6)&0x01)
+    iniminued = (dividend_undivsigned>>25);  
+  else if ((divisor_undivsigned>>5)&0x01)
+    iniminued = (dividend_undivsigned>>26);  
+  else if ((divisor_undivsigned>>4)&0x01)
+    iniminued = (dividend_undivsigned>>27);  
+  else if ((divisor_undivsigned>>3)&0x01)
+    iniminued = (dividend_undivsigned>>28);  
+  else if ((divisor_undivsigned>>2)&0x01)
+    iniminued = (dividend_undivsigned>>29);  
+  else if ((divisor_undivsigned>>1)&0x01)
+    iniminued = (dividend_undivsigned>>30);  
+  else if ((divisor_undivsigned>>0)&0x01)
+    iniminued = (dividend_undivsigned>>31);    
   else
     iniminued = 0;
 
@@ -164,17 +168,31 @@ void divrem()
  div_end_p = (divremcnt_clked == 31) & diven_clked;
 
   //div main body
- qbit = (minued_clked >= divisor);
- newminued = minued_clked - divisor;
- nxt_minued = qbit ? (newminued<<1)   + (dividend>>(31-divremcnt_clked-1))&0x01 : 
-                     (minued_clked<<1)+ (dividend>>(31-divremcnt_clked-1))&0x01;
+ qbit = (minued_clked >= divisor_undivsigned_clked);
+ newminued = minued_clked - divisor_undivsigned_clked;
+ nxt_minued = qbit ? (newminued<<1)   + ((dividend_undivsigned_clked>>(31-divremcnt_clked-1))&0x01) : 
+                     (minued_clked<<1)+ ((dividend_undivsigned_clked>>(31-divremcnt_clked-1))&0x01);
  nxt_q = (q_clked<<1)+qbit;  //shift in left
  nxtrem = div_end_p ? (qbit ? newminued : minued_clked) : 0;  
 //
 
+// be careful about rem :
+// ex: 101/-100 = (q=-1, rem=1), -101/100=(q=-1,rem=-1)
+// ex: -1/-100 = (0,-1)
+result_signed = divisor_signed_clked ^ dividend_signed_clked;
+
+remsigned = (quo_undivsigned_clked==0) ? dividend_clked :
+            result_signed & dividend_signed_clked ? ~(rem_undivsigned_clked&0x7fffffff)+1 : rem_undivsigned_clked;
+quosigned = result_signed ? ~(quo_undivsigned_clked&0x7fffffff)+1 : quo_undivsigned_clked;
+
+remres = div0_clked ? dividend_clked : 
+             ovflow_clked ? 0 : remsigned;
+quores = div0_clked   ? 0xffffffff : 
+             ovflow_clked ? 0x80000000 : quosigned;
+
 if (div_end_p_clked){
   div_rsp_valid = 1;
-  div_rsp_rdata = divorrem_clked ? quo_clked : rem_clked;
+  div_rsp_rdata = divorrem_clked ? quores : remres;
 }
 else{
   div_rsp_valid = 0;

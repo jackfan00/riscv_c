@@ -4,37 +4,51 @@
 #include "reg.h"
 
 //input 
-BIT divrem_cmd_valid;
-BIT divrem_cmd_ready;
+
 REG32 divrem_opd1;
 REG32 divrem_opd2;
+BIT div0_clked;
+BIT ovflow_clked;
+REG32 quo_undivsigned_clked;
+REG32 rem_undivsigned_clked;
+BIT div_end_p_clked;
+REG32 divisor_undivsigned_clked;
+REG32 dividend_undivsigned_clked;
+BIT divorrem_clked;
+REG8 divremcnt_clked;
+REG32 minued_clked;
+BIT diven_clked;
+REG32 q_clked;
+BIT divisor_signed_clked;
+BIT dividend_signed_clked;
+REG32 dividend_clked;
 
 //output
 REG8 inik;
 BIT diven_p;
 BIT div_end_p;
-REG8 divremcnt_clked;
-BIT diven_clked;
-REG32 minued_clked;
-REG32 q_clked;
 REG32 nxtrem;
 REG32 nxt_q;
 REG32 iniminued;
-REG32 quo_clked;
-REG32 rem_clked;
-REG32 divisor;
-REG32 dividend;
-BIT div0;
+REG32 divisor_undivsigned;
+REG32 dividend_undivsigned;
 BIT divsigned;
+BIT div0;
 BIT ovflow;
-BIT div_end_p_clked;
 BIT div_rsp_valid;
 BIT div_rsp_ready;
 REG32 div_rsp_rdata;
 BIT divorrem;
-BIT divorrem_clked;
-REG32 divisor_clked;
-REG32 dividend_clked;
-
+BIT divisor_signed;
+BIT dividend_signed;
+REG32 dividend;
+REG32 nxt_minued;
+//
+  BIT qbit;
+  REG32 newminued;
+  REG32 remsigned;
+  REG32 quosigned;
+  REG32 remres;
+  REG32 quores;
 
 #endif //DIVREM_H

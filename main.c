@@ -71,6 +71,8 @@ int main()
 
             mul();
 
+            divrem();
+
             memwb();  // memory access and write-back at the same stage
 
             regwbus();
@@ -113,6 +115,7 @@ int main()
         databus_clked();
         memwb_bus_clked();
         mul_clked();
+        divrem_clked();
         lif_clked();
         
 

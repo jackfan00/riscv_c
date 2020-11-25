@@ -127,7 +127,7 @@ BIT aluop_divu;
 BIT aluop_rem;
 BIT aluop_remu;
 BIT dec_lif_cmd;
-BIT dec_lif_id;
+REG8 dec_lif_id;
 BIT dec_stall;
 BIT dec_ras_push;
 //BIT dec_branch_pdict_fail_pc;
