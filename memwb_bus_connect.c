@@ -2,6 +2,7 @@
 #include "memwb.h"
 #include "execu.h"
 #include "mul.h"
+#include "divrem.h"
 
 void memwb_bus_connect(){
 

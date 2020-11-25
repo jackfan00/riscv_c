@@ -46,7 +46,6 @@
     REG32 div_cmd_opd2;
     REG8 div_cmd_opmode;
     BIT div_cmd_ready;
-    REG32 div_rsp_rdata;
     BIT exe_branch_taken;
     BIT lsu_stall;
     BIT mul_stall;
