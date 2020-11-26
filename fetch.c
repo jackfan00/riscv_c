@@ -6,10 +6,10 @@
 #include "memwb.h"
 #include "opcode_define.h"
 
-REG32 toir32 (REG16 ir16)
-{
- return 0;
-}
+//REG32 toir32 (REG16 ir16)
+//{
+// return 0;
+//}
 
 void fetdec(REG32 localIR)
 {
@@ -130,7 +130,7 @@ BIT new_midnxtpc_fg;
     irlsb10 = (fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
     fet_ir16 = irlsb10!=3;
     if (fet_ir16){
-        memIR32 = toir32(memIR16);
+        memIR32 = rv16torv32(memIR16);
     }
     else{
         memIR32 = (fetpc_clked&0x02) == 0 ? memIR : ((memIR&0x0ffff) << 16) + memIR_hi16_clked;

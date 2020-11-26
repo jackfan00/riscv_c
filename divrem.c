@@ -182,8 +182,8 @@ void divrem()
 result_signed = divisor_signed_clked ^ dividend_signed_clked;
 
 remsigned = (quo_undivsigned_clked==0) ? dividend_clked :
-            result_signed & dividend_signed_clked ? ~(rem_undivsigned_clked&0x7fffffff)+1 : rem_undivsigned_clked;
-quosigned = result_signed ? ~(quo_undivsigned_clked&0x7fffffff)+1 : quo_undivsigned_clked;
+            result_signed & dividend_signed_clked ? ~(rem_undivsigned_clked)+1 : rem_undivsigned_clked;
+quosigned = result_signed ? ~(quo_undivsigned_clked)+1 : quo_undivsigned_clked;
 
 remres = div0_clked ? dividend_clked : 
              ovflow_clked ? 0 : remsigned;
@@ -198,7 +198,7 @@ else{
   div_rsp_valid = 0;
 }
 
- div_cmd_ready = !diven_clked | div_rsp_valid;
+ div_cmd_ready = !diven_clked | (div_rsp_valid&div_rsp_ready);
 
 
 }
