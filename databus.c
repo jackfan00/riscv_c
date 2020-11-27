@@ -87,23 +87,30 @@ int i,j;
     if ((o_databus_cmd_adr&0xff000000)==DTCM_ADDR_BASE){
         dataramctrl();
     }
-    else if ((o_databus_cmd_adr)==TXUART_ADDR){
-        txUART();
-    }
+
+    //txUART need to change
+    //else if ((o_databus_cmd_adr)==TXUART_ADDR){
+    //    txUART();
+    //}
 
     //
-
-
-}
-
-void dataramctrl()
-{
+    // these signal dont be affected by o_databus_cmd_adr
+    o_databus_rsp_rdata = dataram_rdat;
+    o_databus_rsp_valid =  DATARAM_RSPVALID_CYCLES==0 ? o_databus_cmd_valid & o_databus_cmd_read : 
+                      dataram_rrsp_per_clked & (dataram_rspvalid_cycles_clked>=DATARAM_RSPVALID_CYCLES) ;
+    o_databus_rsp_err =0;
     // cmd_ready consider the larger latency one of cmdready and rspvalid
     o_databus_cmd_ready = DATARAM_CMDREADY_CYCLES==0 ? (!data_rspid_fifo_full_clked) |
                                 (data_rspid_fifo_full_clked & o_databus_rsp_valid & o_databus_rsp_ready) : 
                           (dataram_cmdready_cycles_clked>=DATARAM_CMDREADY_CYCLES) & (
                  (!data_rspid_fifo_full_clked) | (data_rspid_fifo_full_clked & o_databus_rsp_valid & o_databus_rsp_ready)
                               );
+
+
+}
+
+void dataramctrl()
+{
 
 
     if (o_databus_cmd_valid & o_databus_cmd_ready){
@@ -116,22 +123,18 @@ void dataramctrl()
     else{
         dataram_cs = 0;
     }    
-    o_databus_rsp_rdata = dataram_rdat;
     //o_databus_rsp_valid = dataram_cs_clked & !dataram_we_clked;   
 
 
     //o_databus_rsp_valid = dataram_wrsp_valid | dataram_rrsp_valid ;
     //only reply read-request response
     //o_databus_rsp_valid =  dataram_rrsp_valid ;
-    o_databus_rsp_valid =  DATARAM_RSPVALID_CYCLES==0 ? o_databus_cmd_valid & o_databus_cmd_read : 
-                      dataram_rrsp_per_clked & (dataram_rspvalid_cycles_clked>=DATARAM_RSPVALID_CYCLES) ;
     //
     //dataram_wrsp_valid = //DATARAM_WREADY_CYCLES==0 ? dataram_cs & dataram_we :
     //                     dataram_wrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_CMDREADY_CYCLES);
     //dataram_rrsp_valid = //DATARAM_RREADY_CYCLES==0 ? dataram_cs & (!dataram_we):
     //                     dataram_rrsp_per_clked & (dataram_ready_cycles_clked==DATARAM_RSPVALID_CYCLES);
     //
-    o_databus_rsp_err =0;
 }
 
 void txUART()

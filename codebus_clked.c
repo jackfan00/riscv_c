@@ -24,7 +24,7 @@ int i;
 
 
     if (code_rspid_fifo_ren & code_rspid_fifo_empty_clked & (!code_rspid_fifo_wen)){
-        printf("codebus Error:fifo read empty\n");
+        printf("codebus Error:fifo read empty at clockcnt=%x\n", clockcnt);
         //exit(-6);
     }
     if (code_rspid_fifo_wen & code_rspid_fifo_full_clked & (!code_rspid_fifo_ren)){

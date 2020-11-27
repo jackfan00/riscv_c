@@ -88,10 +88,20 @@ int i,j;
         coderamctrl();
     }
     else{
-        printf("Error:codebus address is wrong %08x, should be base on %x\n", o_codebus_cmd_adr, ITCM_ADDR_BASE);
-        return(-5);
+        printf("Error:codebus address is wrong %08x, should be base on %x at clockcnt=%x\n", o_codebus_cmd_adr, ITCM_ADDR_BASE, clockcnt);
+        //return(-5);
     }
     //
+    // these signal dont be affected by o_codebus_cmd_adr
+    o_codebus_rsp_rdata = coderam_rdat;
+    o_codebus_rsp_valid =  CODERAM_RSPVALID_CYCLES==0 ? o_codebus_cmd_valid & o_codebus_cmd_read : 
+                      coderam_rrsp_per_clked & (coderam_rspvalid_cycles_clked>=CODERAM_RSPVALID_CYCLES) ;
+    // cmd_ready consider the larger latency one of cmdready and rspvalid
+    o_codebus_cmd_ready = CODERAM_CMDREADY_CYCLES==0 ? (!code_rspid_fifo_full_clked) |
+                                (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready) : 
+                          (coderam_cmdready_cycles_clked>=CODERAM_CMDREADY_CYCLES) & (
+                 (!code_rspid_fifo_full_clked) | (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready)
+                              );
     
 
 }
@@ -99,12 +109,6 @@ int i,j;
 void coderamctrl()
 {
     //
-    // cmd_ready consider the larger latency one of cmdready and rspvalid
-    o_codebus_cmd_ready = CODERAM_CMDREADY_CYCLES==0 ? (!code_rspid_fifo_full_clked) |
-                                (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready) : 
-                          (coderam_cmdready_cycles_clked>=CODERAM_CMDREADY_CYCLES) & (
-                 (!code_rspid_fifo_full_clked) | (code_rspid_fifo_full_clked & o_codebus_rsp_valid & o_codebus_rsp_ready)
-                              );
 
     if (o_codebus_cmd_valid & o_codebus_cmd_ready){
         coderam_adr = (o_codebus_cmd_adr & 0x00ffffff) >>2;
@@ -117,14 +121,11 @@ void coderamctrl()
         coderam_cs = 0;
     }
     //
-    o_codebus_rsp_rdata = coderam_rdat;
     //o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;   
    
     //o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
     //only reply read-request response
     //o_codebus_rsp_valid =  coderam_rrsp_valid ;
-    o_codebus_rsp_valid =  CODERAM_RSPVALID_CYCLES==0 ? o_codebus_cmd_valid & o_codebus_cmd_read : 
-                      coderam_rrsp_per_clked & (coderam_rspvalid_cycles_clked>=CODERAM_RSPVALID_CYCLES) ;
     
     //coderam_wrsp_valid = //CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
     //                     coderam_wrsp_per_clked & (ready_cycles_clked==CODERAM_WREADY_CYCLES);

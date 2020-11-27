@@ -140,10 +140,10 @@ int main(int argc, char *argv[])
         downloadstart=0;
         //
         //for debug
-        if (clockcnt >= 0x616){
-            printf("stop\n");
-        }
-        if (clockcnt >= 0x62a) return(1);
+        //if (clockcnt >= 0x627){
+        //    printf("stop\n");
+        //}
+        if (clockcnt >= 0x62f) return(1);
 
     }
 
