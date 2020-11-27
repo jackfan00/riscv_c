@@ -229,6 +229,8 @@ void dumpcmdfile()
     fprintf(dc, "#include \"divrem.h\"\n");
     fprintf(dc, "#include \"lif.h\"\n");
     fprintf(dc, "#include \"dumpvars.h\"\n");
+    fprintf(dc, "#include \"rv16torv32.h\"\n");
+    fprintf(dc, "#include \"peri_write_coderam.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -277,6 +279,8 @@ int main()
     parsevars("../mul.h");
     parsevars("../divrem.h");
     parsevars("../lif.h");
+    parsevars("../rv16torv32.h");
+    parsevars("../peri_write_coderam.h");
     //
     dumpcmdfile();
 

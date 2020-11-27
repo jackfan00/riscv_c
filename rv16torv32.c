@@ -12,7 +12,7 @@ REG32 slicebits(REG32 a, int up, int dn)
     return(tmp);
 }
 
-REG32 rv16torv32(REG32 in16)
+REG32 rv16torv32(REG16 in16)
 {
     REG8 c0_rdprime;
     REG8 c0_rs2prime;

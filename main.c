@@ -7,6 +7,7 @@
 #include "codebus.h"
 #include "decode.h"
 #include "execu.h"
+#include "peri_write_coderam.h"
 
 void debug_cpuinfo(){
     int i;
@@ -28,7 +29,7 @@ void debug_cpuinfo(){
 
 void setup()
 {
-    init_rom();
+    //init_rom();
     //
     //rspid_fifo_wadr_clked = RSPFIFOSIZE-1;
     code_rspid_fifo_empty_clked =1;
@@ -40,14 +41,24 @@ void setup()
 
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     int i;
+
+    printf("generate trace waveform file: riscv.vcd\n");
     FILE *vcdfp = fopen("riscv.vcd", "w");
 
     //printf("Hello world!\n");
     //initilize
     setup();
+    //
+    if (argc==2){
+        downloadCode(argv[1]);
+        downloadstart=1;
+    }
+    else{
+        init_rom();
+    }
     //
     dumpvcdheader(vcdfp);
     //dumpvars(clockcnt, vcdfp);
@@ -62,6 +73,8 @@ int main()
 
         //for settle down the combination signal
         for (i=0;i<15;i++){
+
+            peri_write_coderam();
 
             fetch();
 
@@ -91,7 +104,7 @@ int main()
 
 
         //
-        debug_cpuinfo();
+        //debug_cpuinfo();
         dumpvars(clockcnt, vcdfp);
 
         //check execption
@@ -117,12 +130,20 @@ int main()
         mul_clked();
         divrem_clked();
         lif_clked();
+
+        //
+        peri_write_coderam_clked();
         
-
-
         //
         clockcnt++;
         //
+        downloadstart=0;
+        //
+        //for debug
+        if (clockcnt >= 0x616){
+            printf("stop\n");
+        }
+        if (clockcnt >= 0x62a) return(1);
 
     }
 

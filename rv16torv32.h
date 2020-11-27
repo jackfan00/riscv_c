@@ -31,7 +31,7 @@ BIT CJALR     ;
 BIT CADD      ;
 BIT CSWSP     ;
 
-REG32 rv16     ;
+REG16 rv16     ;
 REG32 rv32     ;
 REG32 c0_instr ;
 REG32 c1_instr ; 

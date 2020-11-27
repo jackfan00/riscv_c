@@ -61,6 +61,9 @@ void myasm2mccode()
     char * token1s;
     char * token2s;
     char str[400], token2s_cp[400];
+
+    printf("init coderam using file myasmcode.txt\n");
+
     FILE* fp=fopen("myasmcode.txt","r");
     //
     int opcode;

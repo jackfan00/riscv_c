@@ -19,6 +19,8 @@ REG32 fet_rs1v;
 BIT fet_predict_jmp_clked;
 BIT fet_ir16_clked;
 BIT firstinst_clked;
+REG8 remain_ir16s_clked;
+REG32 ifu2mem_cmd_adr_clked;
 
 //output
 BIT ifu2mem_rsp_ready;
@@ -40,6 +42,14 @@ BIT branchjmp_hipart;
 BIT new_midnxtpc_part2_fg;
 BIT fet_ras_pop;
 BIT fet_ir16;
+REG8 remain_ir16s;
+
+REG32 memIR;
+REG32 memIR32;
+REG16 memIR16;
+REG8 irlsb10;
+REG8 iroffset;
+REG32 nxtpc;
 
 #endif // FETCH_H
 

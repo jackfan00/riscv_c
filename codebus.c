@@ -84,18 +84,14 @@ int i,j;
 
 
     //address demux
-    if (1){//1 for debug, (o_codebus_cmd_adr&0xff000000)==ITCM_ADDR_BASE){
+    if ((o_codebus_cmd_adr&0xff000000)==ITCM_ADDR_BASE){
         coderamctrl();
     }
+    else{
+        printf("Error:codebus address is wrong %08x, should be base on %x\n", o_codebus_cmd_adr, ITCM_ADDR_BASE);
+        return(-5);
+    }
     //
-    o_codebus_rsp_rdata = coderam_rdat;
-    //o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;   
-   
-    //o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
-    //only reply read-request response
-    //o_codebus_rsp_valid =  coderam_rrsp_valid ;
-    o_codebus_rsp_valid =  CODERAM_RSPVALID_CYCLES==0 ? o_codebus_cmd_valid & o_codebus_cmd_read : 
-                      coderam_rrsp_per_clked & (coderam_rspvalid_cycles_clked>=CODERAM_RSPVALID_CYCLES) ;
     
 
 }
@@ -121,6 +117,14 @@ void coderamctrl()
         coderam_cs = 0;
     }
     //
+    o_codebus_rsp_rdata = coderam_rdat;
+    //o_codebus_rsp_valid = coderam_cs_clked & !coderam_we_clked;   
+   
+    //o_codebus_rsp_valid = coderam_wrsp_valid | coderam_rrsp_valid ;
+    //only reply read-request response
+    //o_codebus_rsp_valid =  coderam_rrsp_valid ;
+    o_codebus_rsp_valid =  CODERAM_RSPVALID_CYCLES==0 ? o_codebus_cmd_valid & o_codebus_cmd_read : 
+                      coderam_rrsp_per_clked & (coderam_rspvalid_cycles_clked>=CODERAM_RSPVALID_CYCLES) ;
     
     //coderam_wrsp_valid = //CODERAM_WREADY_CYCLES==0 ? coderam_cs & coderam_we :
     //                     coderam_wrsp_per_clked & (ready_cycles_clked==CODERAM_WREADY_CYCLES);

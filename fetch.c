@@ -5,6 +5,7 @@
 #include "execu.h"
 #include "memwb.h"
 #include "opcode_define.h"
+#include "peri_write_coderam.h"
 
 //REG32 toir32 (REG16 ir16)
 //{
@@ -96,20 +97,14 @@ void fetch()
 {
 
 //local
-REG32 memIR;
-REG32 memIR32;
-REG16 memIR16;
-REG8 irlsb10;
-BIT nxtir16;
-REG8 iroffset;
-REG32 nxtpc;
-BIT newir_fg;
-BIT ifu2mem_cmd_valid_nor;
-REG32 ifu2mem_cmd_adr_nor;
-BIT ifu2mem_cmd_valid_bj;
-BIT incpc_valid;
-BIT midnxtpc_fg;
-BIT new_midnxtpc_fg;
+//BIT newir_fg;
+//BIT newir_fg2;
+//BIT ifu2mem_cmd_valid_nor;
+//REG32 ifu2mem_cmd_adr_nor;
+//BIT ifu2mem_cmd_valid_bj;
+//BIT incpc_valid;
+//BIT midnxtpc_fg;
+//BIT new_midnxtpc_fg;
 
     //
 
@@ -119,15 +114,15 @@ BIT new_midnxtpc_fg;
     //instruction from code-ram
     ifu2mem_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
     //memIR = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? ifu2mem_rsp_rdata : 0;
+    //
+    //keep memIR when rspvalid=0
     memIR = ifu2mem_rsp_rdata ;
     memIR_hi16 = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? (ifu2mem_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
-    //mini deocde for branchjmp
-    fetdec(memIR);
     //
-    memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff :  (memIR>>16) & 0x0ffff;
+    memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
     // calculate next pc
-    irlsb10 = (fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
+    irlsb10 = memIR16 & 0x03; //(fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
     fet_ir16 = irlsb10!=3;
     if (fet_ir16){
         memIR32 = rv16torv32(memIR16);
@@ -136,6 +131,17 @@ BIT new_midnxtpc_fg;
         memIR32 = (fetpc_clked&0x02) == 0 ? memIR : ((memIR&0x0ffff) << 16) + memIR_hi16_clked;
     }
     iroffset = fet_ir16 ? 2 : 4;
+    //mini deocde for branchjmp
+    fetdec(memIR32);
+
+    //
+    // this paramter use for calculate remain_ir16s: (number of instructions which not consume yet)
+    remain_ir16s =  downloadstart|downloadper_clked? remain_ir16s_clked:
+                    exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp ? (nxtpc&0x02 ? -1 : 0) :
+                    remain_ir16s_clked - 
+                    ((remain_ir16s_clked>>7) ? 0 : (fet_ir16?1:2)) + //in negative case, doesnt cousume ir. 
+                    (ifu2mem_rsp_valid & ifu2mem_rsp_ready?2:0);
+    
 
     //
     nxtpc = exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
@@ -144,20 +150,32 @@ BIT new_midnxtpc_fg;
             //fetch_stall ? fetpc_clked : fetpc_clked + iroffset;
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
 
-    newir_fg =  (fetpc_clked&0xfffffffc)!=(nxtpc&0xfffffffc) ;
-    midnxtpc_fg = (nxtpc&0x02);
-    new_midnxtpc_fg = newir_fg & midnxtpc_fg ;
-    new_midnxtpc_part2_fg = new_midnxtpc_fg & ifu2mem_cmd_ready;
+    //req new instr when remain ir16 count less than 2
+    ifu2mem_cmd_valid = downloadstart|downloadper_clked? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
+    ifu2mem_cmd_adr = (ifu2mem_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
 
-    ifu2mem_cmd_valid = (newir_fg | midnxtpc_fg | new_midnxtpc_part2_fg_clked) & 
-                                  (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
-    ifu2mem_cmd_adr = newir_fg | new_midnxtpc_fg ? nxtpc :
-                      midnxtpc_fg | new_midnxtpc_part2_fg_clked ? nxtpc + 0x02 : 0;
+    //newir_fg =  (fetpc_clked&0xfffffffc)!=(nxtpc&0xfffffffc) ;
+    //newir_fg2 =  (fetpc_clked!=nxtpc) ;
+    //midnxtpc_fg = (nxtpc&0x02);
+    //new_midnxtpc_fg = newir_fg & midnxtpc_fg ;
+    //new_midnxtpc_part2_fg = new_midnxtpc_fg & ifu2mem_cmd_ready;
 
-    pc = ifu2mem_cmd_valid & (!new_midnxtpc_part2_fg_clked) & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
+    //ifu2mem_cmd_valid = (newir_fg2 | midnxtpc_fg | new_midnxtpc_part2_fg_clked) & 
+    //                              (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
+    //ifu2mem_cmd_adr = newir_fg | new_midnxtpc_fg ? nxtpc :
+    //                  newir_fg2 | midnxtpc_fg | new_midnxtpc_part2_fg_clked ? nxtpc + 0x02 : 0;
+    //pc = ifu2mem_cmd_valid & (!new_midnxtpc_part2_fg_clked) & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
+    
+    //for remain_ir16s_clked value is negative cycle, its pc is invalid dont update.
+    pc = (ifu2mem_cmd_valid & (remain_ir16s>=0) & ifu2mem_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
+         (remain_ir16s==2 )|
+         (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : fetpc_clked;
 
-    fetch_flush =!(  ifu2mem_rsp_valid & ifu2mem_rsp_ready &(!new_midnxtpc_part2_fg_clked) );
-    fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail;
+    //
+    fetch_flush =!(  ifu2mem_rsp_valid & ifu2mem_rsp_ready  ) & (remain_ir16s_clked!=2);  
+    fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail | 
+                                 (remain_ir16s_clked>>7); //remain_ir16s_clked is negative means jmpto address[1:0]==10
+                                                          //need take 2 cycles to get full instruntion
     fetchIR =  fetch_flush ?  NOP : memIR32;
 
     //

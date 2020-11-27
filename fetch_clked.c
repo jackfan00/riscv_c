@@ -9,8 +9,10 @@ void fetch_clked()
 
     if ((!exe_stall) && (!dec_stall) && (!memwb_stall)){
 
-    firstinst_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? 0 : firstinst_clked;
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
+
+    ifu2mem_cmd_adr_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? ifu2mem_cmd_adr : ifu2mem_cmd_adr_clked;
+
     fetpc_clked = pc;
     fetchIR_clked = fetchIR;
     memIR_hi16_clked = memIR_hi16;
@@ -30,6 +32,12 @@ void fetch_clked()
          ras_stack[i] = ras_stack[i+1];
        }
     }
+
+    // control read new instruction
+    //ensure at first cycle ,remain_ir16s_clked number is correct
+    remain_ir16s_clked = firstinst_clked? 1 : remain_ir16s;
+
+    firstinst_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? 0 : firstinst_clked;
 
     }
 }

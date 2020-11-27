@@ -7,10 +7,11 @@ typedef unsigned char REG8;
 typedef unsigned char BIT;
 
 
-#define ITCM_ADDR_BASE   0x80000000
-#define DTCM_ADDR_BASE   0 //0x90000000
+#define ITCM_ADDR_BASE   0 //0x80000000
+#define DTCM_ADDR_BASE   0x90000000
  //   * PPI       : 0x1000 0000 -- 0x1FFF FFFF
-#define PPI_ADDR_BASE  0x10000000
+#define PPI_ADDR_BASE    0x10000000
+#define TXUART_ADDR      0x10013000
   //  * CLINT     : 0x0200 0000 -- 0x0200 FFFF
   //  * PLIC      : 0x0C00 0000 -- 0x0CFF FFFF
 #define CLINT_ADDR_BASE  0x02000000
@@ -25,7 +26,7 @@ typedef unsigned char BIT;
 #define DATAARBIT_NUM 4
 #define WBARBIT_NUM 4
 #define REGARBIT_NUM 2
-#define MAXCODESIZE 1024
+#define MAXCODESIZE 65536
 #define BOOTADDR ITCM_ADDR_BASE
 #define RASDEPTH 8
 #define LIFSIZE 8
