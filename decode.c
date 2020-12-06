@@ -5,7 +5,8 @@
 #include "execu.h"
 #include "memwb.h"
 #include "lif.h"
-#include "memwb_bus.h"
+//#include "memwb_bus.h"
+#include "regfile.h"
 
 
 void decodeinit()
@@ -60,14 +61,25 @@ void decodeinit()
  dec_rwaw_lif_rs1=0;
  dec_rwaw_lif_rs2=0;
  dec_rwaw_lif_rd=0;
-
+ aluop_csrrw=0;
+ aluop_csrrs=0;
+ aluop_csrrc=0;
+ aluop_csrrwi=0;
+ aluop_csrrsi=0;
+ aluop_csrrci=0;
+ aluop_csrw=0;
+ aluop_csrset=0;
+ aluop_csrclr=0;
+ aluop_ecall=0;
+ aluop_break=0;
+ dec_csr_ren=0;
+ dec_csr_wen=0;
 }
 
 void decode()
 {
 //local
 int i;
-BIT dec_flush;
 REG32 dec_IR;
 
 REG8 opcode;
@@ -104,7 +116,7 @@ int s_j_imm;
     func7 = (dec_IR >> 25) & 0x3f;
     rs1idx = (dec_IR >> 15) & 0x1f;
     rs2idx = (dec_IR >> 20) & 0x1f;
-    i_imm = (dec_IR >> 20) & 0xfff;  //< signed value
+    i_imm = (dec_IR >> 20) & 0x0fff;  //< signed value
     s_imm = (((dec_IR>>25)&0x7f) << 5 ) +  ((dec_IR>>7)&0x1f)   ;
     b_imm = (((dec_IR>>31)&0x1) << 12 ) +  (((dec_IR>>7)&0x1) << 11 ) + (((dec_IR>>25)&0x3f) << 5 ) + (((dec_IR>>8)&0xf) << 1 );
     u_imm = (dec_IR & 0xfffff000);  ///< msb[31:12]
@@ -114,6 +126,7 @@ int s_j_imm;
     rs1x0 = (rs1idx==0);
     rs2x0 = (rs2idx==0);
     rdx0 = (rdidx==0);
+    csridx = i_imm;
     //
     s_i_imm = (i_imm > 0x7ff) ? i_imm - 4096 : i_imm ;
     s_s_imm = (s_imm >=(1<<11)) ? s_imm - (1<<12) : s_imm;
@@ -205,6 +218,16 @@ int s_j_imm;
         break;
     case OPCODE_SYSTEM:
         alusystem =1;
+        rs1en = !rs1x0 & (aluop_csrrw | aluop_csrrs | aluop_csrrc);
+        alu_opd1 = rs1en ? real_rs1v : rs1idx;
+        rden =!rdx0;
+        dec_csr_ren = (aluop_csrrw | aluop_csrrwi) & !rdx0;
+        dec_csr_wen =   aluop_csrrw | aluop_csrrwi |
+                    ((aluop_csrrs  | aluop_csrrc ) &  !rs1x0) |
+                    ((aluop_csrrsi | aluop_csrrci) &  !rs1x0) ;
+
+        alu_opd2 = real_csrv; //i_imm;  //csr address
+
         break;
     default:
         dec_ilg =1;
@@ -373,47 +396,109 @@ int s_j_imm;
             break;
        }
 
+    switch(func3)
+        {
+        //SYSTEM_BREAK    
+        case SYSTEM_ECALL:
+            aluop_ecall =(i_imm==0) & (rs1idx==0) & (rdidx==0) & alusystem;
+            aluop_break =(i_imm==1) & (rs1idx==0) & (rdidx==0) & alusystem;
+            aluop_mret = (i_imm==0x302) & (rs1idx==0) & (rdidx==0) & alusystem;
+            aluop_wfi = (i_imm==0x105) & (rs1idx==0) & (rdidx==0) & alusystem;
+            dec_ilg = dec_ilg | (alusystem & (!(aluop_ecall|aluop_break|aluop_mret|aluop_wfi))) ;
+            break;
+        case SYSTEM_CSRRW:
+            aluop_csrrw =alusystem;
+            aluop_csrw =alusystem;
+            break;
+         case SYSTEM_CSRRS:
+            aluop_csrrs =alusystem;
+            aluop_csrset =alusystem;
+            break;
+         case SYSTEM_CSRRC:
+            aluop_csrrc =alusystem;
+            aluop_csrclr =alusystem;
+            break;
+         case SYSTEM_CSRRWI:
+            aluop_csrrwi =alusystem;
+            aluop_csrw =alusystem;
+            break;
+         case SYSTEM_CSRRSI:
+            aluop_csrrsi =alusystem;
+            aluop_csrset =alusystem;
+            break;
+         case SYSTEM_CSRRCI:
+            aluop_csrrci =alusystem;
+            aluop_csrclr =alusystem;
+            break;
+         default:
+            dec_ilg = dec_ilg | alusystem;
+            break;
+       }
+
        if (dec_ilg){
-           printf("err\n");
+           printf("err dec_ilg\n");
        }
 
        //
+       dec_raw_exe_csr =   (dec_csr_wen_clked & (dec_csridx_clked==csridx && dec_csr_ren));
+       dec_raw_memwb_csr = (exe_csr_wen_clked & (exe_csridx_clked==csridx && dec_csr_ren));   //memwb
+
+
        dec_raw_exe_rs1 =   (dec_rden_clked & (dec_rdidx_clked==rs1idx && rs1en) );
        dec_raw_exe_rs2 =   (dec_rden_clked & (dec_rdidx_clked==rs2idx && rs2en) );
                                       
-       dec_raw_memwb_rs1 =     (memwb_valid & memwb_ready & (memwb_idx==rs1idx && rs1en));   //memwb
-       dec_raw_memwb_rs2 =     (memwb_valid & memwb_ready & (memwb_idx==rs2idx && rs2en));   //memwb
+       //dec_raw_memwb_rs1 =     (memwb_valid & memwb_ready & (memwb_idx==rs1idx && rs1en));   //memwb
+       //dec_raw_memwb_rs2 =     (memwb_valid & memwb_ready & (memwb_idx==rs2idx && rs2en));   //memwb
+       dec_raw_memwb_rs1 =     (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rs1idx && rs1en));   //regfile
+       dec_raw_memwb_rs2 =     (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rs2idx && rs2en));   //regfile
 
        //lif:long command flag rwaw(read/write-after-write) check      
        dec_rwaw_lif_rs1 =0; 
        dec_rwaw_lif_rs2 =0; 
        dec_rwaw_lif_rd =0; 
-       for (i=0;i<LIFSIZE;i++){
-            dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked[i]));
-            dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs2idx==lifrdidx_clked[i]));
-            dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked[i]));
-       }                        
+       //for (i=0;i<LIFSIZE;i++){
+       //     dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked[i]));
+       //     dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs2idx==lifrdidx_clked[i]));
+       //     dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked[i]));
+       //}                        
+       //div
+       dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (rs1en & (rs1idx==lif_divrdidx_clked));
+       dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_divrdidx_clked));
+       dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_divrdidx_clked));
+       //load
+       dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (rs1en & (rs1idx==lif_loadrdidx_clked));
+       dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_loadrdidx_clked));
+       dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_loadrdidx_clked));
 
        //long instuction command definition: take 2 or more clock cycles to complete
        //for now only div is long instuction command, 
        //MUL is optional , can take 1/2 or more cycles to complete depend on hardware implementation
-       dec_lif_cmd = aluop_div | aluop_divu | aluop_rem | aluop_remu |
-                     //aluload |
-                     (aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES>1)
-                     ;
-       dec_lif_id = aluop_div | aluop_divu | aluop_rem | aluop_remu ? DIVBUSID :
-                    aluload ? LSUBUSID :
-                    aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu ? MULBUSID : EXEBUSID;
+       //dec_lif_cmd = aluop_div | aluop_divu | aluop_rem | aluop_remu |
+       //              aluload |
+       //              (aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu) & (MUL_RSPVALID_CYCLES>1)
+       //              ;
+       //dec_lif_id = aluop_div | aluop_divu | aluop_rem | aluop_remu ? DIVBUSID :
+       //             aluload ? LSUBUSID :
+       //             aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu ? MULBUSID : EXEBUSID;
 
-       dec_stall = dec_rwaw_lif_rs1 | dec_rwaw_lif_rs2 | dec_rwaw_lif_rd  ? 1 :
+       
+
+       dec_stall =  (dec_rwaw_lif_rs1 & (!dec_raw_memwb_rs1)) | 
+                    (dec_rwaw_lif_rs2 & (!dec_raw_memwb_rs2)) | 
+                    dec_rwaw_lif_rd  ? 1 :
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
                      ((dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
-                  // dec_raw_memwb_rs1 | dec_raw_memwb_rs2 ? !memwb_valid :
-                                     (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
+                    0;
+                    //                 (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
+
+       real_csrv = !dec_csr_ren ? 0 :
+                    dec_raw_exe_csr  ? csr_res :
+                    dec_raw_memwb_csr ? exe_csr_res_clked : csrv;
 
        real_rs1v = !rs1en ? 0 :
                     dec_raw_exe_rs1 & (!dec_aluload_clked) ? exe_res :
-                    dec_raw_memwb_rs1 ? memwb_wdata : rs1v;
+                    dec_raw_memwb_rs1 ? regfileffs_wdat : rs1v;
+                    //dec_raw_memwb_rs1 ? memwb_wdata : rs1v;
 
        real_rs2v = !rs2en ? 0 :
                    dec_raw_exe_rs2 & (!dec_aluload_clked) ? exe_res :

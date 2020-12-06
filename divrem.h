@@ -22,6 +22,8 @@ REG32 q_clked;
 BIT divisor_signed_clked;
 BIT dividend_signed_clked;
 REG32 dividend_clked;
+  REG8 divregidx_clked;
+  BIT divrden_clked;
 
 //output
 REG8 inik;
@@ -35,9 +37,6 @@ REG32 dividend_undivsigned;
 BIT divsigned;
 BIT div0;
 BIT ovflow;
-BIT div_rsp_valid;
-BIT div_rsp_ready;
-REG32 div_rsp_rdata;
 BIT divorrem;
 BIT divisor_signed;
 BIT dividend_signed;
@@ -50,5 +49,8 @@ REG32 nxt_minued;
   REG32 quosigned;
   REG32 remres;
   REG32 quores;
+
+  REG8 divregidx;
+  BIT divrden;
 
 #endif //DIVREM_H

@@ -13,6 +13,9 @@ void fetch_clked()
 
     ifu2mem_cmd_adr_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? ifu2mem_cmd_adr : ifu2mem_cmd_adr_clked;
 
+    //use for mtval
+    fetchIR16_clked = fet_ir16 ? memIR16 : fetchIR16_clked;
+
     fetpc_clked = pc;
     fetchIR_clked = fetchIR;
     memIR_hi16_clked = memIR_hi16;

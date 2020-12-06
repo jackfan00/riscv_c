@@ -5,7 +5,7 @@
 #include "execu.h"
 #include "memwb.h"
 #include "opcode_define.h"
-#include "peri_write_coderam.h"
+#include "ext_write_coderam.h"
 
 //REG32 toir32 (REG16 ir16)
 //{
@@ -109,7 +109,7 @@ void fetch()
     //
 
     fetch_stall=0;
-    codebus_connect();
+    //codebus_connect();
 
     //instruction from code-ram
     ifu2mem_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);

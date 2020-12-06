@@ -4,10 +4,10 @@
 #include "reg.h"
 #include "fetch.h"
 #include "opcode_define.h"
-#include "codebus.h"
+//#include "codebus.h"
 #include "decode.h"
 #include "execu.h"
-#include "peri_write_coderam.h"
+#include "ext_write_coderam.h"
 
 void debug_cpuinfo(){
     int i;
@@ -32,7 +32,7 @@ void setup()
     //init_rom();
     //
     //rspid_fifo_wadr_clked = RSPFIFOSIZE-1;
-    code_rspid_fifo_empty_clked =1;
+    //code_rspid_fifo_empty_clked =1;
     fetchIR_clked = NOP;
     fetpc_clked = 0x12345678;  //ensure different address from BOOTADDR
     fetch_flush =0;
@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
         //for settle down the combination signal
         for (i=0;i<15;i++){
 
-            peri_write_coderam();
+            ext_write_coderam();
 
             fetch();
 
@@ -88,6 +88,23 @@ int main(int argc, char *argv[])
 
             memwb();  // memory access and write-back at the same stage
 
+            ifubussplit();
+            lsubussplit();
+            biumerge();
+            biubussplit();
+            plic();
+            clint();
+            itcmmerge();
+            itcm();
+            dtcmmerge();
+            dtcm();
+            regfilemerge();
+            regfile();
+            csrreg();
+
+
+
+            /*
             regwbus();
 
             codebus();
@@ -99,6 +116,7 @@ int main(int argc, char *argv[])
             rs1bus();
 
             rs2bus();
+            */
 
         }
 
@@ -118,21 +136,35 @@ int main(int argc, char *argv[])
 
        // memwb_clked();
        // order is important
-        regwbus_clked();
+       // regwbus_clked();
+        regfile_clked();
+        csrreg_clked();
         execu_clked();
         decode_clked();
         fetch_clked();
 //
        //order is not important
-        codebus_clked();
-        databus_clked();
-        memwb_bus_clked();
+       // codebus_clked();
+       // databus_clked();
+       // memwb_bus_clked();
         mul_clked();
         divrem_clked();
         lif_clked();
 
+        ifubussplit_clked();
+        lsubussplit_clked();
+        biumerge_clked();
+        biubussplit_clked();
+        plic_clked();
+        clint_clked();
+        itcmmerge_clked();
+        itcm_clked();
+        dtcmmerge_clked();
+        dtcm_clked();
+        regfilemerge_clked();
+
         //
-        peri_write_coderam_clked();
+        ext_write_coderam_clked();
         
         //
         clockcnt++;
@@ -143,7 +175,8 @@ int main(int argc, char *argv[])
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        if (clockcnt >= 0x62f) return(1);
+        //if (clockcnt >= 0x62f) return(1);
+        if (clockcnt >= 0x100) return(1);
 
     }
 

@@ -7,6 +7,7 @@
 REG32 dec_rs2v_clked;
 REG32 rs1v;
 REG32 rs2v;
+REG32 csrv;
 BIT   rs1en_ack;
 BIT   rs2en_ack;
 REG32 decpc_clked;
@@ -62,17 +63,27 @@ BIT   dec_aluop_div_clked;
 BIT   dec_aluop_divu_clked;
 BIT   dec_aluop_rem_clked;
 BIT   dec_aluop_remu_clked;
-
+BIT   dec_aluop_csrset_clked;
+BIT   dec_aluop_csrclr_clked;
+BIT   dec_aluop_ecall_clked;
+BIT   dec_aluop_break_clked;
+BIT   dec_aluop_csrw_clked;
+BIT   dec_csr_wen_clked;
+BIT   dec_csr_ren_clked;
+REG16 dec_csridx_clked;
 BIT   dec_ras_push_clked;
 BIT   dec_predict_jmp_clked;
 //BIT   dec_branch_pdict_fail_pc_clked;
 REG32 cti_pc_clked;
 BIT dec_jalr_pdict_fail_clked;
 BIT dec_mulh_fuse_clked;
+REG32 dec_IR_clked;
+BIT dec_aluop_mret_clked;
 
 //output
 REG32 real_rs1v;
 REG32 real_rs2v;
+REG32 real_csrv;
 REG8 depfifo_wadr_clked;
 REG32 alu_opd1;
 REG32 alu_opd2;
@@ -130,6 +141,24 @@ BIT dec_lif_cmd;
 REG8 dec_lif_id;
 BIT dec_stall;
 BIT dec_ras_push;
+BIT aluop_csrrw;
+BIT aluop_csrrs;
+BIT aluop_csrrc;
+BIT aluop_csrrwi;
+BIT aluop_csrrsi;
+BIT aluop_csrrci;
+BIT aluop_csrw;
+BIT aluop_csrset;
+BIT aluop_csrclr;
+BIT aluop_ecall;
+BIT aluop_break;
+BIT dec_csr_ren;
+BIT dec_csr_wen;
+REG16 csridx;
+BIT aluop_mret;
+BIT aluop_wfi;
+BIT dec_flush;
+
 //BIT dec_branch_pdict_fail_pc;
 REG32 cti_pc;
 BIT dec_jalr_pdict_fail;
@@ -141,5 +170,7 @@ BIT dec_rwaw_lif_rs2;
 BIT dec_rwaw_lif_rd;
 BIT dec_raw_memwb_rs1;
 BIT dec_raw_memwb_rs2;
+BIT dec_raw_exe_csr;
+BIT dec_raw_memwb_csr;
 
 #endif // DECODE_H

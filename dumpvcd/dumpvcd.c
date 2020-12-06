@@ -2,7 +2,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MAXVARSIZE 1000
+#define MAXVARSIZE 2000
 #define DEFINESIZE 100
 
 int varindex;
@@ -79,7 +79,7 @@ void initdefinevar(char * ff)
     {
         char * strp = strdup(trimwhitespace(str));
         token1s = strsep(&strp, "//");
-        if (*token1s==NULL)
+        if ((*token1s)==NULL)
             continue;
         //
         token2s = strsep(&token1s, " ");
@@ -221,16 +221,29 @@ void dumpcmdfile()
     fprintf(dc, "#include \"decode.h\"\n");
     fprintf(dc, "#include \"execu.h\"\n");
     fprintf(dc, "#include \"memwb.h\"\n");
-    fprintf(dc, "#include \"regbus.h\"\n");
-    fprintf(dc, "#include \"codebus.h\"\n");
-    fprintf(dc, "#include \"databus.h\"\n");
-    fprintf(dc, "#include \"memwb_bus.h\"\n");
+    //fprintf(dc, "#include \"regbus.h\"\n");
+    //fprintf(dc, "#include \"codebus.h\"\n");
+    //fprintf(dc, "#include \"databus.h\"\n");
+    //fprintf(dc, "#include \"memwb_bus.h\"\n");
     fprintf(dc, "#include \"mul.h\"\n");
     fprintf(dc, "#include \"divrem.h\"\n");
     fprintf(dc, "#include \"lif.h\"\n");
     fprintf(dc, "#include \"dumpvars.h\"\n");
     fprintf(dc, "#include \"rv16torv32.h\"\n");
-    fprintf(dc, "#include \"peri_write_coderam.h\"\n");
+    fprintf(dc, "#include \"ext_write_coderam.h\"\n");
+    fprintf(dc, "#include \"lsubussplit.h\"\n");
+    fprintf(dc, "#include \"ifubussplit.h\"\n");
+    fprintf(dc, "#include \"biubussplit.h\"\n");
+    fprintf(dc, "#include \"biumerge.h\"\n");
+    fprintf(dc, "#include \"itcmmerge.h\"\n");
+    fprintf(dc, "#include \"dtcmmerge.h\"\n");
+    fprintf(dc, "#include \"regfilemerge.h\"\n");
+    fprintf(dc, "#include \"clint.h\"\n");
+    fprintf(dc, "#include \"plic.h\"\n");
+    fprintf(dc, "#include \"itcm.h\"\n");
+    fprintf(dc, "#include \"dtcm.h\"\n");
+    fprintf(dc, "#include \"regfile.h\"\n");
+    fprintf(dc, "#include \"csrreg.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -272,15 +285,28 @@ int main()
     parsevars("../decode.h");
     parsevars("../execu.h");
     parsevars("../memwb.h");
-    parsevars("../regbus.h");
-    parsevars("../codebus.h");
-    parsevars("../databus.h");
-    parsevars("../memwb_bus.h");
+    //parsevars("../regbus.h");
+    //parsevars("../codebus.h");
+    //parsevars("../databus.h");
+    //parsevars("../memwb_bus.h");
     parsevars("../mul.h");
     parsevars("../divrem.h");
     parsevars("../lif.h");
     parsevars("../rv16torv32.h");
-    parsevars("../peri_write_coderam.h");
+    parsevars("../ext_write_coderam.h");
+    parsevars("../lsubussplit.h");
+    parsevars("../ifubussplit.h");
+    parsevars("../biubussplit.h");
+    parsevars("../biumerge.h");
+    parsevars("../itcmmerge.h");
+    parsevars("../dtcmmerge.h");
+    parsevars("../regfilemerge.h");
+    parsevars("../clint.h");
+    parsevars("../plic.h");
+    parsevars("../itcm.h");
+    parsevars("../dtcm.h");
+    parsevars("../regfile.h");
+    parsevars("../csrreg.h");
     //
     dumpcmdfile();
 

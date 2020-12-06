@@ -1,6 +1,9 @@
 #include "execu.h"
 #include "decode.h"
 #include "mul.h"
+#include "lsubussplit.h"
+#include "lif.h"
+#include "regfilemerge.h"
 
 void execu()
 {
@@ -18,6 +21,12 @@ void execu()
     REG32 sll_res;
     REG32 srl_res;
     REG32 sra_res;
+    REG32 set_res;
+    REG32 clr_res;
+    REG32 csrw_res;
+    BIT dtcmsel;
+    BIT plicsel;
+
 
     int tmp1, tmp2;
 
@@ -42,6 +51,11 @@ void execu()
 
     or_res = dec_alu_opd1_clked | dec_alu_opd2_clked;
     and_res = dec_alu_opd1_clked & dec_alu_opd2_clked;
+
+    set_res = or_res;
+    clr_res = and_res;
+    csrw_res = dec_alu_opd1_clked;
+
 
     // should merge to shift-left in hardware to reduce cost
     shamt = dec_alu_opd2_clked & 0x1f;
@@ -68,20 +82,52 @@ void execu()
               (dec_aluop_blt_clked | dec_aluop_bltu_clked) ? slt_res :
               (dec_aluop_bge_clked | dec_aluop_bgeu_clked) ? !slt_res : 
               //(mul_cmd_valid & (MUL_RSPVALID_CYCLES==0)) ? mulres :   //single cycle multiple hardware
+
+              //csr operation, for ecall and breakcase , rden will be 0
+              //dec_alu_opd2_clked is put old csrvalue, write to rd
+              dec_alusystem_clked ? dec_alu_opd2_clked :  
+              0;
+
+    csr_res = dec_aluop_csrset_clked ? set_res :
+              dec_aluop_csrclr_clked ? clr_res :
+              dec_aluop_csrw_clked   ? csrw_res : 
               0;
 
     //LSU generation
-    lsu2mem_cmd_valid = (dec_aluload_clked | dec_alustore_clked); // & exe_res_valid & (!lsu_misaligned); 
-    lsu2mem_cmd_read = dec_aluload_clked;
-    lsu2mem_cmd_adr = exe_res;
-    lsu2mem_cmd_wdata = dec_rs2v_clked;
-    lsu2mem_cmd_rwbyte = dec_aluop_lw_clked | dec_aluop_sw_clked ? 0xf :
+    //normal itcm/dtcm load will not have lif_loadfull condition
+    //only may happen at BIU bus target peripheral/flash access
+    lsu_cmd_valid = (dec_aluload_clked& (!lif_loadfull)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
+    lsu_cmd_read = dec_aluload_clked;
+    lsu_cmd_adr = exe_res;
+    lsu_cmd_data = dec_rs2v_clked;
+    lsu_cmd_rwbyte = dec_aluop_lw_clked | dec_aluop_sw_clked ? 0xf :
                          dec_aluop_lh_clked | dec_aluop_lhu_clked | dec_aluop_sh_clked ? 0x3 : 0x1;
 
-    // continue load command will stall
-    lsu_stall = lsu2mem_cmd_valid & (!lsu2mem_cmd_ready);        
-    lsu_misaligned = (dec_aluload_clked | dec_alustore_clked) & (
-                     (((lsu2mem_cmd_adr&0x03)!=0) & lsu2mem_cmd_rwbyte==0xf) | (((lsu2mem_cmd_adr&0x03)==3) & lsu2mem_cmd_rwbyte!=0x1)
+    //
+    //when lsu load command, the rsp will be sent to regfile
+    //so rsp_ready is from lsu2regfile_cmd_ready
+    lsu_rsp_ready = !lsu_cmd_read ? 1 :
+                    lsu2regfile_cmd_ready ;                     
+    //additional info , use for rsp write to regfile, 
+    //need busfifo (lsubussplit) store these info
+    lsu_cmd_regidx =  dec_rdidx_clked;  
+    lsu_cmd_rden = dec_aluload_clked;
+    //
+    //lsu2regfile 
+    lsu2regfile_cmd_valid = lsu_rsp_valid & lsu_rsp_rden;
+    lsu2regfile_cmd_read = 0;
+    lsu2regfile_cmd_adr = lsu_rsp_regidx;
+    lsu2regfile_cmd_data = lsu_rsp_rdata;
+    lsu2regfile_cmd_rwbyte = 0xf;
+    lsu2regfile_rsp_ready = 1;
+
+    //
+    lsu_stall = lsu_cmd_valid & (!lsu_cmd_ready);        
+    lsu_load_misaligned = (dec_aluload_clked ) & (
+                     (((lsu_cmd_adr&0x03)!=0) & lsu_cmd_rwbyte==0xf) | (((lsu_cmd_adr&0x03)==3) & lsu_cmd_rwbyte!=0x1)
+                    );
+    lsu_store_misaligned = ( dec_alustore_clked) & (
+                     (((lsu_cmd_adr&0x03)!=0) & lsu_cmd_rwbyte==0xf) | (((lsu_cmd_adr&0x03)==3) & lsu_cmd_rwbyte!=0x1)
                     );
 
     //branch/jalr judgement                
@@ -103,11 +149,51 @@ void execu()
     mul_cmd_opmode = dec_aluop_mul_clked + (dec_aluop_mulh_clked<<1) + (dec_aluop_mulhsu_clked<<2)+(dec_aluop_mulhu_clked<<3);
     mul_stall = mul_cmd_valid & (!mul_cmd_ready);
 
+    mul_rsp_ready = mul2regfile_cmd_ready ;                     
+    //mul2regfile 
+    //mul dedicate for execu, no others use it
+    //and produce result at fixed 2 cycles
+    mul_cmd_regidx =  exe_rdidx_clked;  
+    mul_cmd_rden = exe_rden_clked;
+    //
+    mul2regfile_cmd_valid = mul_rsp_valid & mul_rsp_rden;
+    mul2regfile_cmd_read = 0;
+    mul2regfile_cmd_adr = mul_rsp_regidx;
+    mul2regfile_cmd_data = mul_rsp_rdata;
+    mul2regfile_cmd_rwbyte = 0xf;
+    mul2regfile_rsp_ready = 1;
+
+
     div_cmd_valid = dec_aluop_div_clked | dec_aluop_divu_clked | dec_aluop_rem_clked | dec_aluop_remu_clked;
     div_cmd_opd1 = dec_alu_opd1_clked;
     div_cmd_opd2 = dec_alu_opd2_clked;
     div_cmd_opmode = dec_aluop_div_clked + (dec_aluop_divu_clked<<1) + (dec_aluop_rem_clked<<2)+(dec_aluop_remu_clked<<3);
     div_stall = div_cmd_valid & (!div_cmd_ready);
+
+    div_rsp_ready = div2regfile_cmd_ready ;                     
+    //need to store these info for futher use
+    //because div cycle is not fixed and may longer than 2 
+    div_cmd_regidx = dec_rdidx_clked;  
+    div_cmd_rden   = dec_rden_clked;
+    //
+    //div2regfile 
+    div2regfile_cmd_valid = div_rsp_valid & div_rsp_rden;
+    div2regfile_cmd_read = 0;
+    div2regfile_cmd_adr =  div_rsp_regidx;
+    div2regfile_cmd_data = div_rsp_rdata;
+    div2regfile_cmd_rwbyte = 0xf;
+    div2regfile_rsp_ready = 1;
+
+    //lif: long instrution flag
+    //write to lif after commit load-command
+    lif_loadrdidx = lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? dec_rdidx_clked :
+                      regfile_wrload ?  0 : lif_loadrdidx_clked;
+
+    lif_divrdidx = div_cmd_valid & div_cmd_ready ? dec_rdidx_clked : 
+                      regfile_wrdiv ?  0 : lif_divrdidx_clked;
+    //lif already contain value
+    //div no need to do lif_divfull condition, because only 1 div target                  
+    lif_loadfull = (lif_loadrdidx_clked!=0) & (!regfile_wrload) ;
 
     exe_stall = mul_stall | div_stall | lsu_stall;
     

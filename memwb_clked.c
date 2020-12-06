@@ -1,4 +1,0 @@
-void memwb_clked()
-{
-
-}

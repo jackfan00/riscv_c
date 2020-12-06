@@ -1,13 +1,14 @@
 #include "lif.h"
 #include "decode.h"
-#include "regbus.h"
-#include "memwb_bus.h"
+//#include "regbus.h"
+//#include "memwb_bus.h"
 
 //long instruction flag, same pipeline position as execu/decode_clked
 // lif_id: 0:div, 1:lsu, 2:mul
 //
 void lif_clked()
 {
+    /*******************
     int i;
     REG8 tmp;
 
@@ -43,6 +44,9 @@ void lif_clked()
     //    lifvalid_clked[dec_lif_id]= 1;
     //    lifrdidx_clked[dec_lif_id]= rdidx;
     //}
+    */
 
+    lif_divrdidx_clked = lif_divrdidx;
+    lif_loadrdidx_clked = lif_loadrdidx;
 
 }

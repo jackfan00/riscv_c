@@ -21,6 +21,7 @@ BIT fet_ir16_clked;
 BIT firstinst_clked;
 REG8 remain_ir16s_clked;
 REG32 ifu2mem_cmd_adr_clked;
+REG16 fetchIR16_clked;
 
 //output
 BIT ifu2mem_rsp_ready;

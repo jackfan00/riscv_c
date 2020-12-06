@@ -49,12 +49,12 @@ if ((!exe_stall) && (!memwb_stall)){
  dec_alubranch_clked  = alubranch & (!dec_stall);
  dec_alumiscmem_clked = alumiscmem  & (!dec_stall);
  dec_alusystem_clked  = alusystem  & (!dec_stall);
- dec_aluop_beq_clked  = aluop_beq;
- dec_aluop_bne_clked  = aluop_bne;
- dec_aluop_blt_clked  = aluop_blt;
- dec_aluop_bge_clked  = aluop_bge;
- dec_aluop_bltu_clked = aluop_bltu;
- dec_aluop_bgeu_clked = aluop_bgeu;
+ dec_aluop_beq_clked  = aluop_beq  & (!dec_stall);
+ dec_aluop_bne_clked  = aluop_bne  & (!dec_stall);
+ dec_aluop_blt_clked  = aluop_blt  & (!dec_stall);
+ dec_aluop_bge_clked  = aluop_bge  & (!dec_stall);
+ dec_aluop_bltu_clked = aluop_bltu & (!dec_stall);
+ dec_aluop_bgeu_clked = aluop_bgeu & (!dec_stall);
  dec_aluop_lb_clked   = aluop_lb  & (!dec_stall);
  dec_aluop_lh_clked   = aluop_lh  & (!dec_stall);
  dec_aluop_lw_clked   = aluop_lw  & (!dec_stall);
@@ -71,11 +71,22 @@ if ((!exe_stall) && (!memwb_stall)){
  dec_aluop_divu_clked   = aluop_divu  & (!dec_stall);
  dec_aluop_rem_clked   = aluop_rem  & (!dec_stall);
  dec_aluop_remu_clked   = aluop_remu  & (!dec_stall);
+ dec_aluop_csrset_clked = aluop_csrset & (!dec_stall);
+ dec_aluop_csrclr_clked = aluop_csrclr & (!dec_stall);
+ dec_aluop_ecall_clked = aluop_ecall & (!dec_stall);
+ dec_aluop_break_clked = aluop_break & (!dec_stall);
+ dec_aluop_csrw_clked = aluop_csrw & (!dec_stall);
+ dec_csr_wen_clked = dec_csr_wen & (!dec_stall);
+ dec_csr_ren_clked = dec_csr_ren & (!dec_stall);
+ dec_csridx_clked = csridx;
  dec_ras_push_clked   = dec_ras_push  & (!dec_stall);
  dec_predict_jmp_clked = fet_predict_jmp_clked;
  cti_pc_clked          = cti_pc;
  dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail & (!dec_stall);
  dec_mulh_fuse_clked = dec_mulh_fuse  & (!dec_stall);
+ dec_aluop_mret_clked = aluop_mret  & (!dec_stall);
+ //use for mtval
+ dec_IR_clked = fet_ir16_clked ? fetchIR16_clked & (!dec_stall) : fetchIR_clked & (!dec_stall) ;
 
 }
 

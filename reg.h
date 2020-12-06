@@ -18,14 +18,19 @@ typedef unsigned char BIT;
 #define PLIC_ADDR_BASE   0x0C000000
 #define FIO_ADDR_BASE    0xf0000000
 
+#define PLIC_INTNUMBER  32
+#define PLIC_INTNUMBER_REG32  1  // PLIC_INTNUMBER>>5
 
 
 //#define DEPFIFOSIZE 4
 #define RSPFIFOSIZE 2  //only support 2
-#define CODEARBIT_NUM 4
-#define DATAARBIT_NUM 4
-#define WBARBIT_NUM 4
-#define REGARBIT_NUM 2
+#define CODEARBIT_NUM 4  //ifu(r), lsu(rw), debug(rw), downloadcode(rw)
+#define DATAARBIT_NUM 4  //lsu(rw), debug(rw), downloadcode(rw)
+#define WBARBIT_NUM 4   //lsu, div, mul, execu, debug
+
+//regfile write: only memwb, read:only decode
+#define REGARBIT_NUM 2  //memwb
+
 #define MAXCODESIZE 65536
 #define BOOTADDR ITCM_ADDR_BASE
 #define RASDEPTH 8
@@ -43,11 +48,26 @@ typedef unsigned char BIT;
 #define MUL_RSPVALID_CYCLES 1
 
 
+#define BIUSPLITTARGETNUM 5
+#define BIUSPLIFIFODEPTH 3
+#define BIUMERGEFIFODEPTH 3
+#define DTCMMERGEFIFODEPTH 3
+#define IFUSPLITTARGETNUM 2
+#define IFUSPLIFIFODEPTH 3
+#define ITCMMERGEFIFODEPTH 3
+#define LSUSPLITTARGETNUM 3
+#define LSUSPLIFIFODEPTH 3
+#define ITCMMERGEFIFODEPTH 3
+
+
 REG8 code_rspid_fifo[RSPFIFOSIZE];
 REG8 data_rspid_fifo[RSPFIFOSIZE];
 REG32 clockcnt;
 REG32 coderam[MAXCODESIZE];
-REG8 dataram0[MAXCODESIZE], dataram1[MAXCODESIZE], dataram2[MAXCODESIZE], dataram3[MAXCODESIZE];
+REG8 dataram0[MAXCODESIZE];
+REG8 dataram1[MAXCODESIZE];
+REG8 dataram2[MAXCODESIZE];
+REG8 dataram3[MAXCODESIZE];
 //REG8 depfifo[DEPFIFOSIZE];
 //BIT depfifo_fg[DEPFIFOSIZE];
 REG32 regsarray[32];

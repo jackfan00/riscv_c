@@ -8,8 +8,11 @@ void divrem()
   REG32 divisor;
   BIT result_signed;
   
+  divregidx = div_cmd_valid & div_cmd_ready ? div_cmd_regidx : divregidx_clked;
+  divrden   = div_cmd_valid & div_cmd_ready ? div_cmd_rden   : divrden_clked;
 
   if (div_cmd_valid & div_cmd_ready){
+    //
     //
     divsigned = (div_cmd_opmode==1) | (div_cmd_opmode==4);  //div/rem
     dividend = div_cmd_opd1;
@@ -193,12 +196,18 @@ quores = div0_clked   ? 0xffffffff :
 if (div_end_p_clked){
   div_rsp_valid = 1;
   div_rsp_rdata = divorrem_clked ? quores : remres;
+  div_rsp_regidx = divregidx_clked;
+  div_rsp_rden = divrden_clked;
 }
 else{
   div_rsp_valid = 0;
+  div_rsp_rdata = 0;
+  div_rsp_regidx = 0;
+  div_rsp_rden = 0;
 }
 
- div_cmd_ready = !diven_clked | (div_rsp_valid&div_rsp_ready);
+//different from mul/sram, it need more than 1 cycle to finish task
+div_cmd_ready = !diven_clked | (div_rsp_valid&div_rsp_ready);
 
 
 }
