@@ -20,26 +20,26 @@ void arbitor2(BIT i_valid0, BIT i_valid1, BIT i_link0pri,
 void biumerge()
 {
     REG8 nxtwrapped_biumergeFIFO_widx;
-    BIT *oifupri_p;
-    BIT *o_cmd_valid_p;
+    BIT oifupri_p;
+    BIT o_cmd_valid_p;
 
     //ifu/lsu roundrobin
     //ifupri_clked : current ifu2biu_cmd_valid priority, 1:high, 0:low
     //oifupri_p : after arbitor, next time ifu2biu_cmd_valid priority
-    arbitor2(ifu2biu_cmd_valid, lsu2biu_cmd_valid, biumerge_ifupri_clked, oifupri_p, o_cmd_valid_p);
-    biumerge_o_cmd_valid = (*o_cmd_valid_p) & (!biumergeFIFOfull);
-    biumerge_o_cmd_read = (biumerge_o_cmd_valid) ? ((*oifupri_p) ? lsu2biu_cmd_read : ifu2biu_cmd_read) : 0;
-    biumerge_o_cmd_adr  = (biumerge_o_cmd_valid) ? ((*oifupri_p) ? lsu2biu_cmd_adr  : ifu2biu_cmd_adr ) : 0;
-    biumerge_o_cmd_data = (biumerge_o_cmd_valid) ? ((*oifupri_p) ? lsu2biu_cmd_data : ifu2biu_cmd_data) : 0;
-    biumerge_o_cmd_rwbyte = (biumerge_o_cmd_valid) ? ((*oifupri_p) ? lsu2biu_cmd_rwbyte : ifu2biu_cmd_rwbyte) : 0;
+    arbitor2(ifu2biu_cmd_valid, lsu2biu_cmd_valid, biumerge_ifupri_clked, &oifupri_p, &o_cmd_valid_p);
+    biumerge_o_cmd_valid = (o_cmd_valid_p) & (!biumergeFIFOfull);
+    biumerge_o_cmd_read = (biumerge_o_cmd_valid) ? ((oifupri_p) ? lsu2biu_cmd_read : ifu2biu_cmd_read) : 0;
+    biumerge_o_cmd_adr  = (biumerge_o_cmd_valid) ? ((oifupri_p) ? lsu2biu_cmd_adr  : ifu2biu_cmd_adr ) : 0;
+    biumerge_o_cmd_data = (biumerge_o_cmd_valid) ? ((oifupri_p) ? lsu2biu_cmd_data : ifu2biu_cmd_data) : 0;
+    biumerge_o_cmd_rwbyte = (biumerge_o_cmd_valid) ? ((oifupri_p) ? lsu2biu_cmd_rwbyte : ifu2biu_cmd_rwbyte) : 0;
 
-    //*oifupri_p=0, select ifu, otherwise select lsu
-    ifu2biu_cmd_ready = (!(*oifupri_p)) & biumerge_o_cmd_ready;
-    lsu2biu_cmd_ready = (*oifupri_p) & biumerge_o_cmd_ready;
+    //oifupri_p=0, select ifu, otherwise select lsu
+    ifu2biu_cmd_ready = (!(oifupri_p)) & biumerge_o_cmd_ready;
+    lsu2biu_cmd_ready = (oifupri_p) & biumerge_o_cmd_ready;
 
     //wid: 0:ifu, 1:lsu
     biumergeFIFO_wen = ((biumerge_o_cmd_valid) & biumerge_o_cmd_ready);
-    biumerge_ifupri = biumergeFIFO_wen ? *oifupri_p : biumerge_ifupri_clked;
+    biumerge_ifupri = biumergeFIFO_wen ? oifupri_p : biumerge_ifupri_clked;
     biumergeFIFO_wid = biumerge_ifupri ? 1 : 0;
     biumergeFIFO = biumergeFIFO_wen ? biumergeFIFO_wid : biumergeFIFO_clked[biumergeFIFO_widx_clked];
     nxtwrapped_biumergeFIFO_widx = ((biumergeFIFO_widx_clked==(BIUMERGEFIFODEPTH-1)) ? 0 :  biumergeFIFO_widx_clked+1);

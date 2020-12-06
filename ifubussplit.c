@@ -1,4 +1,5 @@
 #include "ifubussplit.h"
+#include "fetch.h"
 
 void ifubussplit()
 {
@@ -9,9 +10,22 @@ void ifubussplit()
     ifusplit_TARGETBASE[0] = 0x80; //itcm
     //ifusplit_TARGETBASE[1] = 0x90; //dtcm
 
+    //ifu come from fetch
+    ifusplit_i_bus_cmd_valid = ifu_cmd_valid;
+    ifu_cmd_ready = ifusplit_i_bus_cmd_ready;
+    ifusplit_i_bus_cmd_read = ifu_cmd_read;
+    ifusplit_i_bus_cmd_adr = ifu_cmd_adr;
+    ifusplit_i_bus_cmd_data = 0; //ifu_cmd_data;
+    ifusplit_i_bus_cmd_rwbyte = ifu_cmd_rwbyte;
+    ifu_rsp_valid = ifusplit_i_bus_rsp_valid;
+    ifu_rsp_rdata = ifusplit_i_bus_rsp_rdata;
+    ifusplit_i_bus_rsp_ready = ifu_rsp_ready;
+    //ifu_rsp_rden = ifusplit_i_bus_rsp_rden;
+    //ifu_rsp_regidx = ifusplit_i_bus_rsp_regidx;
+
     //
     //dont accept command if fifo is full
-    real_ifusplit_i_bus_cmd_valid = !ifutransacFIFOfull & ifusplit_i_bus_cmd_valid;
+    real_ifusplit_i_bus_cmd_valid = (!ifutransacFIFOfull) & ifusplit_i_bus_cmd_valid;
     //find matching base address except last ifusplit_o_bus_cmd_valid
     for (i=0;i<IFUSPLITTARGETNUM-1;i++)
     {
@@ -29,7 +43,7 @@ void ifubussplit()
         ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] = ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1]|ifusplit_o_bus_cmd_valid[i];
     }
     //if all previous index dont match, last one target is selected
-    ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] = !ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1];
+    ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] = (!ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1]) & real_ifusplit_i_bus_cmd_valid;
     ifusplit_o_bus_cmd_read[IFUSPLITTARGETNUM-1] = ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] ? ifusplit_i_bus_cmd_read : 0;
     ifusplit_o_bus_cmd_adr[IFUSPLITTARGETNUM-1]  = ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] ? ifusplit_i_bus_cmd_adr : 0;
     ifusplit_o_bus_cmd_data[IFUSPLITTARGETNUM-1] = ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] ? ifusplit_i_bus_cmd_data : 0;

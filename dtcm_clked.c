@@ -3,6 +3,7 @@
 void dtcm_clked()
 {
     REG32 adr;
+    REG32 tmpradr;
     REG32 rdat0;
     REG32 rdat1;
     REG32 rdat2;
@@ -12,7 +13,6 @@ void dtcm_clked()
     REG32 wdat2;
     REG32 wdat3;
     REG32 adr01;
-    REG32 dtcmRAM_rdat;
 
     //
     adr = (dtcmRAM_adr & 0x00ffffff);
@@ -43,20 +43,24 @@ void dtcm_clked()
                                          dtcmRAM_bmask==0x03 ? rdat3+rdat2+(wdat1<<8)+wdat0 : 
                                          dtcmRAM_wdat) ;                          
 
-            dataram0[adr] =   dtcmRAM_wdat & 0x0ff  ;
-            dataram1[adr] =   (dtcmRAM_wdat>>8) & 0x0ff   ;
-            dataram2[adr] =   (dtcmRAM_wdat>>16) & 0x0ff   ;
-            dataram3[adr] =   (dtcmRAM_wdat>>24) & 0x0ff   ;
+            dtcmRAM0[adr] =   dtcmRAM_wdat & 0x0ff  ;
+            dtcmRAM1[adr] =   (dtcmRAM_wdat>>8) & 0x0ff   ;
+            dtcmRAM2[adr] =   (dtcmRAM_wdat>>16) & 0x0ff   ;
+            dtcmRAM3[adr] =   (dtcmRAM_wdat>>24) & 0x0ff   ;
         }
-        else{
-            dtcmRAM_rdat = (adr01==1) ? dtcmRAM_rdat>>8 :
-                           (adr01==2) ? dtcmRAM_rdat>>16 :
-                           (adr01==3) ? dtcmRAM_rdat>>24 : dtcmRAM_rdat;
-        }
+        //else{
+        //    dtcmRAM_rdat = (adr01==1) ? dtcmRAM_rdat>>8 :
+        //                   (adr01==2) ? dtcmRAM_rdat>>16 :
+        //                   (adr01==3) ? dtcmRAM_rdat>>24 : dtcmRAM_rdat;
+        //}
 
     }
 
+
+    dtcmRAM_csadr_clked = dtcmRAM_cs ? dtcmRAM_adr : dtcmRAM_csadr_clked;
     dtcmRAM_read_clked = dtcmRAM_read;
 
+    tmpradr = dtcmRAM_csadr_clked>>2;
+    dtcmRAM_rdat = (dtcmRAM3[tmpradr]<<24) | (dtcmRAM2[tmpradr]<<16) | (dtcmRAM1[tmpradr]<<8) | dtcmRAM0[tmpradr];
 
 }

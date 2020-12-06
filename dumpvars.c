@@ -48,7 +48,8 @@ void fprintfb(FILE *fp, char * str, unsigned int varvalue)
     tmp[0]=tmp[3];
     tmp[1]=tmp[4];
     tmp[2]=tmp[5];
-    tmp[3]='\0';
+    tmp[3]=tmp[6];
+    tmp[4]='\0';
     fprintf(fp, "%s\n", tmp);
 
 }

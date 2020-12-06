@@ -33,7 +33,7 @@ BIT mstatusmie;
 BIT mstatusmpie;
 REG32 mie;
 REG32 csr_rdata;
-BIT mip;
+REG32 mip;
 REG32 mcycle;
 REG32 mcycleh;
 REG32 minstret;

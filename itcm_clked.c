@@ -3,6 +3,7 @@
 void itcm_clked()
 {
     REG32 adr;
+    REG32 tmpradr;
     REG32 rdat0;
     REG32 rdat1;
     REG32 rdat2;
@@ -12,7 +13,6 @@ void itcm_clked()
     REG32 wdat2;
     REG32 wdat3;
     REG32 adr01;
-    REG32 itcmRAM_rdat;
 
     //
     adr = (itcmRAM_adr & 0x00ffffff);
@@ -22,7 +22,6 @@ void itcm_clked()
     rdat1 = itcmRAM1[adr]<<8;
     rdat2 = itcmRAM2[adr]<<16;
     rdat3 = itcmRAM3[adr]<<24;
-    itcmRAM_rdat = rdat0 + rdat1 + rdat2 + rdat3;
 
     if (itcmRAM_cs){
         if (itcmRAM_wr){
@@ -43,20 +42,24 @@ void itcm_clked()
                                          itcmRAM_bmask==0x03 ? rdat3+rdat2+(wdat1<<8)+wdat0 : 
                                          itcmRAM_wdat) ;                          
 
-            dataram0[adr] =   itcmRAM_wdat & 0x0ff  ;
-            dataram1[adr] =   (itcmRAM_wdat>>8) & 0x0ff   ;
-            dataram2[adr] =   (itcmRAM_wdat>>16) & 0x0ff   ;
-            dataram3[adr] =   (itcmRAM_wdat>>24) & 0x0ff   ;
+            itcmRAM0[adr] =   itcmRAM_wdat & 0x0ff  ;
+            itcmRAM1[adr] =   (itcmRAM_wdat>>8) & 0x0ff   ;
+            itcmRAM2[adr] =   (itcmRAM_wdat>>16) & 0x0ff   ;
+            itcmRAM3[adr] =   (itcmRAM_wdat>>24) & 0x0ff   ;
         }
-        else{
-            itcmRAM_rdat = (adr01==1) ? itcmRAM_rdat>>8 :
-                           (adr01==2) ? itcmRAM_rdat>>16 :
-                           (adr01==3) ? itcmRAM_rdat>>24 : itcmRAM_rdat;
-        }
+        //else{
+        //    itcmRAM_rdat = (adr01==1) ? itcmRAM_rdat>>8 :
+        //                   (adr01==2) ? itcmRAM_rdat>>16 :
+        //                   (adr01==3) ? itcmRAM_rdat>>24 : itcmRAM_rdat;
+        //}
 
     }
 
+
+    itcmRAM_csadr_clked = itcmRAM_cs ? itcmRAM_adr : itcmRAM_csadr_clked;
     itcmRAM_read_clked = itcmRAM_read;
 
+    tmpradr = itcmRAM_csadr_clked>>2;
+    itcmRAM_rdat = (itcmRAM3[tmpradr]<<24) | (itcmRAM2[tmpradr]<<16) | (itcmRAM1[tmpradr]<<8) | itcmRAM0[tmpradr];
 
 }

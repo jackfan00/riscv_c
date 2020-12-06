@@ -11,7 +11,7 @@ void fetch_clked()
 
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
 
-    ifu2mem_cmd_adr_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? ifu2mem_cmd_adr : ifu2mem_cmd_adr_clked;
+    ifu_cmd_adr_clked = ifu_cmd_valid & ifu_cmd_ready ? ifu_cmd_adr : ifu_cmd_adr_clked;
 
     //use for mtval
     fetchIR16_clked = fet_ir16 ? memIR16 : fetchIR16_clked;
@@ -26,7 +26,7 @@ void fetch_clked()
     //
     if (new_midnxtpc_part2_fg)
         new_midnxtpc_part2_fg_clked = 1;
-    else if (ifu2mem_cmd_valid & ifu2mem_cmd_ready)
+    else if (ifu_cmd_valid & ifu_cmd_ready)
         new_midnxtpc_part2_fg_clked = 0;
 
     // ras stack pop
@@ -40,7 +40,7 @@ void fetch_clked()
     //ensure at first cycle ,remain_ir16s_clked number is correct
     remain_ir16s_clked = firstinst_clked? 1 : remain_ir16s;
 
-    firstinst_clked = ifu2mem_cmd_valid & ifu2mem_cmd_ready ? 0 : firstinst_clked;
+    firstinst_clked = ifu_cmd_valid & ifu_cmd_ready ? 0 : firstinst_clked;
 
     }
 }

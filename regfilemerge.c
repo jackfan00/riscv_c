@@ -21,53 +21,53 @@ void regfilearbitor2(BIT i_valid0, BIT i_valid1, BIT i_link0pri,
 void regfilemerge()
 {
     REG8 nxtwrapped_regfilemergeFIFO_widx;
-    BIT *arbitstage1_odivpri_p;
-    BIT *arbitstage1_omulpri_p;
-    BIT *arbitstage1_div_o_cmd_valid_p;
-    BIT *arbitstage1_mul_o_cmd_valid_p;
-    BIT *s2pri_p;
-    BIT *o_cmd_valid_p;
+    BIT arbitstage1_odivpri_p;
+    BIT arbitstage1_omulpri_p;
+    BIT arbitstage1_div_o_cmd_valid_p;
+    BIT arbitstage1_mul_o_cmd_valid_p;
+    BIT s2pri_p;
+    BIT o_cmd_valid_p;
 
     //div/lsu/mul/memwb roundrobin
     //divpri_clked : current div2regfile_cmd_valid priority, 1:high, 0:low
     //mulpri_clked : current mul2regfile_cmd_valid priority, 1:high, 0:low
     //
-    regfilearbitor2(div2regfile_cmd_valid, lsu2regfile_cmd_valid,   divpri_clked, arbitstage1_odivpri_p, arbitstage1_div_o_cmd_valid_p);
-    regfilearbitor2(mul2regfile_cmd_valid, memwb2regfile_cmd_valid, mulpri_clked, arbitstage1_omulpri_p, arbitstage1_mul_o_cmd_valid_p);
-    regfilearbitor2(*arbitstage1_div_o_cmd_valid_p, *arbitstage1_mul_o_cmd_valid_p, s2pri_clked, s2pri_p, o_cmd_valid_p);
+    regfilearbitor2(div2regfile_cmd_valid, lsu2regfile_cmd_valid,   divpri_clked, &arbitstage1_odivpri_p, &arbitstage1_div_o_cmd_valid_p);
+    regfilearbitor2(mul2regfile_cmd_valid, memwb2regfile_cmd_valid, mulpri_clked, &arbitstage1_omulpri_p, &arbitstage1_mul_o_cmd_valid_p);
+    regfilearbitor2(arbitstage1_div_o_cmd_valid_p, arbitstage1_mul_o_cmd_valid_p, s2pri_clked, &s2pri_p, &o_cmd_valid_p);
 
-    regfilemerge_o_cmd_valid = (*o_cmd_valid_p) & (!regfilemergeFIFOfull);
+    regfilemerge_o_cmd_valid = (o_cmd_valid_p) & (!regfilemergeFIFOfull);
     regfilemerge_o_cmd_read = regfilemerge_o_cmd_valid ? (
-                                        !(*s2pri_p) ? ((*arbitstage1_odivpri_p) ? lsu2regfile_cmd_read : div2regfile_cmd_read) : 
-                                                     ((*arbitstage1_omulpri_p) ? memwb2regfile_cmd_read : mul2regfile_cmd_read)
+                                        !(s2pri_p) ? ((arbitstage1_odivpri_p) ? lsu2regfile_cmd_read : div2regfile_cmd_read) : 
+                                                      ((arbitstage1_omulpri_p) ? memwb2regfile_cmd_read : mul2regfile_cmd_read)
                                                         ) :  0;
     regfilemerge_o_cmd_adr  = regfilemerge_o_cmd_valid ? (
-                                        !(*s2pri_p) ? ((*arbitstage1_odivpri_p) ? lsu2regfile_cmd_adr : div2regfile_cmd_adr) : 
-                                                     ((*arbitstage1_omulpri_p) ? memwb2regfile_cmd_adr : mul2regfile_cmd_adr)
+                                        !(s2pri_p) ? ((arbitstage1_odivpri_p) ? lsu2regfile_cmd_adr : div2regfile_cmd_adr) : 
+                                                     ((arbitstage1_omulpri_p) ? memwb2regfile_cmd_adr : mul2regfile_cmd_adr)
                                                         ) :  0;
     regfilemerge_o_cmd_data = regfilemerge_o_cmd_valid ? (
-                                        !(*s2pri_p) ? ((*arbitstage1_odivpri_p) ? lsu2regfile_cmd_data : div2regfile_cmd_data) : 
-                                                     ((*arbitstage1_omulpri_p) ? memwb2regfile_cmd_data : mul2regfile_cmd_data)
+                                        !(s2pri_p) ? ((arbitstage1_odivpri_p) ? lsu2regfile_cmd_data : div2regfile_cmd_data) : 
+                                                      ((arbitstage1_omulpri_p) ? memwb2regfile_cmd_data : mul2regfile_cmd_data)
                                                         ) :  0;
     regfilemerge_o_cmd_rwbyte = regfilemerge_o_cmd_valid ? (
-                                        !(*s2pri_p) ? ((*arbitstage1_odivpri_p) ? lsu2regfile_cmd_rwbyte : div2regfile_cmd_rwbyte) : 
-                                                     ((*arbitstage1_omulpri_p) ? memwb2regfile_cmd_rwbyte : mul2regfile_cmd_rwbyte)
+                                        !(s2pri_p) ? ((arbitstage1_odivpri_p) ? lsu2regfile_cmd_rwbyte : div2regfile_cmd_rwbyte) : 
+                                                     ((arbitstage1_omulpri_p) ? memwb2regfile_cmd_rwbyte : mul2regfile_cmd_rwbyte)
                                                         ) :  0;
                                                         
 
     //
-    div2regfile_cmd_ready = (!(*s2pri_p)) & (!(*arbitstage1_odivpri_p)) & regfilemerge_o_cmd_ready;
-    lsu2regfile_cmd_ready = (!(*s2pri_p)) & (*arbitstage1_odivpri_p)    & regfilemerge_o_cmd_ready;
-    mul2regfile_cmd_ready = ((*s2pri_p))  & (!(*arbitstage1_omulpri_p)) & regfilemerge_o_cmd_ready;
-    memwb2regfile_cmd_ready=((*s2pri_p))  & ((*arbitstage1_omulpri_p))  & regfilemerge_o_cmd_ready;
+    div2regfile_cmd_ready = (!(s2pri_p)) &  (!(arbitstage1_odivpri_p)) & regfilemerge_o_cmd_ready;
+    lsu2regfile_cmd_ready = (!(s2pri_p)) &    (arbitstage1_odivpri_p)  & regfilemerge_o_cmd_ready;
+    mul2regfile_cmd_ready =  ((s2pri_p))  & (!(arbitstage1_omulpri_p)) & regfilemerge_o_cmd_ready;
+    memwb2regfile_cmd_ready= ((s2pri_p))  &  ((arbitstage1_omulpri_p)) & regfilemerge_o_cmd_ready;
 
     //wid: 0:div, 1:lsu, 2:mul, 3:memwb
     regfilemergeFIFO_wen = ((regfilemerge_o_cmd_valid) & regfilemerge_o_cmd_ready);
     //store three arbitor2 block priority value 
     //0 means current selected, so priority will change to 0(low) in next clock
-    divpri = regfilemergeFIFO_wen ? *arbitstage1_odivpri_p : divpri_clked;
-    mulpri = regfilemergeFIFO_wen ? *arbitstage1_omulpri_p : mulpri_clked;
-    s2pri  = regfilemergeFIFO_wen ? *s2pri_p : s2pri_clked;
+    divpri = regfilemergeFIFO_wen ? arbitstage1_odivpri_p : divpri_clked;
+    mulpri = regfilemergeFIFO_wen ? arbitstage1_omulpri_p : mulpri_clked;
+    s2pri  = regfilemergeFIFO_wen ? s2pri_p : s2pri_clked;
 
     regfilemergeFIFO_wid =  (!s2pri) & (!divpri) ? 0 :  //div
                             (!s2pri) & ( divpri) ? 1 :  //lsu

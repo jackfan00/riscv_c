@@ -4,6 +4,7 @@
 //#include <strings.h>
 #include "reg.h"
 #include "opcode_define.h"
+#include "itcm.h"
 
 char *strsep(char **stringp, const char *delim) {
     char *rv = *stringp;
@@ -169,12 +170,21 @@ void myasm2mccode()
         }
         //
         if (mccode!=-1)
-            coderam[addr++] = mccode;
+        {
+            //coderam[addr++] = mccode;
+            itcmRAM0[addr] = mccode& 0xff;
+            itcmRAM1[addr] = (mccode>>8)& 0xff;
+            itcmRAM2[addr] = (mccode>>16)& 0xff;
+            itcmRAM3[addr] = (mccode>>24)& 0xff;
+            addr++;
+        }
+            
     };
     //
     fclose(fp);
 
 }
+/*
 void read_hexcode()
 {
     int addr=0;
@@ -190,7 +200,7 @@ void read_hexcode()
         printf("%s, value=%x\n",str, code);
     };
     fclose(fp);
-}
+}*/
 
 void init_rom()
 {

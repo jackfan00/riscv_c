@@ -44,7 +44,7 @@ void biubussplit()
         biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] = biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1]|biusplit_o_bus_cmd_valid[i];
     }
     //if all previous index dont match, last one target is selected
-    biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] = !biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1];
+    biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] = (!biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1]) & real_biusplit_i_bus_cmd_valid;
     biusplit_o_bus_cmd_read[BIUSPLITTARGETNUM-1] = biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] ? biusplit_i_bus_cmd_read : 0;
     biusplit_o_bus_cmd_adr[BIUSPLITTARGETNUM-1]  = biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] ? biusplit_i_bus_cmd_adr : 0;
     biusplit_o_bus_cmd_data[BIUSPLITTARGETNUM-1] = biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] ? biusplit_i_bus_cmd_data : 0;

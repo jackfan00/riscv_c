@@ -20,28 +20,28 @@ void dtcmarbitor2(BIT i_valid0, BIT i_valid1, BIT i_link0pri,
 void dtcmmerge()
 {
     REG8 nxtwrapped_dtcmmergeFIFO_widx;
-    BIT *oextpri_p;
-    BIT *o_cmd_valid_p;
+    BIT oextpri_p;
+    BIT o_cmd_valid_p;
 
     //ext/lsu roundrobin
     //extpri_clked : current ext2dtcm_cmd_valid priority, 1:high, 0:low
     //oextpri_p : after arbitor, next time ext2dtcm_cmd_valid priority
-    dtcmarbitor2(ext2dtcm_cmd_valid, lsu2dtcm_cmd_valid, dtcmmerge_extpri_clked, oextpri_p, o_cmd_valid_p);
+    dtcmarbitor2(ext2dtcm_cmd_valid, lsu2dtcm_cmd_valid, dtcmmerge_extpri_clked, &oextpri_p, &o_cmd_valid_p);
     
-    dtcmmerge_o_cmd_valid  = (*o_cmd_valid_p) & (!dtcmmergeFIFOfull);
-    dtcmmerge_o_cmd_read   = dtcmmerge_o_cmd_valid ? ((*oextpri_p) ? lsu2dtcm_cmd_read  :ext2dtcm_cmd_read  )  : 0;
-    dtcmmerge_o_cmd_adr    = dtcmmerge_o_cmd_valid ? ((*oextpri_p) ? lsu2dtcm_cmd_adr   :ext2dtcm_cmd_adr   )  : 0;
-    dtcmmerge_o_cmd_data   = dtcmmerge_o_cmd_valid ? ((*oextpri_p) ? lsu2dtcm_cmd_data  :ext2dtcm_cmd_data  )  : 0;
-    dtcmmerge_o_cmd_rwbyte = dtcmmerge_o_cmd_valid ? ((*oextpri_p) ? lsu2dtcm_cmd_rwbyte:ext2dtcm_cmd_rwbyte)  : 0;
+    dtcmmerge_o_cmd_valid  = (o_cmd_valid_p) & (!dtcmmergeFIFOfull);
+    dtcmmerge_o_cmd_read   = dtcmmerge_o_cmd_valid ? ((oextpri_p) ? lsu2dtcm_cmd_read  :ext2dtcm_cmd_read  )  : 0;
+    dtcmmerge_o_cmd_adr    = dtcmmerge_o_cmd_valid ? ((oextpri_p) ? lsu2dtcm_cmd_adr   :ext2dtcm_cmd_adr   )  : 0;
+    dtcmmerge_o_cmd_data   = dtcmmerge_o_cmd_valid ? ((oextpri_p) ? lsu2dtcm_cmd_data  :ext2dtcm_cmd_data  )  : 0;
+    dtcmmerge_o_cmd_rwbyte = dtcmmerge_o_cmd_valid ? ((oextpri_p) ? lsu2dtcm_cmd_rwbyte:ext2dtcm_cmd_rwbyte)  : 0;
 
 
     //*oextpri_p=0, select ifu, otherwise select lsu
-    ext2dtcm_cmd_ready = (!(*oextpri_p)) &  dtcmmerge_o_cmd_ready;
-    lsu2dtcm_cmd_ready = (*oextpri_p)    &  dtcmmerge_o_cmd_ready;
+    ext2dtcm_cmd_ready = (!(oextpri_p)) &  dtcmmerge_o_cmd_ready;
+    lsu2dtcm_cmd_ready = (oextpri_p)    &  dtcmmerge_o_cmd_ready;
 
     //wid: 0:ext, 1:lsu, 
     dtcmmergeFIFO_wen = ((dtcmmerge_o_cmd_valid) & dtcmmerge_o_cmd_ready);
-    dtcmmerge_extpri = dtcmmergeFIFO_wen ? *oextpri_p : dtcmmerge_extpri_clked;
+    dtcmmerge_extpri = dtcmmergeFIFO_wen ? oextpri_p : dtcmmerge_extpri_clked;
     dtcmmergeFIFO_wid = dtcmmerge_extpri ? 1 : 0;
 
     dtcmmergeFIFO = dtcmmergeFIFO_wen ? dtcmmergeFIFO_wid : dtcmmergeFIFO_clked[dtcmmergeFIFO_widx_clked];

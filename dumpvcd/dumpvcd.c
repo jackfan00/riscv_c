@@ -44,9 +44,9 @@ char *trimwhitespace(char *str)
 void initvars()
 {
     int i;
-    int idx2, idx1,idx0;
+    int idx3,idx2,idx1,idx0;
     char *idchar = "<!@#$>^&*|";
-    char tmp[4];
+    char tmp[5];
 
     //generate varids
     varindex=0;
@@ -54,13 +54,15 @@ void initvars()
     { 
         varsize[i]=-1;
         //
-        idx2 = i/100;
-        idx1 = (i%100)/10;
+        idx3 = i/1000;
+        idx2 = (i-idx3*1000)/100;
+        idx1 = (i-idx3*1000-idx2*100)/10;
         idx0 = i%10;
-        tmp[0] = idchar[idx2];
+        tmp[0] = idchar[idx0];
         tmp[1] = idchar[idx1];
-        tmp[2] = idchar[idx0];
-        tmp[3] = '\0';
+        tmp[2] = idchar[idx2];
+        tmp[3] = idchar[idx3];
+        tmp[4] = '\0';
         varids[i] = strdup(tmp);
         //
     }

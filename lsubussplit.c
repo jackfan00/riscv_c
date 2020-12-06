@@ -43,7 +43,7 @@ void lsubussplit()
         lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] = lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1]|lsusplit_o_bus_cmd_valid[i];
     }
     //if all previous index dont match, last one target is selected
-    lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] = !lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1];
+    lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] = (!lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1]) & real_lsusplit_i_bus_cmd_valid;
     lsusplit_o_bus_cmd_read[LSUSPLITTARGETNUM-1] = lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] ? lsusplit_i_bus_cmd_read : 0;
     lsusplit_o_bus_cmd_adr[LSUSPLITTARGETNUM-1]  = lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] ? lsusplit_i_bus_cmd_adr : 0;
     lsusplit_o_bus_cmd_data[LSUSPLITTARGETNUM-1] = lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] ? lsusplit_i_bus_cmd_data : 0;

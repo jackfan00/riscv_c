@@ -3,9 +3,10 @@
 #include "reg.h"
 
 
-REG8 itcmRAM0[MAXCODESIZE], itcmRAM1[MAXCODESIZE], itcmRAM2[MAXCODESIZE], itcmRAM3[MAXCODESIZE];
+REG32 itcmRAM0[MAXCODESIZE], itcmRAM1[MAXCODESIZE], itcmRAM2[MAXCODESIZE], itcmRAM3[MAXCODESIZE];
 
 //
+REG32 itcmRAM_csadr_clked;
 BIT itcmRAM_read_clked;
 
 //

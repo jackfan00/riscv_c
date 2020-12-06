@@ -8,6 +8,7 @@
 #include "decode.h"
 #include "execu.h"
 #include "ext_write_coderam.h"
+#include "regfile.h"
 
 void debug_cpuinfo(){
     int i;
@@ -22,7 +23,7 @@ void debug_cpuinfo(){
     printf("\n");
 
     for (i=0;i<32;i++){
-        printf("0x%08x ", regsarray[i]);
+        printf("0x%08x ", regfileffs_clked[i]);
         if ((i%8)==7) printf("\n");
     }
 }

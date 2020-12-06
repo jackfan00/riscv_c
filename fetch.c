@@ -97,27 +97,17 @@ void fetch()
 {
 
 //local
-//BIT newir_fg;
-//BIT newir_fg2;
-//BIT ifu2mem_cmd_valid_nor;
-//REG32 ifu2mem_cmd_adr_nor;
-//BIT ifu2mem_cmd_valid_bj;
-//BIT incpc_valid;
-//BIT midnxtpc_fg;
-//BIT new_midnxtpc_fg;
 
-    //
 
     fetch_stall=0;
     //codebus_connect();
 
     //instruction from code-ram
-    ifu2mem_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
-    //memIR = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? ifu2mem_rsp_rdata : 0;
+    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
     //
     //keep memIR when rspvalid=0
-    memIR = ifu2mem_rsp_rdata ;
-    memIR_hi16 = ifu2mem_rsp_valid & ifu2mem_rsp_ready ? (ifu2mem_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
+    memIR = ifu_rsp_rdata ;
+    memIR_hi16 = ifu_rsp_valid & ifu_rsp_ready ? (ifu_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
     //
     memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
@@ -140,7 +130,7 @@ void fetch()
                     exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp ? (nxtpc&0x02 ? -1 : 0) :
                     remain_ir16s_clked - 
                     ((remain_ir16s_clked>>7) ? 0 : (fet_ir16?1:2)) + //in negative case, doesnt cousume ir. 
-                    (ifu2mem_rsp_valid & ifu2mem_rsp_ready?2:0);
+                    (ifu_rsp_valid & ifu_rsp_ready?2:0);
     
 
     //
@@ -151,52 +141,26 @@ void fetch()
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
 
     //req new instr when remain ir16 count less than 2
-    ifu2mem_cmd_valid = downloadstart|downloadper_clked? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
-    ifu2mem_cmd_adr = (ifu2mem_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
+    ifu_cmd_valid = downloadstart|downloadper_clked? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
+    ifu_cmd_adr = (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
 
-    //newir_fg =  (fetpc_clked&0xfffffffc)!=(nxtpc&0xfffffffc) ;
-    //newir_fg2 =  (fetpc_clked!=nxtpc) ;
-    //midnxtpc_fg = (nxtpc&0x02);
-    //new_midnxtpc_fg = newir_fg & midnxtpc_fg ;
-    //new_midnxtpc_part2_fg = new_midnxtpc_fg & ifu2mem_cmd_ready;
-
-    //ifu2mem_cmd_valid = (newir_fg2 | midnxtpc_fg | new_midnxtpc_part2_fg_clked) & 
-    //                              (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
-    //ifu2mem_cmd_adr = newir_fg | new_midnxtpc_fg ? nxtpc :
-    //                  newir_fg2 | midnxtpc_fg | new_midnxtpc_part2_fg_clked ? nxtpc + 0x02 : 0;
-    //pc = ifu2mem_cmd_valid & (!new_midnxtpc_part2_fg_clked) & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
     
     //for remain_ir16s_clked value is negative cycle, its pc is invalid dont update.
-    pc = (ifu2mem_cmd_valid & (remain_ir16s>=0) & ifu2mem_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
+    pc = (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
          (remain_ir16s==2 )|
          (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : fetpc_clked;
 
     //
-    fetch_flush =!(  ifu2mem_rsp_valid & ifu2mem_rsp_ready  ) & (remain_ir16s_clked!=2);  
+    fetch_flush =!(  ifu_rsp_valid & ifu_rsp_ready  ) & (remain_ir16s_clked!=2);  
     fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail | 
                                  (remain_ir16s_clked>>7); //remain_ir16s_clked is negative means jmpto address[1:0]==10
                                                           //need take 2 cycles to get full instruntion
     fetchIR =  fetch_flush ?  NOP : memIR32;
 
     //
-    //nxtir16 = (nxtpc&0x02) ?  ((memIR>>16)& 0x03)!=3 : (memIR & 0x03)!=3;
-    //ifu2mem_cmd_valid_nor =  newir_fg ? 1 :
-    //                        !nxtir16 ? 1 : 0;
-    //ifu2mem_cmd_adr_nor =  nxtpc + (nxtpc&0x03) ;  //normal continue fetch
+    ifu_cmd_read =1;
+    ifu_cmd_rwbyte = 0xf;
 
-    //branchjmp case: jmp to not align 4-byte address, need fetch 2 times
-
-    //branchjmp_hipart = branchjmp_hipart_clked ? !ifu2mem_cmd_ready : branchjmp & ((branchjmp_pc&0x03)!=0) & ifu2mem_cmd_ready;
-    //ifu2mem_cmd_valid_bj = branchjmp | branchjmp_hipart_clked;
-    //ifu2mem_cmd_valid = (ifu2mem_cmd_valid_nor | ifu2mem_cmd_valid_bj) & !fetch_stall;
-    //ifu2mem_cmd_adr = ifu2mem_cmd_valid_nor ? ifu2mem_cmd_adr_nor :
-    //                  branchjmp ? nxtpc :
-    //                  branchjmp_hipart_clked ? nxtpc+2 : 0;
-    ifu2mem_cmd_read =1;
-    ifu2mem_cmd_rwbyte = 0xf;
-
-    //incpc_valid = ifu2mem_cmd_valid_nor | (branchjmp & ((branchjmp_pc&0x03)==0)) | (branchjmp_hipart_clked & ((branchjmp_pc&0x03)!=0));
-    //pc = incpc_valid & ifu2mem_cmd_ready ? nxtpc : fetpc_clked;
 
 }
 

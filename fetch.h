@@ -3,14 +3,14 @@
 #include "reg.h"
 //input
 BIT fetch_stall;
-BIT ifu2mem_rsp_valid;
-REG32 ifu2mem_rsp_rdata;
+BIT ifu_rsp_valid;
+REG32 ifu_rsp_rdata;
 REG16 memIR_hi16_clked;
 BIT fetch_flush;
 REG32 fetchIR_clked;
 REG32 fetpc_clked;
 REG32 flush_pc;
-BIT ifu2mem_cmd_ready;
+BIT ifu_cmd_ready;
 REG32 rs1v;
 BIT branchjmp_hipart_clked;
 BIT new_midnxtpc_part2_fg_clked;
@@ -20,18 +20,18 @@ BIT fet_predict_jmp_clked;
 BIT fet_ir16_clked;
 BIT firstinst_clked;
 REG8 remain_ir16s_clked;
-REG32 ifu2mem_cmd_adr_clked;
+REG32 ifu_cmd_adr_clked;
 REG16 fetchIR16_clked;
 
 //output
-BIT ifu2mem_rsp_ready;
+BIT ifu_rsp_ready;
 REG16 memIR_hi16;
 REG32 fetchIR;
 REG32 pc;
-BIT ifu2mem_cmd_valid;
-BIT ifu2mem_cmd_read;
-REG32 ifu2mem_cmd_adr;
-REG8 ifu2mem_cmd_rwbyte;
+BIT ifu_cmd_valid;
+BIT ifu_cmd_read;
+REG32 ifu_cmd_adr;
+REG8 ifu_cmd_rwbyte;
 BIT branchjmp;
 BIT predict_en;
 BIT fet_predict_jmp;

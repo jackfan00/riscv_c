@@ -60,17 +60,17 @@ typedef unsigned char BIT;
 #define ITCMMERGEFIFODEPTH 3
 
 
-REG8 code_rspid_fifo[RSPFIFOSIZE];
-REG8 data_rspid_fifo[RSPFIFOSIZE];
+//REG8 code_rspid_fifo[RSPFIFOSIZE];
+//REG8 data_rspid_fifo[RSPFIFOSIZE];
 REG32 clockcnt;
-REG32 coderam[MAXCODESIZE];
-REG8 dataram0[MAXCODESIZE];
-REG8 dataram1[MAXCODESIZE];
-REG8 dataram2[MAXCODESIZE];
-REG8 dataram3[MAXCODESIZE];
+//REG32 coderam[MAXCODESIZE];
+//REG8 dataram0[MAXCODESIZE];
+//REG8 dataram1[MAXCODESIZE];
+//REG8 dataram2[MAXCODESIZE];
+//REG8 dataram3[MAXCODESIZE];
 //REG8 depfifo[DEPFIFOSIZE];
 //BIT depfifo_fg[DEPFIFOSIZE];
-REG32 regsarray[32];
+//REG32 regsarray[32];
 REG32 ras_stack[RASDEPTH];
 REG8 ras_sp;
 

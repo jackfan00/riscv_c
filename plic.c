@@ -39,16 +39,16 @@ void plic()
     //plic function block
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
-        prepriorityout[i] = (i==1) ? 0 : *priorityout[i-1];
-        premaxid[i] = (i==1) ? 0 : *maxid[i-1];
+        prepriorityout[i] = (i==1) ? 0 : priorityout[i-1];
+        premaxid[i] = (i==1) ? 0 : maxid[i-1];
         //
         plicunit(intsource[i], intsource_clked[i], gateway_enable_clked[i], priority_clked[i], IE_clked[i], i, prepriorityout[i],  premaxid[i],
-        *IP[i], *priorityout[i], *maxid[i]);
+        &IP[i], &priorityout[i], &maxid[i]);
         //
     }
 
-    EIP = (*priorityout[PLIC_INTNUMBER-1]>prioritythreshold_clked);
-    INTID = *maxid[PLIC_INTNUMBER-1];
+    EIP = (priorityout[PLIC_INTNUMBER-1]>prioritythreshold_clked);
+    INTID = maxid[PLIC_INTNUMBER-1];
 
     //plic bus read/write
     plic_cmd_ready = plic_cmd_valid & 1;

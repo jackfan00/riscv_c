@@ -19,7 +19,7 @@ void plic_clked()
     //IP regsiter, read-only 
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
-        IP_clked[i>>5] = IP_clked[i>>5] | ((*IP[i])<<i);
+        IP_clked[i>>5] = IP_clked[i>>5] | ((IP[i])<<i);
     }
     //claim/complete pulse
     ccw = plic_regcs & plic_regw & (plic_regadr==(PLIC_CLAIMCOMPLETE)) ;
@@ -38,7 +38,7 @@ void plic_clked()
     //gateway control
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
-        gateway_enable_clked[i] = *IP[i] ? 1 : gateway_enable_clked[i];
+        gateway_enable_clked[i] = IP[i] ? 1 : gateway_enable_clked[i];
     }
     gateway_enable_clked[plic_regwdata] = ccw ? 1 : gateway_enable_clked[plic_regwdata];
 
