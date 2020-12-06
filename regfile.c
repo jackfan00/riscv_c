@@ -13,7 +13,7 @@ void regfile()
     regfileffs_wdat = regfilemerge_o_cmd_data;
     regfileffs_adr = regfilemerge_o_cmd_adr;
     //regfileffs_bmask = regfilemerge_o_cmd_rwbyte;
-    regfilemerge_o_rsp_valid = 1;
+    regfilemerge_o_rsp_valid = regfileffs_cs;
     regfilemerge_o_rsp_rdata = 0;
 
     //regfile read , rs1, rs2

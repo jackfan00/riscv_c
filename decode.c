@@ -61,12 +61,12 @@ void decodeinit()
  dec_rwaw_lif_rs1=0;
  dec_rwaw_lif_rs2=0;
  dec_rwaw_lif_rd=0;
- aluop_csrrw=0;
- aluop_csrrs=0;
- aluop_csrrc=0;
- aluop_csrrwi=0;
- aluop_csrrsi=0;
- aluop_csrrci=0;
+ //aluop_csrrw=0;
+ //aluop_csrrs=0;
+ //aluop_csrrc=0;
+ //aluop_csrrwi=0;
+ //aluop_csrrsi=0;
+ //aluop_csrrci=0;
  aluop_csrw=0;
  aluop_csrset=0;
  aluop_csrclr=0;
@@ -218,13 +218,13 @@ int s_j_imm;
         break;
     case OPCODE_SYSTEM:
         alusystem =1;
-        rs1en = !rs1x0 & (aluop_csrrw | aluop_csrrs | aluop_csrrc);
+        rs1en = (!rs1x0) & (aluop_csrrw | aluop_csrrs | aluop_csrrc);
         alu_opd1 = rs1en ? real_rs1v : rs1idx;
         rden =!rdx0;
-        dec_csr_ren = (aluop_csrrw | aluop_csrrwi) & !rdx0;
+        dec_csr_ren = (aluop_csrrw | aluop_csrrwi) & (!rdx0);
         dec_csr_wen =   aluop_csrrw | aluop_csrrwi |
-                    ((aluop_csrrs  | aluop_csrrc ) &  !rs1x0) |
-                    ((aluop_csrrsi | aluop_csrrci) &  !rs1x0) ;
+                    ((aluop_csrrs  | aluop_csrrc ) &  (!rs1x0)) |
+                    ((aluop_csrrsi | aluop_csrrci) &  (!rs1x0)) ;
 
         alu_opd2 = real_csrv; //i_imm;  //csr address
 
@@ -396,6 +396,12 @@ int s_j_imm;
             break;
        }
 
+ aluop_csrrw=0;
+ aluop_csrrs=0;
+ aluop_csrrc=0;
+ aluop_csrrwi=0;
+ aluop_csrrsi=0;
+ aluop_csrrci=0;
     switch(func3)
         {
         //SYSTEM_BREAK    

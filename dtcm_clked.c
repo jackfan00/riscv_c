@@ -60,7 +60,7 @@ void dtcm_clked()
     dtcmRAM_csadr_clked = dtcmRAM_cs ? dtcmRAM_adr : dtcmRAM_csadr_clked;
     dtcmRAM_read_clked = dtcmRAM_read;
 
-    tmpradr = dtcmRAM_csadr_clked>>2;
+    tmpradr = (dtcmRAM_csadr_clked & 0x00ffffff)>>2;
     dtcmRAM_rdat = (dtcmRAM3[tmpradr]<<24) | (dtcmRAM2[tmpradr]<<16) | (dtcmRAM1[tmpradr]<<8) | dtcmRAM0[tmpradr];
 
 }

@@ -7,7 +7,7 @@ typedef unsigned char REG8;
 typedef unsigned char BIT;
 
 
-#define ITCM_ADDR_BASE   0 //0x80000000
+#define ITCM_ADDR_BASE   0x80000000
 #define DTCM_ADDR_BASE   0x90000000
  //   * PPI       : 0x1000 0000 -- 0x1FFF FFFF
 #define PPI_ADDR_BASE    0x10000000
@@ -37,12 +37,12 @@ typedef unsigned char BIT;
 #define LIFSIZE 8
 
 //normal sram parameter is  (1, 0), DATARAM_RREADY_CYCLES=0 is not supported
-#define DATARAM_RSPVALID_CYCLES 1
-#define DATARAM_CMDREADY_CYCLES 0
+//#define DATARAM_RSPVALID_CYCLES 1
+//#define DATARAM_CMDREADY_CYCLES 0
 
 //normal sram parameter is  (1, 0), CODERAM_RREADY_CYCLES=0 is not supported
-#define CODERAM_RSPVALID_CYCLES 1
-#define CODERAM_CMDREADY_CYCLES 0
+//#define CODERAM_RSPVALID_CYCLES 1
+//#define CODERAM_CMDREADY_CYCLES 0
 
 //MUL cycles, MUL_RSPVALID_CYCLES=0 is not supportted
 #define MUL_RSPVALID_CYCLES 1

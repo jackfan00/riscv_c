@@ -176,8 +176,8 @@ int main(int argc, char *argv[])
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 0x62f) return(1);
-        if (clockcnt >= 0x100) return(1);
+        if (clockcnt >= 0x63f) return(1);
+        //if (downloadcomplete) return(1);
 
     }
 

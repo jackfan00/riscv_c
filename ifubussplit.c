@@ -87,9 +87,10 @@ void ifubussplit()
     //
     ifu2biu_cmd_valid = ifusplit_o_bus_cmd_valid[1];
     ifusplit_o_bus_cmd_ready[1] = ifu2biu_cmd_ready & ifu2biu_cmd_valid;
-    ifu2biu_cmd_read = ifusplit_o_bus_cmd_valid[1];
-    ifu2biu_cmd_adr = ifusplit_o_bus_cmd_valid[1];
-    ifu2biu_cmd_data = ifusplit_o_bus_cmd_valid[1];
+    ifu2biu_cmd_read = ifusplit_o_bus_cmd_read[1];
+    ifu2biu_cmd_adr = ifusplit_o_bus_cmd_adr[1];
+    ifu2biu_cmd_data = ifusplit_o_bus_cmd_data[1];
+    ifu2biu_cmd_rwbyte = ifusplit_o_bus_cmd_rwbyte[1];
     ifusplit_o_bus_rsp_valid[1] = ifu2biu_rsp_valid;
     ifusplit_o_bus_rsp_rdata[1] = ifu2biu_rsp_rdata;
     ifu2biu_rsp_ready = ifusplit_o_bus_rsp_ready[1];
@@ -97,9 +98,10 @@ void ifubussplit()
     //
     ifu2itcm_cmd_valid = ifusplit_o_bus_cmd_valid[0];
     ifusplit_o_bus_cmd_ready[0] = ifu2itcm_cmd_ready & ifu2itcm_cmd_valid;
-    ifu2itcm_cmd_read = ifusplit_o_bus_cmd_valid[0];
-    ifu2itcm_cmd_adr = ifusplit_o_bus_cmd_valid[0];
-    ifu2itcm_cmd_data = ifusplit_o_bus_cmd_valid[0];
+    ifu2itcm_cmd_read = ifusplit_o_bus_cmd_read[0];
+    ifu2itcm_cmd_adr = ifusplit_o_bus_cmd_adr[0];
+    ifu2itcm_cmd_data = ifusplit_o_bus_cmd_data[0];
+    ifu2itcm_cmd_rwbyte = ifusplit_o_bus_cmd_rwbyte[0];
     ifusplit_o_bus_rsp_valid[0] = ifu2itcm_rsp_valid;
     ifusplit_o_bus_rsp_rdata[0] = ifu2itcm_rsp_rdata;
     ifu2itcm_rsp_ready = ifusplit_o_bus_rsp_ready[0];

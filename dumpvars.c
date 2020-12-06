@@ -44,7 +44,7 @@ void fprintfb(FILE *fp, char * str, unsigned int varvalue)
         fprintf(fp, "%d", (varvalue>>(bitwidth-i-1))&0x01);
     }
     fprintf(fp, " ");
-    // varid
+    // varid to extend to support more variables
     tmp[0]=tmp[3];
     tmp[1]=tmp[4];
     tmp[2]=tmp[5];

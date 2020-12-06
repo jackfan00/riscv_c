@@ -2,7 +2,7 @@
 #include <string.h>
 #include <time.h>
 
-#define MAXVARSIZE 2000
+#define MAXVARSIZE 9999
 #define DEFINESIZE 100
 
 int varindex;
@@ -94,6 +94,9 @@ void initdefinevar(char * ff)
                     defstr[index] = strdup(token2s);
                     index++;
                 }
+                else{
+                    printf("define %s > 32, skip it\n",token2s);
+                }
             }
         }
 
@@ -111,7 +114,7 @@ int getdefinevalue(char * kw, char * fn)
             return(defnum[i]);
         }
     }
-    printf("error: can not find define %s, filename=%s\n", kw, fn);
+    printf("Warning: can not find define %s, filename=%s\n", kw, fn);
     return -1;
 }
 
@@ -170,6 +173,8 @@ void parsevars(char * filename)
 
         //
         if (varindex>=MAXVARSIZE){
+            printf("Error: varindex is exceed %d\n",MAXVARSIZE);
+            printf("need to modify dumpvcd.c and ../dumpvars.c(fpintfb function) \n");
             continue;
         }
         //
@@ -311,6 +316,7 @@ int main()
     parsevars("../csrreg.h");
     //
     dumpcmdfile();
+    //
 
 }
 
