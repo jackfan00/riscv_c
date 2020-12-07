@@ -2,6 +2,7 @@
 #include "biumerge.h"
 #include "plic.h"
 #include "clint.h"
+#include "peripheral.h"
 
 void biubussplit()
 {
@@ -11,7 +12,7 @@ void biubussplit()
     //if more targets, should assign value to SPLITTARGETNUM-1 index
     biusplit_TARGETBASE[0] = 0x0c; //plic
     biusplit_TARGETBASE[1] = 0x02; //clint
-    biusplit_TARGETBASE[2] = 0x10; //periperal
+    biusplit_TARGETBASE[2] = 0x10; //peripheral
     biusplit_TARGETBASE[3] = 0x20; //flash mempry mapping
 
     //
@@ -105,5 +106,15 @@ void biubussplit()
     biusplit_o_bus_rsp_valid[1] = clint_rsp_valid;
     biusplit_o_bus_rsp_rdata[1] = clint_rsp_rdata;
     clint_rsp_ready = biusplit_o_bus_rsp_ready[1];
+
+    //peripheral registers
+    peripheral_cmd_valid = biusplit_o_bus_cmd_valid[2];
+    biusplit_o_bus_cmd_ready[2] = peripheral_cmd_ready & peripheral_cmd_valid;
+    peripheral_cmd_read = biusplit_o_bus_cmd_read[2];
+    peripheral_cmd_adr = biusplit_o_bus_cmd_adr[2];
+    peripheral_cmd_data = biusplit_o_bus_cmd_data[2];
+    biusplit_o_bus_rsp_valid[2] = peripheral_rsp_valid;
+    biusplit_o_bus_rsp_rdata[2] = peripheral_rsp_rdata;
+    peripheral_rsp_ready = biusplit_o_bus_rsp_ready[2];
 
 }

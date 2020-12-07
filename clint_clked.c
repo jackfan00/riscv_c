@@ -10,4 +10,6 @@ void clint_clked()
     //not reg
     clint_mtip_clked = clint_mtip;
 
+    clint_read_clked = clint_read;
+
 }

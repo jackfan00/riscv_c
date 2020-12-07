@@ -103,7 +103,7 @@ void fetch()
     //codebus_connect();
 
     //instruction from code-ram
-    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall);
+    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & ifu_rsp_valid;
     //
     //keep memIR when rspvalid=0
     memIR = ifu_rsp_rdata ;

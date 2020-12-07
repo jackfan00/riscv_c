@@ -9,6 +9,7 @@
 #include "execu.h"
 #include "ext_write_coderam.h"
 #include "regfile.h"
+#include "clint.h"
 
 void debug_cpuinfo(){
     int i;
@@ -39,6 +40,8 @@ void setup()
     fetch_flush =0;
     firstinst_clked=1;
     clockcnt=0;
+    clint_mtimecmp_clked=0xffffffff;
+    clint_mtimecmph_clked=0xffffffff;
 
 }
 
@@ -95,6 +98,7 @@ int main(int argc, char *argv[])
             biubussplit();
             plic();
             clint();
+            peripheral();
             itcmmerge();
             itcm();
             dtcmmerge();
@@ -158,6 +162,7 @@ int main(int argc, char *argv[])
         biubussplit_clked();
         plic_clked();
         clint_clked();
+        peripheral_clked();
         itcmmerge_clked();
         itcm_clked();
         dtcmmerge_clked();
@@ -176,7 +181,9 @@ int main(int argc, char *argv[])
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        if (clockcnt >= 0x63f) return(1);
+        //if (clockcnt >= 0x63f) return(1);
+        if (clockcnt >= 0x243c) return(1);
+        //if (fetpc_clked == 0x800001a8) return(1);
         //if (downloadcomplete) return(1);
 
     }
