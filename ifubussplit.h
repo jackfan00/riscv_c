@@ -1,5 +1,8 @@
 #ifndef IFUBUSSPLIT_H
 #define IFUBUSSPLIT_H
+void ifubussplit();
+void ifubussplit_clked();
+
 #include "reg.h"
 
 

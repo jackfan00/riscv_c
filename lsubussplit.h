@@ -1,5 +1,8 @@
 #ifndef LSUBUSSPLIT_H
 #define LSUBUSSPLIT_H
+void lsubussplit();
+void lsubussplit_clked();
+
 #include "reg.h"
 
 

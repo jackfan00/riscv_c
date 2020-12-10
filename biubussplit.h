@@ -1,6 +1,8 @@
 #ifndef BIUBUSSPLIT_H
 #define BIUBUSSPLIT_H
 #include "reg.h"
+void biubussplit();
+void biubussplit_clked();
 
 
 //last target dont need to compare targetbase

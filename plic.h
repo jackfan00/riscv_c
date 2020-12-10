@@ -1,5 +1,8 @@
 #ifndef PLIC_H
 #define PLIC_H
+void plic();
+void plic_clked();
+
 #include "reg.h"
 
 #define PLIC_PRIORITY_BASE  0x0c000000

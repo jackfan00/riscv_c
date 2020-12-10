@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define DUMPVCD
+#include "dumpvars.h"
+#include "downloadCode.h"
+#include "init_rom.h"
 #include "reg.h"
 #include "fetch.h"
 #include "opcode_define.h"
@@ -55,9 +59,11 @@ int main(int argc, char *argv[])
 {
     int i;
 
+#ifdef DUMPVCD
     printf("generate trace waveform file: riscv.vcd\n");
     FILE *vcdfp = fopen("riscv.vcd", "w");
-
+    dumpvcdheader(vcdfp);
+#endif
     //printf("Hello world!\n");
     //initilize
     setup();
@@ -70,8 +76,6 @@ int main(int argc, char *argv[])
         init_rom();
     }
     //
-    dumpvcdheader(vcdfp);
-    //dumpvars(clockcnt, vcdfp);
 
 
     while(1)
@@ -133,14 +137,13 @@ int main(int argc, char *argv[])
 
 
         //
-        //debug_cpuinfo();
+#ifdef DUMPVCD
         dumpvars(clockcnt, vcdfp);
-
+#endif
         //check execption
         if (exe_dec_ilg_clked){
             printf("STOP by detect illigal instruction\n");
-            fclose(vcdfp);
-            return(1);
+            break;
         }
 
         // flipflop
@@ -187,12 +190,15 @@ int main(int argc, char *argv[])
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 0x63f) return(1);
-        if (clockcnt >= 0x487c) return(1);
-        //if (fetpc_clked == 0x8000025e) return(1);
-        //if (downloadcomplete) return(1);
+        //if (clockcnt >= 0x63f) break;
+        if (clockcnt >= 0x487c) break;
+        //if (fetpc_clked == 0x8000025e) break;
+        //if (downloadcomplete) break;
 
     }
 
+#ifdef DUMPVCD
+    fclose(vcdfp);
+#endif    
     return 0;
 }

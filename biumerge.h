@@ -1,6 +1,8 @@
 #ifndef BIUMERGE_H
 #define BIUMERGE_H
 #include "reg.h"
+void biumerge();
+void biumerge_clked();
 
 
 REG8 biumergeFIFO_widx_clked;

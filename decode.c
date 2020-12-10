@@ -222,7 +222,7 @@ int s_j_imm;
         rs1en = (!rs1x0) & (aluop_csrrw | aluop_csrrs | aluop_csrrc);
         alu_opd1 = rs1en ? real_rs1v : rs1idx;
         rden =!rdx0;
-        dec_csr_ren = ((aluop_csrrw | aluop_csrrwi) & (!rdx0)) | aluop_mret;
+        dec_csr_ren = ((aluop_csrrw | aluop_csrrwi | aluop_csrrs  | aluop_csrrc | aluop_csrrsi | aluop_csrrci) & (!rdx0)) | aluop_mret;
         dec_csr_wen =   aluop_csrrw | aluop_csrrwi |
                     ((aluop_csrrs  | aluop_csrrc ) &  (!rs1x0)) |
                     ((aluop_csrrsi | aluop_csrrci) &  (!rs1x0)) ;

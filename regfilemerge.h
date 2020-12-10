@@ -1,5 +1,8 @@
 #ifndef REGFILEMERGE_H
 #define REGFILEMERGE_H
+void regfilemerge();
+void regfilemerge_clked();
+
 #include "reg.h"
 
 

@@ -1,5 +1,8 @@
 #ifndef MUL_H
 #define MUL_H
+void mul();
+void mul_clked();
+
 #include "reg.h"
 
 //input 

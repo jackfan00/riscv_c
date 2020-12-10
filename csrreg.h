@@ -1,6 +1,8 @@
 #ifndef CSRREG_H
 #define CSRREG_H
 #include "reg.h"
+void csrreg();
+void csrreg_clked();
 
 #define MVENDORID 0x0
 #define MARCHID 0x0

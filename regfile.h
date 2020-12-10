@@ -1,5 +1,8 @@
 #ifndef REGFILE_H
 #define REGFILE_H
+void regfile();
+void regfile_clked();
+
 #include "reg.h"
 
 REG32 regfileffs_clked[32];

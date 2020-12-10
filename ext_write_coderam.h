@@ -1,6 +1,8 @@
 #ifndef EXT_WRITE_CODERAM_H
 #define EXT_WRITE_CODERAM_H
 #include "reg.h"
+void ext_write_coderam();
+void ext_write_coderam_clked();
 
 //input
 BIT ext_cmd_ready;

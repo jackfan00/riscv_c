@@ -3,6 +3,7 @@
 #include "execu.h"
 #include "memwb.h"
 #include "csrreg.h"
+#include "opcode_define.h"
 
 void decode_clked()
 {
@@ -87,7 +88,8 @@ if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  dec_csridx_clked = csridx;
  cti_pc_clked          = cti_pc;
  //use for mtval
- dec_IR_clked = fet_ir16_clked ? fetchIR16_clked & (!dec_stall) : fetchIR_clked & (!dec_stall) ;
+ dec_IR_clked = fet_ir16_clked ? (dec_stall ? NOP : fetchIR16_clked ) : 
+                                 (dec_stall ? NOP : fetchIR_clked   ) ;
  dec_ir16_clked = fet_ir16_clked;
 
 }

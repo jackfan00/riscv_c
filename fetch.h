@@ -1,5 +1,8 @@
 #ifndef FETCH_H
 #define FETCH_H
+void fetch();
+void fetch_clked();
+
 #include "reg.h"
 //input
 BIT fetch_stall;

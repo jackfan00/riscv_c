@@ -1,10 +1,13 @@
  #ifndef EXECU_H
  #define EXECU_H
+void execu();
+void execu_clked();
 
  #include "reg.h"
 
     //input
     BIT exe_ir16_clked;
+    REG32 exe_pc_d1_clked;
     REG32 exe_pc_clked;
     REG32 lsu_misaligned_adr_clked;
     BIT exe_aluop_ecall_clked;

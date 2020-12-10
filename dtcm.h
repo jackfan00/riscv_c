@@ -1,6 +1,8 @@
 #ifndef DTCM_H
 #define DTCM_H
 #include "reg.h"
+void dtcm();
+void dtcm_clked();
 
 
 REG32 dtcmRAM0[MAXCODESIZE], dtcmRAM1[MAXCODESIZE], dtcmRAM2[MAXCODESIZE], dtcmRAM3[MAXCODESIZE];

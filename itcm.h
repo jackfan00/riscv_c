@@ -1,5 +1,8 @@
 #ifndef ITCM_H
 #define ITCM_H
+void itcm();
+void itcm_clked();
+
 #include "reg.h"
 
 

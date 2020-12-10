@@ -1,6 +1,8 @@
 #ifndef CLINT_H
 #define CLINT_H
 #include "reg.h"
+void clint();
+void clint_clked();
 
 #define CLINT_MSIP      0x02000000
 #define CLINT_MTIMECMP  0x02004000

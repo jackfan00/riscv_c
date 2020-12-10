@@ -1,6 +1,8 @@
 #ifndef DOWNLOADCODE_H
 #define DOWNLOADCODE_H
 
+void downloadCode(char * filename);
+
 #include "reg.h"
 
 #define MAXHEXFILE_CODESIZE 1024

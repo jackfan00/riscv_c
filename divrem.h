@@ -1,5 +1,7 @@
 #ifndef DIVREM_H
 #define DIVREM_H
+void divrem();
+void divrem_clked();
 
 #include "reg.h"
 

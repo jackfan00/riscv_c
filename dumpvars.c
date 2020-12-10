@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
-
-void printtrace(FILE * fp);
+#include "dumpvars.h"
 
 void dumpvcdheader(FILE *vcdfp)
 {

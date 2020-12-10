@@ -2,17 +2,21 @@
 #include "decode.h"
 #include "memwb.h"
 #include "csrreg.h"
+#include "opcode_define.h"
 
 void execu_clked()
 {
     int i;
 
 if ((!memwb_stall) && (!csr_exception_stall)){
+ exe_pc_d1_clked            = exe_pc_clked;
  exe_pc_clked               = decpc_clked;
+//
  exe_res_clked              = exe_res;
  exe_csr_res_clked          = csr_res;
  exe_rdidx_clked            = dec_rdidx_clked;
  exe_csridx_clked           = dec_csridx_clked;
+ exe_IR_clked               = exe_stall|csr_exception_flush ? NOP : dec_IR_clked       ;
 //
  exe_ir16_clked             = dec_ir16_clked        & (!exe_stall) & (!csr_exception_flush);
  exe_dec_ilg_clked          = dec_dec_ilg_clked     & (!exe_stall) & (!csr_exception_flush);
@@ -25,7 +29,6 @@ if ((!memwb_stall) && (!csr_exception_stall)){
  exe_csr_ren_clked          = dec_csr_ren_clked     & (!exe_stall) & (!csr_exception_flush);
  exe_rden_clked             = exe_rden              & (!exe_stall) & (!csr_exception_flush);
  exe_res_valid_clked        = exe_res_valid         & (!exe_stall) & (!csr_exception_flush);
- exe_IR_clked               = dec_IR_clked          & (!exe_stall) & (!csr_exception_flush);
  exe_mret_clked             = dec_aluop_mret_clked  & (!exe_stall) & (!csr_exception_flush);
  lsu_misaligned_adr_clked   = lsu_load_misaligned|lsu_store_misaligned ? lsu_cmd_adr : lsu_misaligned_adr_clked;
  //ras stack push

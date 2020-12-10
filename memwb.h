@@ -1,5 +1,6 @@
 #ifndef MEMWB_H
 #define MEMWB_H
+void memwb();
 
 #include "reg.h"
 

@@ -1,6 +1,8 @@
 #ifndef DTCMMERGE_H
 #define DTCMMERGE_H
 #include "reg.h"
+void dtcmmerge();
+void dtcmmerge_clked();
 
 
 REG8 dtcmmergeFIFO_widx_clked;

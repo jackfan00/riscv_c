@@ -1,5 +1,8 @@
 #ifndef ITCMMERGE_H
 #define ITCMMERGE_H
+void itcmmerge();
+void itcmmerge_clked();
+
 #include "reg.h"
 
 

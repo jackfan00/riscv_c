@@ -44,9 +44,10 @@ void csrreg()
     csrreg_wen_minstreth = 0;    
 
     //
-    csrv = csrreg_ren ? csr_rdata : 0;
+    //csrv = csrreg_ren ? csr_rdata : 0;
+    csrv =  csr_rdata ;
 
-    switch(csrreg_adr)
+    switch(csridx) //csrreg_adr)
     {
         case 0xf11:
             csr_rdata = MVENDORID;
@@ -62,7 +63,7 @@ void csrreg()
             break;
         case 0x300:
             csr_rdata =  ((0b0<<13)| (0b11<<11)| (0b0<<8)| (mstatusmpie_clked<<7)| (0b0<<4)| (mstatusmie_clked<<3)| 0b0); //mstatus;
-            csrreg_wen_mstatus = csrreg_wen;
+        //    csrreg_wen_mstatus = csrreg_wen;
             break;
         case 0x301:
             csr_rdata = MISA;
@@ -75,22 +76,22 @@ void csrreg()
         //    break;
         case 0x304:
             csr_rdata = mie_clked;
-            csrreg_wen_mie = csrreg_wen;
+        //    csrreg_wen_mie = csrreg_wen;
             break;
         case 0x305:
             csr_rdata = mtvec_clked;
-            csrreg_wen_mtvec = csrreg_wen;
+        //    csrreg_wen_mtvec = csrreg_wen;
             break;
         //case 0x306:
         //    csr_rdata = mcounteren;
         //    break;
         case 0x340:
             csr_rdata = mscratch_clked;
-            csrreg_wen_mscratch = csrreg_wen;
+        //    csrreg_wen_mscratch = csrreg_wen;
             break;
         case 0x341:
             csr_rdata = mepc_clked;
-            csrreg_wen_mepc = csrreg_wen;
+        //    csrreg_wen_mepc = csrreg_wen;
             break;
         case 0x342:
             csr_rdata = mcause_clked;
@@ -103,19 +104,19 @@ void csrreg()
             break;
         case 0xb00:
             csr_rdata = mcycle_clked;
-            csrreg_wen_mcycle = csrreg_wen;
+        //    csrreg_wen_mcycle = csrreg_wen;
             break;
         case 0xb02:
             csr_rdata = minstret_clked;
-            csrreg_wen_minstret = csrreg_wen;
+        //    csrreg_wen_minstret = csrreg_wen;
             break;
         case 0xb80:
             csr_rdata = mcycleh_clked;
-            csrreg_wen_mcycleh = csrreg_wen;
+        //    csrreg_wen_mcycleh = csrreg_wen;
             break;
         case 0xb82:
             csr_rdata = minstreth_clked;
-            csrreg_wen_minstreth = csrreg_wen;
+        //    csrreg_wen_minstreth = csrreg_wen;
             break;
         case 0x7b0:
          //   csr_rdata = dcsr_clked;
@@ -131,6 +132,91 @@ void csrreg()
             break;
     }
 
+
+    switch(csrreg_adr)
+    {
+        //case 0xf11:
+        //    csr_rdata = MVENDORID;
+        //    break;
+        //case 0xf12:
+        //    csr_rdata = MARCHID;
+        //    break;
+        //case 0xf13:
+        //    csr_rdata = MIMPID;
+        //    break;
+        //case 0xf14:
+        //    csr_rdata = MHARTID;
+        //    break;
+        case 0x300:
+            //csr_rdata =  ((0b0<<13)| (0b11<<11)| (0b0<<8)| (mstatusmpie_clked<<7)| (0b0<<4)| (mstatusmie_clked<<3)| 0b0); //mstatus;
+            csrreg_wen_mstatus = csrreg_wen;
+            break;
+        //case 0x301:
+        //    csr_rdata = MISA;
+        //    break;
+        //case 0x302:
+        //    csr_rdata = medeleg;
+        //    break;
+        //case 0x303:
+        //    csr_rdata = mideleg;
+        //    break;
+        case 0x304:
+            //csr_rdata = mie_clked;
+            csrreg_wen_mie = csrreg_wen;
+            break;
+        case 0x305:
+            //csr_rdata = mtvec_clked;
+            csrreg_wen_mtvec = csrreg_wen;
+            break;
+        //case 0x306:
+        //    csr_rdata = mcounteren;
+        //    break;
+        case 0x340:
+            //csr_rdata = mscratch_clked;
+            csrreg_wen_mscratch = csrreg_wen;
+            break;
+        case 0x341:
+            //csr_rdata = mepc_clked;
+            csrreg_wen_mepc = csrreg_wen;
+            break;
+        //case 0x342:
+        //    csr_rdata = mcause_clked;
+        //    break;
+        //case 0x343:
+        //    csr_rdata = mtval_clked; 
+        //    break;
+        //case 0x344:
+        //    csr_rdata = mip;
+        //    break;
+        case 0xb00:
+            //csr_rdata = mcycle_clked;
+            csrreg_wen_mcycle = csrreg_wen;
+            break;
+        case 0xb02:
+            //csr_rdata = minstret_clked;
+            csrreg_wen_minstret = csrreg_wen;
+            break;
+        case 0xb80:
+            //csr_rdata = mcycleh_clked;
+            csrreg_wen_mcycleh = csrreg_wen;
+            break;
+        case 0xb82:
+            //csr_rdata = minstreth_clked;
+            csrreg_wen_minstreth = csrreg_wen;
+            break;
+        //case 0x7b0:
+        // //   csr_rdata = dcsr_clked;
+        //    break;
+        //case 0x7b1:
+        // //   csr_rdata = dpc_clked;
+        //    break;
+        //case 0x7b2:
+        // //   csr_rdata = dscratch_clked;
+        //    break;
+        //default:
+        //    //csr_rdata =0;
+        //    break;
+    }
 
 //
 

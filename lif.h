@@ -1,5 +1,6 @@
 #ifndef LIF_H
 #define LIF_H
+void lif_clked();
 
 #include "reg.h"
 
