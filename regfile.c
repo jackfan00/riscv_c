@@ -4,6 +4,7 @@
 
 void regfile()
 {
+
     //regfile write
     //ready should always 1
     regfilemerge_o_cmd_ready= (!regfilemerge_o_rsp_valid | (regfilemerge_o_rsp_valid & regfilemerge_o_rsp_ready)) & regfilemerge_o_cmd_valid;
@@ -15,6 +16,7 @@ void regfile()
     //regfileffs_bmask = regfilemerge_o_cmd_rwbyte;
     regfilemerge_o_rsp_valid = regfileffs_cs;
     regfilemerge_o_rsp_rdata = 0;
+    regfilemerge_o_rsp_read = 0;
 
     //regfile read , rs1, rs2
     //only from decode

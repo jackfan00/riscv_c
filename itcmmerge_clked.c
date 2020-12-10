@@ -4,11 +4,12 @@ void itcmmerge_clked()
 {
     //FIFO
     //write first
-    itcmmergeFIFO_clked[itcmmergeFIFO_widx_clked] = itcmmergeFIFO ;
-    itcmmergeFIFO_widx_clked = itcmmergeFIFO_widx;
+    //itcmmergeFIFO_clked[itcmmergeFIFO_widx_clked] = itcmmergeFIFO ;
+    itcmmergeFIFO_clked = itcmmergeFIFO ;
+    //itcmmergeFIFO_widx_clked = itcmmergeFIFO_widx;
 
     //read second
-    itcmmergeFIFO_ridx_clked = itcmmergeFIFO_ridx;
+    //itcmmergeFIFO_ridx_clked = itcmmergeFIFO_ridx;
 
     //roundrobin arbitor
     itcmmerge_ifupri_clked = itcmmerge_ifupri;

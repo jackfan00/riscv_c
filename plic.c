@@ -51,7 +51,10 @@ void plic()
     INTID = maxid[PLIC_INTNUMBER-1];
 
     //plic bus read/write
-    plic_cmd_ready = plic_cmd_valid & 1;
+    //plic_cmd_ready = plic_cmd_valid & (!plic_rsp_valid | (plic_rsp_valid & plic_rsp_ready));
+    plic_cmd_ready = plic_cmd_valid & plic_rsp_ready;
+
+
     plic_regcs = plic_cmd_valid & plic_cmd_ready ? 1 : 0;
     plic_regw = plic_cmd_valid & plic_cmd_ready ? !plic_cmd_read : 0;
     plic_regwdata = plic_cmd_valid & plic_cmd_ready ? plic_cmd_data : 0;
@@ -77,10 +80,13 @@ void plic()
         plic_regrdata = plic_regrdata | (ccr                                            ? INTID_clked : 0    );
     //
     plic_read =     plic_regcs     & (!plic_regw) ? 1 : 
-                    plic_rsp_valid &   plic_rsp_ready ? 0 :
+                    plic_rsp_valid &   plic_rsp_ready & (plic_cmd_valid ? plic_cmd_read:1) ? 0 : //eliminate write case
                     plic_read_clked;
 
-    plic_rsp_valid = plic_regcs & plic_regw? 1 : plic_read_clked;
+    plic_rsp_valid = plic_regcs & plic_regw? 1 :  //combinational loop issue
+                        plic_read_clked;
+
+    plic_rsp_read = plic_read_clked;
 
     plic_rsp_rdata = plic_regrdata;
 

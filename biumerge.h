@@ -16,6 +16,7 @@ REG32 biumerge_o_cmd_data;
 REG8 biumerge_o_cmd_rwbyte;
 BIT biumerge_o_rsp_valid;
 BIT biumerge_o_rsp_ready;
+BIT biumerge_o_rsp_read;
 REG32 biumerge_o_rsp_rdata;
 REG8 biumergeFIFO_widx;
 REG8 biumergeFIFO_ridx;

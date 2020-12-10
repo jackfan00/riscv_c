@@ -3,7 +3,8 @@
 
 #include "reg.h"
 
-REG32 memwb_wdata;
+REG32 memwb_pc;
+BIT memwb_ir16;
 REG8 memwb_idx;
 BIT memwb_valid;
 BIT memwb_ready;
@@ -39,6 +40,7 @@ REG32 memwb2regfile_cmd_data;
 REG8 memwb2regfile_cmd_rwbyte;
 BIT memwb2regfile_rsp_valid;
 BIT memwb2regfile_rsp_ready;
+BIT memwb2regfile_rsp_read;
 REG32 memwb2regfile_rsp_rdata;
 BIT memwb2regfile_stall;
 

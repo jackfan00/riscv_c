@@ -4,11 +4,12 @@ void regfilemerge_clked()
 {
     //FIFO
     //write first
-    regfilemergeFIFO_clked[regfilemergeFIFO_widx_clked] = regfilemergeFIFO ;
-    regfilemergeFIFO_widx_clked = regfilemergeFIFO_widx;
+    //regfilemergeFIFO_clked[regfilemergeFIFO_widx_clked] = regfilemergeFIFO ;
+    regfilemergeFIFO_clked = regfilemergeFIFO ;
+    //regfilemergeFIFO_widx_clked = regfilemergeFIFO_widx;
 
     //read second
-    regfilemergeFIFO_ridx_clked = regfilemergeFIFO_ridx;
+    //regfilemergeFIFO_ridx_clked = regfilemergeFIFO_ridx;
 
     //roundrobin arbitor
     divpri_clked = divpri;

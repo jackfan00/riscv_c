@@ -10,6 +10,9 @@
 #include "ext_write_coderam.h"
 #include "regfile.h"
 #include "clint.h"
+#include "itcmmerge.h"
+#include "dtcmmerge.h"
+#include "regfilemerge.h"
 
 void debug_cpuinfo(){
     int i;
@@ -42,6 +45,9 @@ void setup()
     clockcnt=0;
     clint_mtimecmp_clked=0xffffffff;
     clint_mtimecmph_clked=0xffffffff;
+    itcmmergeFIFO_clked =0xff;
+    dtcmmergeFIFO_clked =0xff;
+    regfilemergeFIFO_clked =0xff;
 
 }
 
@@ -76,7 +82,7 @@ int main(int argc, char *argv[])
         // 4-pipeline stage
 
         //for settle down the combination signal
-        for (i=0;i<15;i++){
+        for (i=0;i<25;i++){
 
             ext_write_coderam();
 
@@ -182,8 +188,8 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) return(1);
-        if (clockcnt >= 0x243c) return(1);
-        //if (fetpc_clked == 0x800001a8) return(1);
+        if (clockcnt >= 0x487c) return(1);
+        //if (fetpc_clked == 0x8000025e) return(1);
         //if (downloadcomplete) return(1);
 
     }

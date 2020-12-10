@@ -4,6 +4,7 @@
 #include "reg.h"
 
 //input
+BIT dec_ir16_clked;
 REG32 dec_rs2v_clked;
 REG32 rs1v;
 REG32 rs2v;
@@ -170,6 +171,7 @@ BIT dec_rwaw_lif_rs2;
 BIT dec_rwaw_lif_rd;
 BIT dec_raw_memwb_rs1;
 BIT dec_raw_memwb_rs2;
+BIT dec_waw_memwb_rd;
 BIT dec_raw_exe_csr;
 BIT dec_raw_memwb_csr;
 

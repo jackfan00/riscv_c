@@ -5,7 +5,7 @@
 
 REG8 itcmmergeFIFO_widx_clked;
 REG8 itcmmergeFIFO_ridx_clked;
-REG8 itcmmergeFIFO_clked[ITCMMERGEFIFODEPTH];
+REG8 itcmmergeFIFO_clked;//[ITCMMERGEFIFODEPTH];
 BIT itcmmerge_ifupri_clked;
 BIT itcmmerge_extpri_clked;
 
@@ -38,6 +38,8 @@ REG32 ext2itcm_cmd_data;
 REG8 ext2itcm_cmd_rwbyte;
 BIT ext2itcm_rsp_valid;
 BIT ext2itcm_rsp_ready;
+BIT ext2itcm_rsp_read;
 REG32 ext2itcm_rsp_rdata;
+BIT itcmmerge_o_rsp_read;
 
 #endif //ITCMMERGE_H

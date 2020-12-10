@@ -7,6 +7,7 @@
 #include "lif.h"
 //#include "memwb_bus.h"
 #include "regfile.h"
+#include "csrreg.h"
 
 
 void decodeinit()
@@ -108,7 +109,7 @@ int s_j_imm;
 //
     decodeinit();
     //
-    dec_flush = exe_branch_pdict_fail | exe_jalr_pdict_fail;
+    dec_flush = exe_branch_pdict_fail | exe_jalr_pdict_fail | csr_exception_flush;
     dec_IR = dec_flush ? NOP : fetchIR_clked;
 
     opcode = dec_IR & 0x7f;
@@ -126,7 +127,7 @@ int s_j_imm;
     rs1x0 = (rs1idx==0);
     rs2x0 = (rs2idx==0);
     rdx0 = (rdidx==0);
-    csridx = i_imm;
+    csridx = aluop_mret ? 0x341 : i_imm;
     //
     s_i_imm = (i_imm > 0x7ff) ? i_imm - 4096 : i_imm ;
     s_s_imm = (s_imm >=(1<<11)) ? s_imm - (1<<12) : s_imm;
@@ -221,7 +222,7 @@ int s_j_imm;
         rs1en = (!rs1x0) & (aluop_csrrw | aluop_csrrs | aluop_csrrc);
         alu_opd1 = rs1en ? real_rs1v : rs1idx;
         rden =!rdx0;
-        dec_csr_ren = (aluop_csrrw | aluop_csrrwi) & (!rdx0);
+        dec_csr_ren = ((aluop_csrrw | aluop_csrrwi) & (!rdx0)) | aluop_mret;
         dec_csr_wen =   aluop_csrrw | aluop_csrrwi |
                     ((aluop_csrrs  | aluop_csrrc ) &  (!rs1x0)) |
                     ((aluop_csrrsi | aluop_csrrci) &  (!rs1x0)) ;
@@ -402,6 +403,8 @@ int s_j_imm;
  aluop_csrrwi=0;
  aluop_csrrsi=0;
  aluop_csrrci=0;
+ aluop_mret =0;
+ aluop_wfi =0;
     switch(func3)
         {
         //SYSTEM_BREAK    
@@ -441,9 +444,9 @@ int s_j_imm;
             break;
        }
 
-       if (dec_ilg){
-           printf("err dec_ilg\n");
-       }
+       //if (dec_ilg){
+       //    printf("err dec_ilg\n");
+       //}
 
        //
        dec_raw_exe_csr =   (dec_csr_wen_clked & (dec_csridx_clked==csridx && dec_csr_ren));
@@ -457,6 +460,7 @@ int s_j_imm;
        //dec_raw_memwb_rs2 =     (memwb_valid & memwb_ready & (memwb_idx==rs2idx && rs2en));   //memwb
        dec_raw_memwb_rs1 =     (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rs1idx && rs1en));   //regfile
        dec_raw_memwb_rs2 =     (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rs2idx && rs2en));   //regfile
+       dec_waw_memwb_rd =      (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rdidx  && rden ));   //regfile
 
        //lif:long command flag rwaw(read/write-after-write) check      
        dec_rwaw_lif_rs1 =0; 
@@ -488,10 +492,11 @@ int s_j_imm;
        //             aluop_mul | aluop_mulh | aluop_mulhsu | aluop_mulhu ? MULBUSID : EXEBUSID;
 
        
-
+        // if conflict at regfile stage, dont need to stall
+        // regfile read always available, dont stall
        dec_stall =  (dec_rwaw_lif_rs1 & (!dec_raw_memwb_rs1)) | 
                     (dec_rwaw_lif_rs2 & (!dec_raw_memwb_rs2)) | 
-                    dec_rwaw_lif_rd  ? 1 :
+                    (dec_rwaw_lif_rd  & (!dec_waw_memwb_rd )) ? 1 :
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
                      ((dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                     0;
@@ -508,7 +513,7 @@ int s_j_imm;
 
        real_rs2v = !rs2en ? 0 :
                    dec_raw_exe_rs2 & (!dec_aluload_clked) ? exe_res :
-                   dec_raw_memwb_rs2 ? memwb_wdata : rs2v;
+                   dec_raw_memwb_rs2 ? regfileffs_wdat : rs2v;
 
        dec_ras_push = (opcode==OPCODE_JAL  & (rdidx==1 || rdidx==5)) |
                (opcode==OPCODE_JALR & (rdidx==1 || rdidx==5) & (rs1idx!=1 && rs1idx!=5)) |

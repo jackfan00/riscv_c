@@ -36,7 +36,7 @@ void regfilemerge()
     regfilearbitor2(mul2regfile_cmd_valid, memwb2regfile_cmd_valid, mulpri_clked, &arbitstage1_omulpri_p, &arbitstage1_mul_o_cmd_valid_p);
     regfilearbitor2(arbitstage1_div_o_cmd_valid_p, arbitstage1_mul_o_cmd_valid_p, s2pri_clked, &s2pri_p, &o_cmd_valid_p);
 
-    regfilemerge_o_cmd_valid = (o_cmd_valid_p) & (!regfilemergeFIFOfull);
+    regfilemerge_o_cmd_valid = (o_cmd_valid_p) & ((!regfilemergeFIFOfull));// | (regfilemergeFIFO_ren));
     regfilemerge_o_cmd_read = regfilemerge_o_cmd_valid ? (
                                         !(s2pri_p) ? ((arbitstage1_odivpri_p) ? lsu2regfile_cmd_read : div2regfile_cmd_read) : 
                                                       ((arbitstage1_omulpri_p) ? memwb2regfile_cmd_read : mul2regfile_cmd_read)
@@ -62,54 +62,64 @@ void regfilemerge()
     memwb2regfile_cmd_ready= ((s2pri_p))  &  ((arbitstage1_omulpri_p)) & regfilemerge_o_cmd_ready;
 
     //wid: 0:div, 1:lsu, 2:mul, 3:memwb
-    regfilemergeFIFO_wen = ((regfilemerge_o_cmd_valid) & regfilemerge_o_cmd_ready);
+    //regfilemergeFIFO_wen should always 0, because regfile only write.
+    regfilemergeFIFO_wen = (regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready & regfilemerge_o_cmd_read);
     //store three arbitor2 block priority value 
     //0 means current selected, so priority will change to 0(low) in next clock
-    divpri = regfilemergeFIFO_wen ? arbitstage1_odivpri_p : divpri_clked;
-    mulpri = regfilemergeFIFO_wen ? arbitstage1_omulpri_p : mulpri_clked;
-    s2pri  = regfilemergeFIFO_wen ? s2pri_p : s2pri_clked;
+    divpri = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready ? arbitstage1_odivpri_p : divpri_clked;
+    mulpri = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready ? arbitstage1_omulpri_p : mulpri_clked;
+    s2pri  = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready ? s2pri_p               : s2pri_clked;
 
     regfilemergeFIFO_wid =  (!s2pri) & (!divpri) ? 0 :  //div
                             (!s2pri) & ( divpri) ? 1 :  //lsu
-                            ( s2pri) & (!divpri) ? 2 :  //mul
+                            ( s2pri) & (!mulpri) ? 2 :  //mul
                                                    3 ;  //memwb
 
-    regfilemergeFIFO = regfilemergeFIFO_wen ? regfilemergeFIFO_wid : regfilemergeFIFO_clked[regfilemergeFIFO_widx_clked];
-    nxtwrapped_regfilemergeFIFO_widx = ((regfilemergeFIFO_widx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  regfilemergeFIFO_widx_clked+1);
-    regfilemergeFIFO_widx = regfilemergeFIFO_wen ? nxtwrapped_regfilemergeFIFO_widx : 
+    regfilemergeFIFO = regfilemergeFIFO_wen ? regfilemergeFIFO_wid : 
+                        regfilemergeFIFO_ren ? 0xff :
+                        regfilemergeFIFO_clked;//[regfilemergeFIFO_widx_clked];
+    //nxtwrapped_regfilemergeFIFO_widx = ((regfilemergeFIFO_widx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  regfilemergeFIFO_widx_clked+1);
+    //regfilemergeFIFO_widx = regfilemergeFIFO_wen ? nxtwrapped_regfilemergeFIFO_widx : 
                             regfilemergeFIFO_widx_clked;
 
     //fifo full condition : if next fifo write reach read-idx
-    regfilemergeFIFOfull = (nxtwrapped_regfilemergeFIFO_widx==regfilemergeFIFO_ridx_clked);
+    regfilemergeFIFOfull = (regfilemergeFIFO_clked!=0xff);//(nxtwrapped_regfilemergeFIFO_widx==regfilemergeFIFO_ridx_clked);
 
 
     //fifo empty definition : if current write-idx equal to current read-idx
-    regfilemergeFIFOempty = (regfilemergeFIFO_widx_clked==regfilemergeFIFO_ridx_clked);
-    regfilemergeFIFO_rid = regfilemergeFIFOempty ? regfilemergeFIFO_wid : regfilemergeFIFO_clked[regfilemergeFIFO_ridx_clked];
+    regfilemergeFIFOempty = !regfilemergeFIFOfull;//(regfilemergeFIFO_widx_clked==regfilemergeFIFO_ridx_clked);
+    regfilemergeFIFO_rid =  regfilemerge_o_cmd_valid & (!regfilemerge_o_cmd_read) ? regfilemergeFIFO_wid : //for write bypass
+                            //regfilemergeFIFOempty ? regfilemergeFIFO_wid : 
+                            regfilemergeFIFO_clked;//[regfilemergeFIFO_ridx_clked];
 
     //rsp accept and move regfilemergeFIFO_ridx to next item
-    regfilemergeFIFO_ren = regfilemerge_o_rsp_valid & regfilemerge_o_rsp_ready;
-    regfilemergeFIFO_ridx = regfilemergeFIFO_ren ? ((regfilemergeFIFO_ridx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  regfilemergeFIFO_ridx_clked+1) : 
-                            regfilemergeFIFO_ridx_clked;
+    regfilemergeFIFO_ren = regfilemerge_o_rsp_valid & regfilemerge_o_rsp_ready & regfilemerge_o_rsp_read & 
+                            (regfilemerge_o_cmd_valid?regfilemerge_o_cmd_read:1); //eliminate write case
+    //regfilemergeFIFO_ridx = regfilemergeFIFO_ren ? ((regfilemergeFIFO_ridx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  regfilemergeFIFO_ridx_clked+1) : 
+    //                        regfilemergeFIFO_ridx_clked;
 
     //
+    div2regfile_rsp_read = (regfilemergeFIFO_rid==0) & regfilemerge_o_rsp_read;
     div2regfile_rsp_valid = (regfilemergeFIFO_rid==0) & regfilemerge_o_rsp_valid;
     div2regfile_rsp_rdata = regfilemerge_o_rsp_rdata;
+    lsu2regfile_rsp_read = (regfilemergeFIFO_rid==1) & regfilemerge_o_rsp_read;
     lsu2regfile_rsp_valid = (regfilemergeFIFO_rid==1) & regfilemerge_o_rsp_valid;
     lsu2regfile_rsp_rdata = regfilemerge_o_rsp_rdata;
+    mul2regfile_rsp_read = (regfilemergeFIFO_rid==2) & regfilemerge_o_rsp_read;
     mul2regfile_rsp_valid = (regfilemergeFIFO_rid==2) & regfilemerge_o_rsp_valid;
     mul2regfile_rsp_rdata = regfilemerge_o_rsp_rdata;
+    memwb2regfile_rsp_read = (regfilemergeFIFO_rid==3) & regfilemerge_o_rsp_read;
     memwb2regfile_rsp_valid = (regfilemergeFIFO_rid==3) & regfilemerge_o_rsp_valid;
     memwb2regfile_rsp_rdata = regfilemerge_o_rsp_rdata;
 
     regfilemerge_o_rsp_ready =  regfilemergeFIFO_rid==0 ? div2regfile_rsp_ready :
                                 regfilemergeFIFO_rid==1 ? lsu2regfile_rsp_ready : 
                                 regfilemergeFIFO_rid==2 ? mul2regfile_rsp_ready : 
-                                regfilemergeFIFO_rid==3 ? memwb2regfile_rsp_ready : 0
+                                regfilemergeFIFO_rid==3 ? memwb2regfile_rsp_ready : 1
                             ;
 
-    regfile_wrdiv  = regfilemergeFIFO_wen & (regfilemergeFIFO_wid==0);
-    regfile_wrload = regfilemergeFIFO_wen & (regfilemergeFIFO_wid==1);
+    regfile_wrdiv  = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready & (regfilemergeFIFO_wid==0);
+    regfile_wrload = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready & (regfilemergeFIFO_wid==1);
 
 }
 

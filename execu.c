@@ -91,7 +91,7 @@ void execu()
     csr_res = dec_aluop_csrset_clked ? set_res :
               dec_aluop_csrclr_clked ? clr_res :
               dec_aluop_csrw_clked   ? csrw_res : 
-              0;
+              dec_alu_opd2_clked;  //mret's mepc reg value
 
     //LSU generation
     //normal itcm/dtcm load will not have lif_loadfull condition
@@ -106,14 +106,14 @@ void execu()
     //
     //when lsu load command, the rsp will be sent to regfile
     //so rsp_ready is from lsu2regfile_cmd_ready
-    lsu_rsp_ready = (!lsu_cmd_read ? 1 : lsu2regfile_cmd_ready) & lsu_rsp_valid ;                     
+    lsu_rsp_ready = (!lsu_cmd_read ? 1 : lsu2regfile_cmd_ready) ;//& lsu_rsp_valid ;                     
     //additional info , use for rsp write to regfile, 
     //need busfifo (lsubussplit) store these info
     lsu_cmd_regidx =  dec_rdidx_clked;  
     lsu_cmd_rden = dec_aluload_clked;
     //
     //lsu2regfile 
-    lsu2regfile_cmd_valid = lsu_rsp_valid & lsu_rsp_rden;
+    lsu2regfile_cmd_valid = lsu_rsp_valid & lsu_rsp_read & lsu_rsp_rden;
     lsu2regfile_cmd_read = 0;
     lsu2regfile_cmd_adr = lsu_rsp_regidx;
     lsu2regfile_cmd_data = lsu_rsp_rdata;
@@ -148,7 +148,7 @@ void execu()
     mul_cmd_opmode = dec_aluop_mul_clked + (dec_aluop_mulh_clked<<1) + (dec_aluop_mulhsu_clked<<2)+(dec_aluop_mulhu_clked<<3);
     mul_stall = mul_cmd_valid & (!mul_cmd_ready);
 
-    mul_rsp_ready = mul2regfile_cmd_ready & mul_rsp_valid;                     
+    mul_rsp_ready = mul2regfile_cmd_ready ;//& mul_rsp_valid;                     
     //mul2regfile 
     //mul dedicate for execu, no others use it
     //and produce result at fixed 2 cycles
@@ -169,7 +169,7 @@ void execu()
     div_cmd_opmode = dec_aluop_div_clked + (dec_aluop_divu_clked<<1) + (dec_aluop_rem_clked<<2)+(dec_aluop_remu_clked<<3);
     div_stall = div_cmd_valid & (!div_cmd_ready);
 
-    div_rsp_ready = div2regfile_cmd_ready & div_rsp_valid;                     
+    div_rsp_ready = div2regfile_cmd_ready ;//& div_rsp_valid;                     
     //need to store these info for futher use
     //because div cycle is not fixed and may longer than 2 
     div_cmd_regidx = dec_rdidx_clked;  

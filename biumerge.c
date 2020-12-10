@@ -38,8 +38,8 @@ void biumerge()
     lsu2biu_cmd_ready = (oifupri_p) & biumerge_o_cmd_ready;
 
     //wid: 0:ifu, 1:lsu
-    biumergeFIFO_wen = ((biumerge_o_cmd_valid) & biumerge_o_cmd_ready);
-    biumerge_ifupri = biumergeFIFO_wen ? oifupri_p : biumerge_ifupri_clked;
+    biumergeFIFO_wen = (biumerge_o_cmd_valid & biumerge_o_cmd_ready & biumerge_o_cmd_read);
+    biumerge_ifupri = biumerge_o_cmd_valid & biumerge_o_cmd_ready ? oifupri_p : biumerge_ifupri_clked;
     biumergeFIFO_wid = biumerge_ifupri ? 1 : 0;
     biumergeFIFO = biumergeFIFO_wen ? biumergeFIFO_wid : biumergeFIFO_clked[biumergeFIFO_widx_clked];
     nxtwrapped_biumergeFIFO_widx = ((biumergeFIFO_widx_clked==(BIUMERGEFIFODEPTH-1)) ? 0 :  biumergeFIFO_widx_clked+1);
@@ -52,15 +52,19 @@ void biumerge()
 
     //fifo empty definition : if current write-idx equal to current read-idx
     biumergeFIFOempty = (biumergeFIFO_widx_clked==biumergeFIFO_ridx_clked);
-    biumergeFIFO_rid = biumergeFIFOempty ? biumergeFIFO_wid : biumergeFIFO_clked[biumergeFIFO_ridx_clked];
+    biumergeFIFO_rid =  biumerge_o_cmd_valid & (!biumerge_o_cmd_read) ? biumergeFIFO_wid : //for write bypass
+                        biumergeFIFOempty ? biumergeFIFO_wid : biumergeFIFO_clked[biumergeFIFO_ridx_clked];
 
     //rsp accept and move biumergeFIFO_ridx to next item
-    biumergeFIFO_ren = biumerge_o_rsp_valid & biumerge_o_rsp_ready;
+    biumergeFIFO_ren = biumerge_o_rsp_valid & biumerge_o_rsp_ready & biumerge_o_rsp_read & 
+                        (biumerge_o_cmd_valid?biumerge_o_cmd_read:1);  //eliminate write case
     biumergeFIFO_ridx = biumergeFIFO_ren ? ((biumergeFIFO_ridx_clked==(BIUMERGEFIFODEPTH-1)) ? 0 :  biumergeFIFO_ridx_clked+1) : 
                             biumergeFIFO_ridx_clked;
 
+    ifu2biu_rsp_read  = (!biumergeFIFO_rid) & biumerge_o_rsp_read;
     ifu2biu_rsp_valid = (!biumergeFIFO_rid) & biumerge_o_rsp_valid;
     ifu2biu_rsp_rdata = biumerge_o_rsp_rdata;
+    lsu2biu_rsp_read  = ( biumergeFIFO_rid) & biumerge_o_rsp_read;
     lsu2biu_rsp_valid = ( biumergeFIFO_rid) & biumerge_o_rsp_valid;
     lsu2biu_rsp_rdata = biumerge_o_rsp_rdata;
     biumerge_o_rsp_ready = biumergeFIFO_rid ? lsu2biu_rsp_ready : ifu2biu_rsp_ready;

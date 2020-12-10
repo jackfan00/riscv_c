@@ -3,8 +3,6 @@
 #include "reg.h"
 //input
 BIT fetch_stall;
-BIT ifu_rsp_valid;
-REG32 ifu_rsp_rdata;
 REG16 memIR_hi16_clked;
 BIT fetch_flush;
 REG32 fetchIR_clked;
@@ -24,10 +22,11 @@ REG32 ifu_cmd_adr_clked;
 REG16 fetchIR16_clked;
 
 //output
+
+BIT ifu_rsp_valid;
+REG32 ifu_rsp_rdata;
 BIT ifu_rsp_ready;
-REG16 memIR_hi16;
-REG32 fetchIR;
-REG32 pc;
+BIT ifu_rsp_read;
 BIT ifu_cmd_valid;
 BIT ifu_cmd_read;
 REG32 ifu_cmd_adr;
@@ -44,13 +43,18 @@ BIT new_midnxtpc_part2_fg;
 BIT fet_ras_pop;
 BIT fet_ir16;
 REG8 remain_ir16s;
-
+REG16 memIR_hi16;
+REG32 fetchIR;
+REG32 pc;
 REG32 memIR;
 REG32 memIR32;
 REG16 memIR16;
 REG8 irlsb10;
 REG8 iroffset;
 REG32 nxtpc;
-
+BIT ddd;
+BIT ddd1;
+BIT ddd2;
+BIT ddd3;
 #endif // FETCH_H
 

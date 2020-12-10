@@ -5,6 +5,7 @@
 #include "execu.h"
 #include "fetch.h"
 #include "memwb.h"
+#include "lif.h"
 
 //case1:
 // EXT interrupt(which is not precisely exception) affect the memwb stage immediately, it jump to interrupt handler address
@@ -29,6 +30,7 @@ void csrreg()
     BIT mtvecmode;
     BIT notstall;
     BIT notflush;
+
 
     //init zero
     csrreg_wen_mscratch  = 0;
@@ -94,7 +96,7 @@ void csrreg()
             csr_rdata = mcause_clked;
             break;
         case 0x343:
-            csr_rdata = mtval_clked;
+            csr_rdata = mtval_clked; 
             break;
         case 0x344:
             csr_rdata = mip;
@@ -160,8 +162,11 @@ void csrreg()
     //mepc
     intpc = mtvecmode ? mtvec_clked+(intcause<<2) : mtvec_clked;
     exceppc = mtvec_clked;
-    mepc = csr_inthappen ? intpc :
-           memwb_excephappen ? exceppc :
+    csrtrappc = csr_inthappen ? intpc :
+           memwb_excephappen ? exceppc : 
+           memwb_mret ? exe_res_clked : 0;
+    mepc = csr_inthappen ? memwb_pc + (memwb_ir16 ? 2 : 4) :
+           memwb_excephappen ? memwb_pc :
            csrreg_wen_mepc ? csrreg_wdata : mepc_clked;
 
     //mstatus
@@ -190,12 +195,18 @@ void csrreg()
     mcycleh = csrreg_wen_mcycleh ? csrreg_wdata : 
                         (mcycle_clked==0xffffffff) ? mcycleh_clked+1 : mcycleh_clked;
     
-    notstall = !(fetch_stall|dec_stall|exe_stall|memwb_stall);
+    notstall = !(fetch_stall|dec_stall|exe_stall|memwb_stall|csr_exception_stall);
     notflush = !(fetch_flush|dec_flush);
 
     minstret =  csrreg_wen_minstret  ? csrreg_wdata : 
                 notstall & notflush ? minstret_clked+1 : minstret_clked;
     minstreth = csrreg_wen_minstreth ? csrreg_wdata : 
                         (minstret_clked==0xffffffff) ? minstreth_clked+1 : minstreth_clked;
+
+    csr_cmd_exception_valid = csr_inthappen|memwb_excephappen|memwb_mret;
+    csr_cmd_exception_ready = ((lif_divrdidx_clked==0) & (lif_loadrdidx_clked==0)) & csr_cmd_exception_valid;
+    csr_exception_stall = csr_cmd_exception_valid & (!csr_cmd_exception_ready);
+    csr_exception_flush = csr_cmd_exception_valid & ( csr_cmd_exception_ready);
+
 
 }

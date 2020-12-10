@@ -14,6 +14,7 @@ REG32 ifusplit_o_bus_cmd_data[IFUSPLITTARGETNUM];
 REG8 ifusplit_o_bus_cmd_rwbyte[IFUSPLITTARGETNUM];
 BIT ifusplit_o_bus_rsp_valid[IFUSPLITTARGETNUM];
 BIT ifusplit_o_bus_rsp_ready[IFUSPLITTARGETNUM];
+BIT ifusplit_o_bus_rsp_read[IFUSPLITTARGETNUM];
 REG32 ifusplit_o_bus_rsp_rdata[IFUSPLITTARGETNUM];
 REG8 ifutransacFIFO_clked[IFUSPLIFIFODEPTH];
 REG8 ifutransacFIFO_widx_clked;
@@ -27,6 +28,7 @@ REG32 ifusplit_i_bus_cmd_data;
 REG8 ifusplit_i_bus_cmd_rwbyte;
 BIT ifusplit_i_bus_rsp_valid;
 BIT ifusplit_i_bus_rsp_ready;
+BIT ifusplit_i_bus_rsp_read;
 REG32 ifusplit_i_bus_rsp_rdata;
 REG8 ifutransacFIFO;
 REG8 ifutransacFIFO_wid;
@@ -47,6 +49,7 @@ REG32 ifu2biu_cmd_data;
 REG8 ifu2biu_cmd_rwbyte;
 BIT ifu2biu_rsp_valid;
 BIT ifu2biu_rsp_ready;
+BIT ifu2biu_rsp_read;
 REG32 ifu2biu_rsp_rdata;
 
 BIT ifu2itcm_cmd_valid;
@@ -57,6 +60,7 @@ REG32 ifu2itcm_cmd_data;
 REG8 ifu2itcm_cmd_rwbyte;
 BIT ifu2itcm_rsp_valid;
 BIT ifu2itcm_rsp_ready;
+BIT ifu2itcm_rsp_read;
 REG32 ifu2itcm_rsp_rdata;
 
 #endif //IFUBUSSPLIT_H

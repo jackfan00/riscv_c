@@ -86,6 +86,7 @@ void mul()
         mul_rsp_regidx = 0;
         mul_rsp_rden   = 0;
     }
+    mul_rsp_read = mul_rsp_valid;
     mul_rsp_rdata = mulres;
 
     

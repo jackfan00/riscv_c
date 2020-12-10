@@ -44,6 +44,7 @@ REG32 plic_cmd_adr;
 REG32 plic_cmd_data;
 BIT plic_rsp_valid;
 BIT plic_rsp_ready;
+BIT plic_rsp_read;
 REG32 plic_rsp_rdata;
 BIT plic_read;
 REG32 plic_regwadr;

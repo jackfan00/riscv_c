@@ -6,6 +6,7 @@
 #include "memwb.h"
 #include "opcode_define.h"
 #include "ext_write_coderam.h"
+#include "csrreg.h"
 
 //REG32 toir32 (REG16 ir16)
 //{
@@ -103,7 +104,7 @@ void fetch()
     //codebus_connect();
 
     //instruction from code-ram
-    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & ifu_rsp_valid;
+    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & (!csr_exception_stall); // & ifu_rsp_valid;
     //
     //keep memIR when rspvalid=0
     memIR = ifu_rsp_rdata ;
@@ -122,14 +123,19 @@ void fetch()
     }
     iroffset = fet_ir16 ? 2 : 4;
     //mini deocde for branchjmp
-    fetdec(memIR32);
+    //fetdec(memIR32);
+    fetdec(fetchIR);
+    //merge exception to jmp signal control
+    branchjmp_pc = csr_exception_flush ? csrtrappc : branchjmp_pc;
+    branchjmp = branchjmp | csr_exception_flush;
 
     //
     // this paramter use for calculate remain_ir16s: (number of instructions which not consume yet)
-    remain_ir16s =  downloadstart|downloadper_clked? remain_ir16s_clked:
+    remain_ir16s =  downloadstart|downloadper_clked? 0://remain_ir16s_clked:
                     exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp ? (nxtpc&0x02 ? -1 : 0) :
                     remain_ir16s_clked - 
-                    ((remain_ir16s_clked>>7) ? 0 : (fet_ir16?1:2)) + //in negative case, doesnt cousume ir. 
+                    //in negative case or flush, doesnt cousume ir. 
+                    ((remain_ir16s_clked>>7)|fetch_flush ? 0 : (fet_ir16?1:2)) + 
                     (ifu_rsp_valid & ifu_rsp_ready?2:0);
     
 
@@ -142,12 +148,17 @@ void fetch()
 
     //req new instr when remain ir16 count less than 2
     ifu_cmd_valid = downloadstart|downloadper_clked? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
-    ifu_cmd_adr = (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
+    ifu_cmd_adr =   (remain_ir16s>>7) ? nxtpc :
+                    (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
 
     
+    //ddd1 = (remain_ir16s>=0);
+    //ddd2 = (!(remain_ir16s_clked>>7));
+    //ddd =  (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) ;
+    //ddd3 = ifu_cmd_ready ;
     //for remain_ir16s_clked value is negative cycle, its pc is invalid dont update.
     pc = (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
-         (remain_ir16s==2 )|
+         (remain_ir16s==2 ) |
          (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : fetpc_clked;
 
     //

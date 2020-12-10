@@ -37,6 +37,7 @@ REG32 clint_cmd_adr;
 REG32 clint_cmd_data;
 BIT clint_rsp_valid;
 BIT clint_rsp_ready;
+BIT clint_rsp_read;
 REG32 clint_rsp_rdata;
 BIT clint_read;
 

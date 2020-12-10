@@ -16,11 +16,12 @@ void peripheral()
 
     //regrdata
     peripheral_read =   peripheral_regcs     & (!peripheral_regwr) ? 1 : 
-                        peripheral_rsp_valid &   peripheral_rsp_ready ? 0 :
+                        peripheral_rsp_valid &   peripheral_rsp_ready &  (peripheral_cmd_valid ? peripheral_cmd_read:1) ? 0 :  //eliminate write case
                         peripheral_read_clked;
 
     peripheral_rsp_valid = peripheral_regcs & peripheral_regwr? 1 : peripheral_read_clked;
 
+    peripheral_rsp_read = peripheral_read_clked;
     //faked
     peripheral_rsp_rdata = device_reg;
 

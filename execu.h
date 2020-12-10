@@ -4,6 +4,8 @@
  #include "reg.h"
 
     //input
+    BIT exe_ir16_clked;
+    REG32 exe_pc_clked;
     REG32 lsu_misaligned_adr_clked;
     BIT exe_aluop_ecall_clked;
     BIT exe_aluop_break_clked;
@@ -21,6 +23,7 @@
     BIT exe_lw_clked;
     BIT exe_dec_ilg_clked;
     BIT lsu_rsp_valid;
+    BIT lsu_rsp_read;
     BIT lsu_rsp_ready;
     BIT lsu_rsp_rden;
     REG8 lsu_rsp_regidx;
@@ -67,6 +70,7 @@
     REG8 mul_cmd_regidx;
     BIT mul_cmd_rden;
     BIT mul_rsp_valid;
+    BIT mul_rsp_read;
     REG32 mul_rsp_rdata;
     REG8 mul_rsp_regidx;
     BIT mul_rsp_rden;
@@ -80,6 +84,7 @@
     BIT div_cmd_rden;
     BIT div_rsp_valid;
     BIT div_rsp_ready;
+    BIT div_rsp_read;
     REG32 div_rsp_rdata;
     BIT div_rsp_rden;
     REG8 div_rsp_regidx;
@@ -93,6 +98,7 @@
     REG8 mul2regfile_cmd_rwbyte;
     BIT mul2regfile_rsp_valid;
     BIT mul2regfile_rsp_ready;
+    BIT mul2regfile_rsp_read;
     REG32 mul2regfile_rsp_rdata;
 
     BIT div2regfile_cmd_valid;
@@ -103,6 +109,7 @@
     REG8 div2regfile_cmd_rwbyte;
     BIT div2regfile_rsp_valid;
     BIT div2regfile_rsp_ready;
+    BIT div2regfile_rsp_read;
     REG32 div2regfile_rsp_rdata;
 
 
@@ -114,6 +121,7 @@
     REG8 lsu2regfile_cmd_rwbyte;
     BIT lsu2regfile_rsp_valid;
     BIT lsu2regfile_rsp_ready;
+    BIT lsu2regfile_rsp_read;
     REG32 lsu2regfile_rsp_rdata;
 
     BIT exe_branch_taken;

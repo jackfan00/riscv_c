@@ -2,6 +2,7 @@
 #include "decode.h"
 #include "execu.h"
 #include "memwb.h"
+#include "csrreg.h"
 
 void decode_clked()
 {
@@ -14,7 +15,7 @@ void decode_clked()
     //}
 
 
-if ((!exe_stall) && (!memwb_stall)){
+if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  decpc_clked = fetpc_clked;
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
@@ -24,69 +25,70 @@ if ((!exe_stall) && (!memwb_stall)){
  dec_rs1idx_clked     = rs1idx;
  dec_rs2idx_clked     = rs2idx;
  dec_rdidx_clked      = rdidx;
- dec_rs1en_clked      = rs1en  & (!dec_stall);
- dec_rs2en_clked      = rs2en  & (!dec_stall);
- dec_rden_clked       = rden     & (!dec_stall);
- dec_aluop_sub_clked  = aluop_sub  & (!dec_stall);
- dec_aluop_add_clked  = aluop_add;
- dec_aluop_sll_clked  = aluop_sll  & (!dec_stall);
- dec_aluop_slt_clked  = aluop_slt  & (!dec_stall);
- dec_aluop_sltu_clked = aluop_sltu  & (!dec_stall);
- dec_aluop_xor_clked  = aluop_xor  & (!dec_stall);
- dec_aluop_sra_clked  = aluop_sra  & (!dec_stall);
- dec_aluop_srl_clked  = aluop_srl  & (!dec_stall);
- dec_aluop_or_clked   = aluop_or  & (!dec_stall);
- dec_aluop_and_clked  = aluop_and  & (!dec_stall);
- dec_dec_ilg_clked    = dec_ilg  & (!dec_stall);
+ dec_aluop_add_clked  = aluop_add; 
  dec_aluopimm_clked   = aluopimm;
- dec_aluop_clked      = aluop  & (!dec_stall);
- dec_aluload_clked    = aluload  & (!dec_stall);
- dec_alustore_clked   = alustore & (!dec_stall);
- dec_alujal_clked     = alujal  & (!dec_stall);
- dec_alujalr_clked    = alujalr  & (!dec_stall);
- dec_alului_clked     = alului  & (!dec_stall);
- dec_aluauipc_clked   = aluauipc  & (!dec_stall);
- dec_alubranch_clked  = alubranch & (!dec_stall);
- dec_alumiscmem_clked = alumiscmem  & (!dec_stall);
- dec_alusystem_clked  = alusystem  & (!dec_stall);
- dec_aluop_beq_clked  = aluop_beq  & (!dec_stall);
- dec_aluop_bne_clked  = aluop_bne  & (!dec_stall);
- dec_aluop_blt_clked  = aluop_blt  & (!dec_stall);
- dec_aluop_bge_clked  = aluop_bge  & (!dec_stall);
- dec_aluop_bltu_clked = aluop_bltu & (!dec_stall);
- dec_aluop_bgeu_clked = aluop_bgeu & (!dec_stall);
- dec_aluop_lb_clked   = aluop_lb  & (!dec_stall);
- dec_aluop_lh_clked   = aluop_lh  & (!dec_stall);
- dec_aluop_lw_clked   = aluop_lw  & (!dec_stall);
- dec_aluop_lbu_clked  = aluop_lbu  & (!dec_stall);
- dec_aluop_lhu_clked  = aluop_lhu  & (!dec_stall);
- dec_aluop_sb_clked   = aluop_sb  & (!dec_stall);
- dec_aluop_sh_clked   = aluop_sh  & (!dec_stall);
- dec_aluop_sw_clked   = aluop_sw  & (!dec_stall);
- dec_aluop_mul_clked   = aluop_mul  & (!dec_stall);
- dec_aluop_mulh_clked   = aluop_mulh  & (!dec_stall);
- dec_aluop_mulhsu_clked   = aluop_mulhsu  & (!dec_stall);
- dec_aluop_mulhu_clked   = aluop_mulhu  & (!dec_stall);
- dec_aluop_div_clked   = aluop_div  & (!dec_stall);
- dec_aluop_divu_clked   = aluop_divu  & (!dec_stall);
- dec_aluop_rem_clked   = aluop_rem  & (!dec_stall);
- dec_aluop_remu_clked   = aluop_remu  & (!dec_stall);
- dec_aluop_csrset_clked = aluop_csrset & (!dec_stall);
- dec_aluop_csrclr_clked = aluop_csrclr & (!dec_stall);
- dec_aluop_ecall_clked = aluop_ecall & (!dec_stall);
- dec_aluop_break_clked = aluop_break & (!dec_stall);
- dec_aluop_csrw_clked = aluop_csrw & (!dec_stall);
- dec_csr_wen_clked = dec_csr_wen & (!dec_stall);
- dec_csr_ren_clked = dec_csr_ren & (!dec_stall);
+ dec_rs1en_clked      = rs1en                    & (!dec_stall) &(!csr_exception_flush);
+ dec_rs2en_clked      = rs2en                    & (!dec_stall) &(!csr_exception_flush);
+ dec_rden_clked       = rden                     & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sub_clked  = aluop_sub                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sll_clked  = aluop_sll                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_slt_clked  = aluop_slt                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sltu_clked = aluop_sltu               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_xor_clked  = aluop_xor                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sra_clked  = aluop_sra                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_srl_clked  = aluop_srl                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_or_clked   = aluop_or                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_and_clked  = aluop_and                & (!dec_stall) &(!csr_exception_flush);
+ dec_dec_ilg_clked    = dec_ilg                  & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_clked      = aluop                    & (!dec_stall) &(!csr_exception_flush);
+ dec_aluload_clked    = aluload                  & (!dec_stall) &(!csr_exception_flush);
+ dec_alustore_clked   = alustore                 & (!dec_stall) &(!csr_exception_flush);
+ dec_alujal_clked     = alujal                   & (!dec_stall) &(!csr_exception_flush);
+ dec_alujalr_clked    = alujalr                  & (!dec_stall) &(!csr_exception_flush);
+ dec_alului_clked     = alului                   & (!dec_stall) &(!csr_exception_flush);
+ dec_aluauipc_clked   = aluauipc                 & (!dec_stall) &(!csr_exception_flush);
+ dec_alubranch_clked  = alubranch                & (!dec_stall) &(!csr_exception_flush);
+ dec_alumiscmem_clked = alumiscmem               & (!dec_stall) &(!csr_exception_flush);
+ dec_alusystem_clked  = alusystem                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_beq_clked  = aluop_beq                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_bne_clked  = aluop_bne                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_blt_clked  = aluop_blt                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_bge_clked  = aluop_bge                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_bltu_clked = aluop_bltu               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_bgeu_clked = aluop_bgeu               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_lb_clked   = aluop_lb                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_lh_clked   = aluop_lh                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_lw_clked   = aluop_lw                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_lbu_clked  = aluop_lbu                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_lhu_clked  = aluop_lhu                & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sb_clked   = aluop_sb                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sh_clked   = aluop_sh                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_sw_clked   = aluop_sw                 & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_mul_clked   = aluop_mul               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_mulh_clked   = aluop_mulh             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_mulhsu_clked   = aluop_mulhsu         & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_mulhu_clked   = aluop_mulhu           & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_div_clked   = aluop_div               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_divu_clked   = aluop_divu             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_rem_clked   = aluop_rem               & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_remu_clked   = aluop_remu             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_csrset_clked = aluop_csrset           & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_csrclr_clked = aluop_csrclr           & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_ecall_clked = aluop_ecall             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_break_clked = aluop_break             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_csrw_clked = aluop_csrw               & (!dec_stall) &(!csr_exception_flush);
+ dec_csr_wen_clked = dec_csr_wen                 & (!dec_stall) &(!csr_exception_flush);
+ dec_csr_ren_clked = dec_csr_ren                 & (!dec_stall) &(!csr_exception_flush);
+ dec_ras_push_clked   = dec_ras_push             & (!dec_stall) &(!csr_exception_flush);
+ dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail & (!dec_stall) &(!csr_exception_flush);
+ dec_mulh_fuse_clked = dec_mulh_fuse             & (!dec_stall) &(!csr_exception_flush);
+ dec_aluop_mret_clked = aluop_mret               & (!dec_stall) &(!csr_exception_flush);
+ dec_predict_jmp_clked = fet_predict_jmp_clked   & (!dec_stall) &(!csr_exception_flush);
  dec_csridx_clked = csridx;
- dec_ras_push_clked   = dec_ras_push  & (!dec_stall);
- dec_predict_jmp_clked = fet_predict_jmp_clked;
  cti_pc_clked          = cti_pc;
- dec_jalr_pdict_fail_clked = dec_jalr_pdict_fail & (!dec_stall);
- dec_mulh_fuse_clked = dec_mulh_fuse  & (!dec_stall);
- dec_aluop_mret_clked = aluop_mret  & (!dec_stall);
  //use for mtval
  dec_IR_clked = fet_ir16_clked ? fetchIR16_clked & (!dec_stall) : fetchIR_clked & (!dec_stall) ;
+ dec_ir16_clked = fet_ir16_clked;
 
 }
 

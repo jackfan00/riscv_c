@@ -19,6 +19,8 @@ void memwb()
     memwb_IR = exe_IR_clked;
     memwb_excephappen = memwb_dec_ilg|memwb_load_misaligned|memwb_store_misaligned|memwb_ecall|memwb_break;
     memwb_mret = exe_mret_clked;
+    memwb_pc = exe_pc_clked;
+    memwb_ir16 = exe_ir16_clked;
 
     csrreg_adr = exe_csridx_clked;
     csrreg_wen = exe_csr_wen_clked;

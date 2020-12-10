@@ -2,12 +2,14 @@
 #include "execu.h"
 #include "decode.h"
 #include "memwb.h"
+#include "csrreg.h"
+#include "opcode_define.h"
 
 void fetch_clked()
 {
     int i;
 
-    if ((!exe_stall) && (!dec_stall) && (!memwb_stall)){
+    if ((!exe_stall) && (!dec_stall) && (!memwb_stall) && (!csr_exception_stall)){
 
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
 
@@ -17,10 +19,10 @@ void fetch_clked()
     fetchIR16_clked = fet_ir16 ? memIR16 : fetchIR16_clked;
 
     fetpc_clked = pc;
-    fetchIR_clked = fetchIR;
+    fetchIR_clked = dec_flush ? NOP : fetchIR;
+    fet_ir16_clked = dec_flush ? 0 : fet_ir16;
     memIR_hi16_clked = memIR_hi16;
     fet_predict_jmp_clked = fet_predict_jmp;
-    fet_ir16_clked = fet_ir16;
     //branchjmp_hipart_clked = branchjmp_hipart;
 
     //
@@ -38,7 +40,8 @@ void fetch_clked()
 
     // control read new instruction
     //ensure at first cycle ,remain_ir16s_clked number is correct
-    remain_ir16s_clked = firstinst_clked? 1 : remain_ir16s;
+    remain_ir16s_clked = //firstinst_clked? 1 : 
+                            remain_ir16s;
 
     firstinst_clked = ifu_cmd_valid & ifu_cmd_ready ? 0 : firstinst_clked;
 

@@ -5,7 +5,7 @@
 
 REG8 regfilemergeFIFO_widx_clked;
 REG8 regfilemergeFIFO_ridx_clked;
-REG8 regfilemergeFIFO_clked[ITCMMERGEFIFODEPTH];
+REG8 regfilemergeFIFO_clked;//[ITCMMERGEFIFODEPTH];
 BIT divpri_clked;
 BIT mulpri_clked;
 BIT s2pri_clked;
@@ -18,6 +18,7 @@ REG32 regfilemerge_o_cmd_data;
 REG8 regfilemerge_o_cmd_rwbyte;
 BIT regfilemerge_o_rsp_valid;
 BIT regfilemerge_o_rsp_ready;
+BIT regfilemerge_o_rsp_read;
 REG32 regfilemerge_o_rsp_rdata;
 REG8 regfilemergeFIFO_widx;
 REG8 regfilemergeFIFO_ridx;

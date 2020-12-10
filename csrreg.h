@@ -47,5 +47,10 @@ REG32 excepcause;
 REG32 intpc;
 REG32 exceppc;
 REG32 real_csr_rdata;
+REG32 csrtrappc;
+BIT csr_cmd_exception_valid;
+BIT csr_cmd_exception_ready;
+BIT csr_exception_stall;
+BIT csr_exception_flush;
 
 #endif //CSRREG_H

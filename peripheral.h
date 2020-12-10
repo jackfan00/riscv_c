@@ -21,6 +21,7 @@ REG32 peripheral_cmd_adr;
 REG32 peripheral_cmd_data;
 BIT peripheral_rsp_valid;
 BIT peripheral_rsp_ready;
+BIT peripheral_rsp_read;
 REG32 peripheral_rsp_rdata;
 REG32 device_reg;
 BIT peripheral_read;

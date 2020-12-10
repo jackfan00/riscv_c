@@ -14,6 +14,7 @@ REG32 lsusplit_o_bus_cmd_adr[LSUSPLITTARGETNUM];
 REG32 lsusplit_o_bus_cmd_data[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_rsp_valid[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_rsp_ready[LSUSPLITTARGETNUM];
+BIT lsusplit_o_bus_rsp_read[LSUSPLITTARGETNUM];
 REG32 lsusplit_o_bus_rsp_rdata[LSUSPLITTARGETNUM];
 REG8 lsutransacFIFO_clked[LSUSPLIFIFODEPTH];
 REG8 lsuregfileidxFIFO_clked[LSUSPLIFIFODEPTH];
@@ -29,6 +30,7 @@ REG32 lsusplit_i_bus_cmd_adr;
 REG32 lsusplit_i_bus_cmd_data;
 BIT lsusplit_i_bus_rsp_valid;
 BIT lsusplit_i_bus_rsp_ready;
+BIT lsusplit_i_bus_rsp_read;
 REG32 lsusplit_i_bus_rsp_rdata;
 REG8 lsusplit_i_bus_rsp_regidx;
 BIT lsusplit_i_bus_rsp_rden;
@@ -53,6 +55,7 @@ REG32 lsu2biu_cmd_data;
 REG8 lsu2biu_cmd_rwbyte;
 BIT lsu2biu_rsp_valid;
 BIT lsu2biu_rsp_ready;
+BIT lsu2biu_rsp_read;
 REG32 lsu2biu_rsp_rdata;
 
 BIT lsu2dtcm_cmd_valid;
@@ -63,6 +66,7 @@ REG32 lsu2dtcm_cmd_data;
 REG8 lsu2dtcm_cmd_rwbyte;
 BIT lsu2dtcm_rsp_valid;
 BIT lsu2dtcm_rsp_ready;
+BIT lsu2dtcm_rsp_read;
 REG32 lsu2dtcm_rsp_rdata;
 
 BIT lsu2itcm_cmd_valid;
@@ -73,6 +77,7 @@ REG32 lsu2itcm_cmd_data;
 REG8 lsu2itcm_cmd_rwbyte;
 BIT lsu2itcm_rsp_valid;
 BIT lsu2itcm_rsp_ready;
+BIT lsu2itcm_rsp_read;
 REG32 lsu2itcm_rsp_rdata;
 
 #endif //LSUBUSSPLIT_H

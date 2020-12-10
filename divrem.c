@@ -205,6 +205,7 @@ else{
   div_rsp_regidx = 0;
   div_rsp_rden = 0;
 }
+div_rsp_read = div_rsp_valid;
 
 //different from mul/sram, it need more than 1 cycle to finish task
 div_cmd_ready = !diven_clked | (div_rsp_valid&div_rsp_ready);
