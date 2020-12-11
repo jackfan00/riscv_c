@@ -75,6 +75,8 @@ void decodeinit()
  aluop_break=0;
  dec_csr_ren=0;
  dec_csr_wen=0;
+ aluop_fence=0;
+ aluop_fencei=0;
 }
 
 void decode()
@@ -444,6 +446,22 @@ int s_j_imm;
             break;
        }
 
+    // stall current fetch/decode instruction until lif/execu instruction finish
+    switch(func3)
+    {
+        case MISCMEM_FENCE:
+            aluop_fence = rs1x0 & ((i_imm>>8)==0) & rdx0 & alumiscmem;
+            dec_ilg = dec_ilg | (alumiscmem & (!(aluop_fence)));
+            break;
+        case MISCMEM_FENCEI:
+            aluop_fencei = rs1x0 & (i_imm==0) & rdx0 & alumiscmem;
+            dec_ilg = dec_ilg | (alumiscmem & (!(aluop_fencei)));
+            break;
+         default:
+            dec_ilg = dec_ilg | alumiscmem;
+            break;
+    }
+
        //if (dec_ilg){
        //    printf("err dec_ilg\n");
        //}
@@ -494,7 +512,8 @@ int s_j_imm;
        
         // if conflict at regfile stage, dont need to stall
         // regfile read always available, dont stall
-       dec_stall =  (dec_rwaw_lif_rs1 & (!dec_raw_memwb_rs1)) | 
+       dec_stall =  ((aluop_fence | aluop_fencei ) & (lif_loadrdidx_clked!=0 || lif_divrdidx_clked!=0)) |
+                    (dec_rwaw_lif_rs1 & (!dec_raw_memwb_rs1)) | 
                     (dec_rwaw_lif_rs2 & (!dec_raw_memwb_rs2)) | 
                     (dec_rwaw_lif_rd  & (!dec_waw_memwb_rd )) ? 1 :
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 

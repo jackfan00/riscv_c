@@ -74,6 +74,10 @@
 #define SYSTEM_CSRRSI   0x06
 #define SYSTEM_CSRRCI   0x07
 
+#define MISCMEM_FENCE   0x0
+#define MISCMEM_FENCEI  0x1
+
+
 #define CSR_WR          0x01
 #define CSR_SET         0x02
 #define CSR_CLR         0x03

@@ -160,6 +160,8 @@ BIT dec_csr_wen;
 REG16 csridx;
 BIT aluop_mret;
 BIT aluop_wfi;
+BIT aluop_fence;
+BIT aluop_fencei;
 BIT dec_flush;
 
 //BIT dec_branch_pdict_fail_pc;
