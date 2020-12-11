@@ -102,21 +102,24 @@ void fetch()
 //local
 
 
-    fetch_stall=0;
+    //fetch_stall=0;
+    fetch_stall =  (exe_stall) | (dec_stall) | (memwb_stall) | (csr_exception_stall); // & ifu_rsp_valid;
     //codebus_connect();
 
     //instruction from code-ram
-    ifu_rsp_ready = (!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & (!csr_exception_stall); // & ifu_rsp_valid;
+    ifu_rsp_ready = 1; //(!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & (!csr_exception_stall); // & ifu_rsp_valid;
     //
-    //keep memIR when rspvalid=0
-    memIR = ifu_rsp_rdata ;
+    //
+    buffered_rsp_rdata = ifu_rsp_valid&ifu_rsp_ready ? ifu_rsp_rdata : buffered_rsp_rdata_clked;
+    memIR = ifu_rsp_valid&ifu_rsp_ready ? ifu_rsp_rdata : buffered_rsp_rdata_clked ;
     memIR_hi16 = ifu_rsp_valid & ifu_rsp_ready ? (ifu_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
     //
     memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
     // calculate next pc
     irlsb10 = memIR16 & 0x03; //(fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
-    fet_ir16 = irlsb10!=3;
+    fet_ir16 = (ifu_rsp_valid&ifu_rsp_ready)|(remain_ir16s_clked==2) ? irlsb10!=3 : fet_ir16_clked;
+    //fet_ir16 = irlsb10!=3;
     if (fet_ir16){
         memIR32 = rv16torv32(memIR16);
     }
@@ -149,7 +152,7 @@ void fetch()
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
 
     //req new instr when remain ir16 count less than 2
-    ifu_cmd_valid = downloadstart|downloadper_clked? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
+    ifu_cmd_valid = downloadstart|downloadper_clked|fetch_stall? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
     ifu_cmd_adr =   (remain_ir16s>>7) ? nxtpc :
                     (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
 

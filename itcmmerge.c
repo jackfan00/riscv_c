@@ -57,34 +57,37 @@ void itcmmerge()
     ext2itcm_cmd_ready =(!(oifupri_p)) & itcmmerge_o_cmd_ready;
 
     //wid: 0:ifu, 1:lsu, 2:ext
-    itcmmergeFIFO_wen = (itcmmerge_o_cmd_valid & itcmmerge_o_cmd_ready & itcmmerge_o_cmd_read);
+    itcmmergeFIFO_wen = (itcmmerge_o_cmd_valid & itcmmerge_o_cmd_ready);// & itcmmerge_o_cmd_read);
     itcmmerge_ifupri = itcmmerge_o_cmd_valid & itcmmerge_o_cmd_ready ? arbitstage1_oifupri_p : itcmmerge_ifupri_clked;
     itcmmerge_extpri = itcmmerge_o_cmd_valid & itcmmerge_o_cmd_ready ? oifupri_p             : itcmmerge_extpri_clked;
     itcmmergeFIFO_wid = itcmmerge_extpri ? (itcmmerge_ifupri ? 1 : 0) : 2;
 
-    itcmmergeFIFO_ren = itcmmerge_o_rsp_valid & itcmmerge_o_rsp_ready & itcmmerge_o_rsp_read & 
-                        (itcmmerge_o_cmd_valid?itcmmerge_o_cmd_read:1) ; //eliminate write case
+    itcmmergeFIFO_ren = itcmmerge_o_rsp_valid & itcmmerge_o_rsp_ready ;//& itcmmerge_o_rsp_read & 
+                        //(itcmmerge_o_cmd_valid?itcmmerge_o_cmd_read:1) ; //eliminate write case
     //if write/read same time, write have high priority
     itcmmergeFIFO = itcmmergeFIFO_wen ? itcmmergeFIFO_wid : 
-                    itcmmergeFIFO_ren ? 0xff : 
-                    itcmmergeFIFO_clked;//[itcmmergeFIFO_widx_clked];
-    //nxtwrapped_itcmmergeFIFO_widx = ((itcmmergeFIFO_widx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  itcmmergeFIFO_widx_clked+1);
-    //itcmmergeFIFO_widx = itcmmergeFIFO_wen ? nxtwrapped_itcmmergeFIFO_widx : 
-    //                        itcmmergeFIFO_widx_clked;
+                    //itcmmergeFIFO_ren ? 0xff : 
+                    itcmmergeFIFO_clked[itcmmergeFIFO_widx_clked];
+    nxtwrapped_itcmmergeFIFO_widx = ((itcmmergeFIFO_widx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  itcmmergeFIFO_widx_clked+1);
+    itcmmergeFIFO_widx = itcmmergeFIFO_wen ? nxtwrapped_itcmmergeFIFO_widx : 
+                            itcmmergeFIFO_widx_clked;
 
     //fifo full condition : if next fifo write reach read-idx
-    itcmmergeFIFOfull = (itcmmergeFIFO_clked!=0xff); //(nxtwrapped_itcmmergeFIFO_widx==itcmmergeFIFO_ridx_clked);
+    itcmmergeFIFOfull = (nxtwrapped_itcmmergeFIFO_widx==itcmmergeFIFO_ridx_clked);
+                        // (itcmmergeFIFO_clked!=0xff); //
 
 
     //fifo empty definition : if current write-idx equal to current read-idx
-    itcmmergeFIFOempty = !itcmmergeFIFOfull; //(itcmmergeFIFO_widx_clked==itcmmergeFIFO_ridx_clked);
-    itcmmergeFIFO_rid = itcmmerge_o_cmd_valid & (!itcmmerge_o_cmd_read) ? itcmmergeFIFO_wid : //for write bypass
-                        //itcmmergeFIFOempty ? itcmmergeFIFO_wid : 
-                        itcmmergeFIFO_clked;//[itcmmergeFIFO_ridx_clked];
+    itcmmergeFIFOempty =// !itcmmergeFIFOfull; //
+                        (itcmmergeFIFO_widx_clked==itcmmergeFIFO_ridx_clked) & itcmmergeFIFO_ren & (!itcmmergeFIFO_wen);
+                        //(nxtwrapped_itcmmergeFIFO_widx==itcmmergeFIFO_ridx_clked);
+    itcmmergeFIFO_rid = //itcmmerge_o_cmd_valid & (!itcmmerge_o_cmd_read) ? itcmmergeFIFO_wid : //for write bypass
+                        itcmmerge_o_cmd_valid & (!itcmmerge_o_cmd_read) & itcmmergeFIFOempty_clked ? itcmmergeFIFO_wid : //for write bypass
+                        itcmmergeFIFO_clked[itcmmergeFIFO_ridx_clked];
 
     //rsp accept and move itcmmergeFIFO_ridx to next item
-    //itcmmergeFIFO_ridx = itcmmergeFIFO_ren ? ((itcmmergeFIFO_ridx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  itcmmergeFIFO_ridx_clked+1) : 
-    //                        itcmmergeFIFO_ridx_clked;
+    itcmmergeFIFO_ridx = itcmmergeFIFO_ren ? ((itcmmergeFIFO_ridx_clked==(ITCMMERGEFIFODEPTH-1)) ? 0 :  itcmmergeFIFO_ridx_clked+1) : 
+                            itcmmergeFIFO_ridx_clked;
 
     ifu2itcm_rsp_read  = (itcmmergeFIFO_rid==0) & itcmmerge_o_rsp_read;
     ifu2itcm_rsp_valid = (itcmmergeFIFO_rid==0) & itcmmerge_o_rsp_valid;

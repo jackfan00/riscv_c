@@ -7,7 +7,7 @@ void regfile()
 
     //regfile write
     //ready should always 1
-    regfilemerge_o_cmd_ready= (!regfilemerge_o_rsp_valid | (regfilemerge_o_rsp_valid & regfilemerge_o_rsp_ready)) & regfilemerge_o_cmd_valid;
+    regfilemerge_o_cmd_ready=1;// (!regfilemerge_o_rsp_valid | (regfilemerge_o_rsp_valid & regfilemerge_o_rsp_ready)) & regfilemerge_o_cmd_valid;
     //
     regfileffs_cs = regfilemerge_o_cmd_valid & regfilemerge_o_cmd_ready;
     regfileffs_wr = !regfilemerge_o_cmd_read;  //should always 1

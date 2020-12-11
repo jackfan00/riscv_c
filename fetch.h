@@ -23,6 +23,7 @@ BIT firstinst_clked;
 REG8 remain_ir16s_clked;
 REG32 ifu_cmd_adr_clked;
 REG16 fetchIR16_clked;
+REG32 buffered_rsp_rdata_clked;
 
 //output
 
@@ -55,9 +56,11 @@ REG16 memIR16;
 REG8 irlsb10;
 REG8 iroffset;
 REG32 nxtpc;
-BIT ddd;
-BIT ddd1;
-BIT ddd2;
-BIT ddd3;
+REG32 buffered_rsp_rdata;
+
+//BIT ddd;
+//BIT ddd1;
+//BIT ddd2;
+//BIT ddd3;
 #endif // FETCH_H
 

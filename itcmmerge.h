@@ -8,9 +8,10 @@ void itcmmerge_clked();
 
 REG8 itcmmergeFIFO_widx_clked;
 REG8 itcmmergeFIFO_ridx_clked;
-REG8 itcmmergeFIFO_clked;//[ITCMMERGEFIFODEPTH];
+REG8 itcmmergeFIFO_clked[ITCMMERGEFIFODEPTH];
 BIT itcmmerge_ifupri_clked;
 BIT itcmmerge_extpri_clked;
+BIT itcmmergeFIFOempty_clked;
 
 BIT itcmmerge_o_cmd_valid;
 BIT itcmmerge_o_cmd_ready;

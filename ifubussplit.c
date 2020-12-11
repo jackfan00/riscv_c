@@ -51,7 +51,7 @@ void ifubussplit()
     ifusplit_o_bus_cmd_rwbyte[IFUSPLITTARGETNUM-1] = ifusplit_o_bus_cmd_valid[IFUSPLITTARGETNUM-1] ? ifusplit_i_bus_cmd_rwbyte : 0;
 
     //
-    ifutransacFIFO_wen=ifusplit_i_bus_cmd_ready & ifusplit_i_bus_cmd_valid & ifusplit_i_bus_cmd_read;
+    ifutransacFIFO_wen=ifusplit_i_bus_cmd_ready & ifusplit_i_bus_cmd_valid;// & ifusplit_i_bus_cmd_read;
     ifutransacFIFO_wid=0;
     for (i=0;i<IFUSPLITTARGETNUM;i++)
     {
@@ -72,8 +72,9 @@ void ifubussplit()
 
     //fifo empty definition : if current write-idx equal to current read-idx
     ifutransacFIFOempty = (ifutransacFIFO_widx_clked==ifutransacFIFO_ridx_clked);
-    ifutransacFIFO_rid = ifusplit_i_bus_cmd_valid & (!ifusplit_i_bus_cmd_read) ? ifutransacFIFO_wid : //for write bypass 
-                         ifutransacFIFOempty ? ifutransacFIFO_wid : ifutransacFIFO_clked[ifutransacFIFO_ridx_clked];
+    ifutransacFIFO_rid = ifusplit_i_bus_cmd_valid & (!ifusplit_i_bus_cmd_read) & ifutransacFIFOempty ? ifutransacFIFO_wid : //for write bypass 
+                         //ifutransacFIFOempty ? ifutransacFIFO_wid : 
+                         ifutransacFIFO_clked[ifutransacFIFO_ridx_clked];
     
     ifusplit_i_bus_rsp_read =0;
     ifusplit_i_bus_rsp_valid=0;
@@ -87,7 +88,7 @@ void ifubussplit()
     }
 
     //rsp accept and move ifutransacFIFO_ridx to next item
-    ifutransacFIFO_ren = ifusplit_i_bus_rsp_valid & ifusplit_i_bus_rsp_ready & ifusplit_i_bus_rsp_read;
+    ifutransacFIFO_ren = ifusplit_i_bus_rsp_valid & ifusplit_i_bus_rsp_ready ;//& ifusplit_i_bus_rsp_read;
     ifutransacFIFO_ridx = ifutransacFIFO_ren ? ((ifutransacFIFO_ridx_clked==(IFUSPLIFIFODEPTH-1)) ? 0 :  ifutransacFIFO_ridx_clked+1) : 
                             ifutransacFIFO_ridx_clked;
 

@@ -106,7 +106,7 @@ void execu()
     //
     //when lsu load command, the rsp will be sent to regfile
     //so rsp_ready is from lsu2regfile_cmd_ready
-    lsu_rsp_ready = (!lsu_cmd_read ? 1 : lsu2regfile_cmd_ready) ;//& lsu_rsp_valid ;                     
+    lsu_rsp_ready = (!lsu_rsp_read ? 1 : lsu2regfile_cmd_ready) ;//& lsu_rsp_valid ;                     
     //additional info , use for rsp write to regfile, 
     //need busfifo (lsubussplit) store these info
     lsu_cmd_regidx =  dec_rdidx_clked;  

@@ -11,6 +11,7 @@ REG32 itcmRAM0[MAXCODESIZE], itcmRAM1[MAXCODESIZE], itcmRAM2[MAXCODESIZE], itcmR
 //
 REG32 itcmRAM_csadr_clked;
 BIT itcmRAM_read_clked;
+BIT itcmRAM_write_clked;
 REG32 read_itcmRAM_rdat_clked;
 BIT itcmRAM_read1st_clked;
 
@@ -22,6 +23,7 @@ REG32 itcmRAM_adr;
 REG32 itcmRAM_wdat;
 REG32 itcmRAM_rdat;
 BIT itcmRAM_read;
+BIT itcmRAM_write;
 REG32 read_itcmRAM_rdat;
 BIT itcmRAM_read1st;
 

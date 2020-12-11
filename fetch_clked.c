@@ -11,6 +11,7 @@ void fetch_clked()
 
     if ((!exe_stall) && (!dec_stall) && (!memwb_stall) && (!csr_exception_stall)){
 
+    buffered_rsp_rdata_clked = buffered_rsp_rdata;
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
 
     ifu_cmd_adr_clked = ifu_cmd_valid & ifu_cmd_ready ? ifu_cmd_adr : ifu_cmd_adr_clked;

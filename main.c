@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DUMPVCD
+//#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -64,9 +64,10 @@ void setup()
     clockcnt=0;
     clint_mtimecmp_clked=0xffffffff;
     clint_mtimecmph_clked=0xffffffff;
-    itcmmergeFIFO_clked =0xff;
+    //itcmmergeFIFO_clked =0xff;
     dtcmmergeFIFO_clked =0xff;
     regfilemergeFIFO_clked =0xff;
+    itcmmergeFIFO_ridx_clked=1;
 
 }
 
@@ -212,7 +213,10 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) break;
-        if (clockcnt >= 0x487c) break;
+        //if (clockcnt >= 0x49af) {
+        //    break;
+           // printf("dddd\n");
+        //}
         //if (fetpc_clked == 0x8000025e) break;
         //if (downloadcomplete) break;
 

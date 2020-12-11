@@ -51,7 +51,7 @@ void lsubussplit()
     lsusplit_o_bus_cmd_rwbyte[LSUSPLITTARGETNUM-1] = lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM-1] ? lsusplit_i_bus_cmd_rwbyte : 0;
 
     //
-    lsutransacFIFO_wen = lsusplit_i_bus_cmd_ready & lsusplit_i_bus_cmd_valid & lsusplit_i_bus_cmd_read;
+    lsutransacFIFO_wen = lsusplit_i_bus_cmd_ready & lsusplit_i_bus_cmd_valid;// & lsusplit_i_bus_cmd_read;
     lsutransacFIFO_wid=0;
     for (i=0;i<LSUSPLITTARGETNUM;i++)
     {
@@ -66,7 +66,7 @@ void lsubussplit()
     lsutransacFIFO_widx = lsutransacFIFO_wen ? nxtwrapped_lsutransacFIFO_widx : 
                             lsutransacFIFO_widx_clked;
     //store regfile info
-    lsuregfileidxFIFO = lsutransacFIFO_wen ? lsu_cmd_regidx : lsuregfileidxFIFO_clked[lsutransacFIFO_widx_clked];
+    lsuregfileidxFIFO  = lsutransacFIFO_wen ? lsu_cmd_regidx : lsuregfileidxFIFO_clked[lsutransacFIFO_widx_clked];
     lsuregfilerdenFIFO = lsutransacFIFO_wen ? lsu_cmd_rden : lsuregfilerdenFIFO_clked[lsutransacFIFO_widx_clked];
 
     //fifo full condition : if next fifo write reach read-idx
@@ -75,12 +75,13 @@ void lsubussplit()
 
     //fifo empty definition : if current write-idx equal to current read-idx
     lsutransacFIFOempty = (lsutransacFIFO_widx_clked==lsutransacFIFO_ridx_clked);
-    lsutransacFIFO_rid =lsusplit_i_bus_cmd_valid & (!lsusplit_i_bus_cmd_read) ? lsutransacFIFO_wid : //for write bypass 
-                        lsutransacFIFOempty ? lsutransacFIFO_wid : lsutransacFIFO_clked[lsutransacFIFO_ridx_clked];
+    lsutransacFIFO_rid =lsusplit_i_bus_cmd_valid & (!lsusplit_i_bus_cmd_read) & lsutransacFIFOempty ? lsutransacFIFO_wid : //for write bypass 
+                        //lsutransacFIFOempty ? lsutransacFIFO_wid : 
+                        lsutransacFIFO_clked[lsutransacFIFO_ridx_clked];
 
     //addition info
-    lsusplit_i_bus_rsp_regidx= lsutransacFIFOempty ? lsu_cmd_regidx : lsuregfileidxFIFO_clked[lsutransacFIFO_ridx_clked];
-    lsusplit_i_bus_rsp_rden  = lsutransacFIFOempty ? lsu_cmd_rden   : lsuregfilerdenFIFO_clked[lsutransacFIFO_ridx_clked];
+    lsusplit_i_bus_rsp_regidx= lsusplit_i_bus_cmd_valid & (!lsusplit_i_bus_cmd_read) & lsutransacFIFOempty ? lsu_cmd_regidx : lsuregfileidxFIFO_clked[lsutransacFIFO_ridx_clked];
+    lsusplit_i_bus_rsp_rden  = lsusplit_i_bus_cmd_valid & (!lsusplit_i_bus_cmd_read) & lsutransacFIFOempty ? lsu_cmd_rden   : lsuregfilerdenFIFO_clked[lsutransacFIFO_ridx_clked];
 
     //
     lsusplit_i_bus_rsp_read =0;
@@ -88,6 +89,8 @@ void lsubussplit()
     lsusplit_i_bus_rsp_rdata=0;
     for (i=0;i<LSUSPLITTARGETNUM;i++)
     {
+        //lsusplit_i_bus_rsp_regidx  = lsusplit_i_bus_rsp_regidx  | (lsutransacFIFO_rid==i ? lsusplit_o_bus_rsp_regidx[i]  : 0) ;
+        //lsusplit_i_bus_rsp_rden  = lsusplit_i_bus_rsp_rden  | (lsutransacFIFO_rid==i ? lsusplit_o_bus_rsp_rden[i]  : 0) ;
         lsusplit_i_bus_rsp_read  = lsusplit_i_bus_rsp_read  | (lsutransacFIFO_rid==i ? lsusplit_o_bus_rsp_read[i]  : 0) ;
         lsusplit_i_bus_rsp_valid = lsusplit_i_bus_rsp_valid | (lsutransacFIFO_rid==i ? lsusplit_o_bus_rsp_valid[i] : 0) ;
         lsusplit_i_bus_rsp_rdata = lsusplit_i_bus_rsp_rdata | (lsutransacFIFO_rid==i ? lsusplit_o_bus_rsp_rdata[i] : 0) ;
@@ -95,8 +98,8 @@ void lsubussplit()
     }
 
     //rsp accept and move lsutransacFIFO_ridx to next item
-    lsutransacFIFO_ren = lsusplit_i_bus_rsp_valid & lsusplit_i_bus_rsp_ready & lsusplit_i_bus_rsp_read &
-                            (lsusplit_i_bus_cmd_valid?lsusplit_i_bus_cmd_read:1) ; //eliminate write case
+    lsutransacFIFO_ren = lsusplit_i_bus_rsp_valid & lsusplit_i_bus_rsp_ready ;//& lsusplit_i_bus_rsp_read &
+                            //(lsusplit_i_bus_cmd_valid?lsusplit_i_bus_cmd_read:1) ; //eliminate write case
 
     lsutransacFIFO_ridx = lsutransacFIFO_ren ? ((lsutransacFIFO_ridx_clked==(LSUSPLIFIFODEPTH-1)) ? 0 :  lsutransacFIFO_ridx_clked+1) : 
                             lsutransacFIFO_ridx_clked;

@@ -58,11 +58,12 @@ void itcm_clked()
 
     itcmRAM_csadr_clked = itcmRAM_cs ? itcmRAM_adr : itcmRAM_csadr_clked;
     itcmRAM_read_clked = itcmRAM_read;
+    itcmRAM_write_clked = itcmRAM_write;
 
     tmpradr = (itcmRAM_csadr_clked & 0x00ffffff)>>2;
     itcmRAM_rdat = (itcmRAM3[tmpradr]<<24) | (itcmRAM2[tmpradr]<<16) | (itcmRAM1[tmpradr]<<8) | itcmRAM0[tmpradr];
 
     itcmRAM_read1st_clked = itcmRAM_read1st;
     read_itcmRAM_rdat_clked = read_itcmRAM_rdat;
-    
+
 }
