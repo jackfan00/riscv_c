@@ -1,10 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+
 //#include <strings.h>
 #include "reg.h"
 #include "opcode_define.h"
 #include "itcm.h"
+#include "init_rom.h"
 
 char *strsep(char **stringp, const char *delim) {
     char *rv = *stringp;
@@ -79,7 +82,7 @@ void myasm2mccode()
     {
         char * strp = strdup(str);
         token1s = strsep(&strp, "//");
-        if (*token1s==NULL)
+        if ((*token1s)=='\0')//NULL)
             continue;
         //
         mccode=-1;

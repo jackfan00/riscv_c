@@ -1,22 +1,36 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define DUMPVCD
+#include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
 #include "init_rom.h"
 #include "reg.h"
 #include "fetch.h"
-#include "opcode_define.h"
-//#include "codebus.h"
 #include "decode.h"
 #include "execu.h"
+#include "lif.h"
+#include "mul.h"
+#include "divrem.h"
+#include "memwb.h"
 #include "ext_write_coderam.h"
 #include "regfile.h"
+#include "csrreg.h"
 #include "clint.h"
+#include "plic.h"
+#include "itcm.h"
+#include "dtcm.h"
+#include "peripheral.h"
+#include "ifubussplit.h"
+#include "lsubussplit.h"
+#include "biubussplit.h"
+#include "biumerge.h"
 #include "itcmmerge.h"
 #include "dtcmmerge.h"
 #include "regfilemerge.h"
+#include "testfinishcheck.h"
 
 void debug_cpuinfo(){
     int i;
@@ -35,6 +49,7 @@ void debug_cpuinfo(){
         if ((i%8)==7) printf("\n");
     }
 }
+
 
 void setup()
 {
@@ -71,6 +86,7 @@ int main(int argc, char *argv[])
     if (argc==2){
         downloadCode(argv[1]);
         downloadstart=1;
+        testcase = strdup(argv[1]);
     }
     else{
         init_rom();
@@ -145,6 +161,10 @@ int main(int argc, char *argv[])
             printf("STOP by detect illigal instruction\n");
             break;
         }
+        //
+        if (testfinishcheck()){
+            break;
+        }
 
         // flipflop
 
@@ -180,6 +200,7 @@ int main(int argc, char *argv[])
 
         //
         ext_write_coderam_clked();
+        testfinishcheck_clked();
         
         //
         clockcnt++;

@@ -1,6 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
+
+char *strsep(char **stringp, const char *delim);
+char *trimwhitespace(char *str);
 
 #define MAXVARSIZE 9999
 #define DEFINESIZE 100
@@ -81,7 +86,7 @@ void initdefinevar(char * ff)
     {
         char * strp = strdup(trimwhitespace(str));
         token1s = strsep(&strp, "//");
-        if ((*token1s)==NULL)
+        if ((*token1s)=='\0')//NULL)
             continue;
         //
         token2s = strsep(&token1s, " ");
@@ -179,7 +184,7 @@ void parsevars(char * filename)
         }
         //
         token1s = strsep(&strp, "//");
-        if (*token1s==NULL)
+        if ((*token1s)=='\0') //NULL)
             continue;
         //
         token2s = strsep(&token1s, " ");
@@ -187,7 +192,7 @@ void parsevars(char * filename)
         if (bitnumber!=-1){  //valid
             token1s = strsep(&token1s, ";");
             tmp = strsep(&token1s, "[");
-            if (token1s!=0 && *token1s!= NULL){
+            if (token1s!=0 && (*token1s)!= '\0'){//NULL){
                 tmp2 = strsep(&token1s, "]");
                 arraysize = getdefinevalue(tmp2, filename);
                 for (i=0;i<arraysize;i++){
@@ -252,6 +257,7 @@ void dumpcmdfile()
     fprintf(dc, "#include \"dtcm.h\"\n");
     fprintf(dc, "#include \"regfile.h\"\n");
     fprintf(dc, "#include \"csrreg.h\"\n");
+    fprintf(dc, "#include \"testfinishcheck.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -316,6 +322,8 @@ int main()
     parsevars("../dtcm.h");
     parsevars("../regfile.h");
     parsevars("../csrreg.h");
+    parsevars("../testfinishcheck.h");
+    
     //
     dumpcmdfile();
     //

@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "downloadCode.h"
 #include "ext_write_coderam.h"
+#include "init_rom.h"
 /*
 char *strsep(char **stringp, const char *delim) {
     char *rv = *stringp;
@@ -52,7 +56,7 @@ void downloadCode(char * filename)
         char * strp = strdup(trimwhitespace(str));
 
         token1s = strsep(&strp, "//");
-        if (*token1s==NULL)
+        if ((*token1s)=='\0')//NULL)
             continue;
         //init
         for (ii=0;ii<sizeof(linecode)/sizeof(linecode[0]);ii++)
@@ -68,18 +72,18 @@ void downloadCode(char * filename)
         else{  // code body
             lineaddr=0;
             token2s = strsep(&token1s, " ");
-            while(*token2s!=NULL)
+            while((*token2s)!='\0')//NULL)
             {
 
                 if (lineaddr>=sizeof(linecode)/sizeof(linecode[0])){
                     printf("Error: downloadCode excess linecode array size\n");
-                    return(-2);
+                    return;
                 }
                 //
-                linecode[lineaddr] = (REG8)strtol(trimwhitespace(token2s), NULL, 16);
+                linecode[lineaddr] = (REG32)strtol(trimwhitespace(token2s), NULL, 16);
                 lineaddr++;
                 //
-                if (token1s!=0 && *token1s!=NULL){
+                if (token1s!=0 && (*token1s)!='\0'){//NULL){
                     token2s = strsep(&token1s, " ");
                 }
                 else{
@@ -103,7 +107,7 @@ void downloadCode(char * filename)
     //
     if (codesize>=(MAXHEXFILE_CODESIZE*4)){
         printf("Error:Download Code: size=%d bytes, MAXHEXFILE_CODESIZE=%d bytes\n", codesize, MAXHEXFILE_CODESIZE*4);
-        return(-3);
+        return;
     }
     printf("Download Code: size=%d bytes\n", codesize);
     download_codesize=(codesize>>2);

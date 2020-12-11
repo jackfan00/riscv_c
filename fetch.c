@@ -8,6 +8,8 @@
 #include "ext_write_coderam.h"
 #include "csrreg.h"
 
+REG32 rv16torv32(REG16 in16);
+
 //REG32 toir32 (REG16 ir16)
 //{
 // return 0;
