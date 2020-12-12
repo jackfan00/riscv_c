@@ -192,7 +192,7 @@ int s_j_imm;
         break;
     case OPCODE_JAL:
         alu_opd1 = decpc_clked;
-        alu_opd2 = 4;
+        alu_opd2 = fet_ir16_clked ? 2 : 4;
         rs1en =0;
         rs2en =0;
         rden = !rdx0;
@@ -201,7 +201,7 @@ int s_j_imm;
         break;
     case OPCODE_JALR:
         alu_opd1 = decpc_clked;
-        alu_opd2 = 4;
+        alu_opd2 = fet_ir16_clked ? 2 : 4;
         rs1en =!rs1x0 ;
         rs2en =0;
         rden = !rdx0 ;

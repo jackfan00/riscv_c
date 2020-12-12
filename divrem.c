@@ -181,11 +181,12 @@ void divrem()
 
 // be careful about rem :
 // ex: 101/-100 = (q=-1, rem=1), -101/100=(q=-1,rem=-1)
-// ex: -1/-100 = (0,-1)
+// ex: -1/-100 = (0,-1), -6/-2 = (3,-2)
 result_signed = divisor_signed_clked ^ dividend_signed_clked;
 
 remsigned = (quo_undivsigned_clked==0) ? dividend_clked :
-            result_signed & dividend_signed_clked ? ~(rem_undivsigned_clked)+1 : rem_undivsigned_clked;
+            //result_signed & dividend_signed_clked ? ~(rem_undivsigned_clked)+1 : rem_undivsigned_clked;
+            dividend_signed_clked ? ~(rem_undivsigned_clked)+1 : rem_undivsigned_clked;
 quosigned = result_signed ? ~(quo_undivsigned_clked)+1 : quo_undivsigned_clked;
 
 remres = div0_clked ? dividend_clked : 

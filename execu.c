@@ -158,8 +158,8 @@ void execu()
     //mul2regfile 
     //mul dedicate for execu, no others use it
     //and produce result at fixed 2 cycles
-    mul_cmd_regidx =  exe_rdidx_clked;  
-    mul_cmd_rden = exe_rden_clked;
+    mul_cmd_regidx =  dec_rdidx_clked;  
+    mul_cmd_rden = dec_rden_clked;
     //
     mul2regfile_cmd_valid = mul_rsp_valid & mul_rsp_rden;
     mul2regfile_cmd_read = 0;

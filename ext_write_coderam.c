@@ -7,7 +7,7 @@
 
 void ext_write_coderam()
 {
-    downloadcomplete = (codeindex_clked>download_codesize);
+    downloadcomplete = (codeindex_clked>=download_codesize);
     if (downloadper_clked){
         ext_cmd_valid = (randomcycle_clked>PERI_CYCLES);
         ext_cmd_read =0;

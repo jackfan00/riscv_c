@@ -213,11 +213,14 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) break;
-        //if (clockcnt >= 0x49af) {
+        //if (clockcnt >= 0x7b58) {
         //    break;
            // printf("dddd\n");
         //}
-        //if (fetpc_clked == 0x8000025e) break;
+        //if (fetpc_clked == 0x800020b0){
+        //    printf("dddd %x\n",clockcnt);
+        //    break;
+        //} 
         //if (downloadcomplete) break;
 
     }

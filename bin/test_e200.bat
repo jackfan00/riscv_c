@@ -37,4 +37,13 @@ myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sub.veri
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sw.verilog >> test_e200.report
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xor.verilog >> test_e200.report
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xori.verilog >> test_e200.report
- 
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-div.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-divu.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-rem.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-remu.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mul.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulh.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhsu.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhu.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32uc-p-rvc.verilog >> test_e200.report
+

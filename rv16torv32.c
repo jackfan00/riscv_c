@@ -30,9 +30,11 @@ REG32 rv16torv32(REG16 in16)
     CLW       = (slicebits(rv16,1,0)==0b0) && (slicebits(rv16,15,13)==0b010);
     CSW       = (slicebits(rv16,1,0)==0b0) && (slicebits(rv16,15,13)==0b110);
 
+                 // ({32{CLW}} & {5'b0,c0_uimm,2'b0,2'b01,c0_rs1prime,3'b010,2'b01,c0_rdprime,7'h03}) |  //lw rd', offset[6:2](rs1')
+
     c0_instr =  ((CADDI4SPN ? 0xffffffff : 0) & ((0b0<<30)|(c0_nzuimm<<22)|(0b0<<20)|(0x2<<15)|(0b0<<12)|(0b01<<10)|(c0_rdprime<<7)|0x13)) |  // addi rd', x2, nzuimm[9:2]
-                ((CLW       ? 0xffffffff : 0) & ((0b0<<27)|(c0_uimm<<22)|(0b0<<20)|(0b01<<18),(c0_rs1prime<<15)|(0b010<<12)|(0b01<<10)|(c0_rdprime<<7)|0x03)) |  //lw rd', offset[6:2](rs1')
-                ((CSW       ? 0xffffffff : 0) & ((0b0<<27)|(slicebits(c0_uimm62,6,5)<<25)|(0b01<<23)|(c0_rs2prime<<20)|(0b01<<18)|(c0_rs1prime<<15)|(0b010<<12),(slicebits(c0_uimm62,4,2)<<9)|(0b0<<7)|0x23)) ;  // sw, rs2', offset[6:2](rs1')
+                ((CLW       ? 0xffffffff : 0) & ((0b0<<27)|(c0_uimm<<22)|(0b00<<20)|(0b01<<18)|(c0_rs1prime<<15)|(0b010<<12)|(0b01<<10)|(c0_rdprime<<7)|0x03)) |  //lw rd', offset[6:2](rs1')
+                ((CSW       ? 0xffffffff : 0) & ((0b0<<27)|(slicebits(c0_uimm62,6,5)<<25)|(0b01<<23)|(c0_rs2prime<<20)|(0b01<<18)|(c0_rs1prime<<15)|(0b010<<12)|(slicebits(c0_uimm62,4,2)<<9)|(0b0<<7)|0x23)) ;  // sw, rs2', offset[6:2](rs1')
 
     c1_rs2prime = c0_rdprime;
     c1_rs1prime = c0_rs1prime;

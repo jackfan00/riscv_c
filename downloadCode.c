@@ -110,7 +110,7 @@ void downloadCode(char * filename)
         return;
     }
     printf("Download Code: size=%d bytes\n", codesize);
-    download_codesize=(codesize>>2);
+    download_codesize=(codesize>>2) + (codesize&0x03 ? 1 : 0);  // add reminder
 
 }
 
