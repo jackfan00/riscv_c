@@ -24,9 +24,11 @@ REG8 remain_ir16s_clked;
 REG32 ifu_cmd_adr_clked;
 REG16 fetchIR16_clked;
 REG32 buffered_rsp_rdata_clked;
+BIT ifu_rsp_valid_clked;
+BIT fetch_stall_clked;
 
 //output
-
+BIT stalled_ifu_rsp_valid;
 BIT ifu_rsp_valid;
 REG32 ifu_rsp_rdata;
 BIT ifu_rsp_ready;

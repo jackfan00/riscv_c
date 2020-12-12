@@ -14,6 +14,7 @@ BIT itcmRAM_read_clked;
 BIT itcmRAM_write_clked;
 REG32 read_itcmRAM_rdat_clked;
 BIT itcmRAM_read1st_clked;
+REG8 itcmRAM_bmask_clked;
 
 //
 BIT   itcmRAM_cs;

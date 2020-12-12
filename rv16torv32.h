@@ -50,6 +50,7 @@ BIT CSWSP     ;
     REG32 c1_addi16sp_nzimm;
     REG32 c1_addi16sp_nzimm94;
     REG32 c1_lui_nzuimm;
+    REG32 c1_lui_nzuimm1712;
     REG32 c1_shamt;
     REG32 c1_bxx_offset;
     REG32 c1_bxx_offset81;

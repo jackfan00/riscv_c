@@ -61,7 +61,8 @@ void execu()
     shamt = dec_alu_opd2_clked & 0x1f;
     sll_res = dec_alu_opd1_clked << shamt;
     srl_res = dec_alu_opd1_clked >> shamt;
-    opd1_longlong = dec_alu_opd1_clked;
+
+    opd1_longlong = (dec_alu_opd1_clked&0x80000000) ? 0xffffffff00000000 | dec_alu_opd1_clked : dec_alu_opd1_clked;
     sra_res = opd1_longlong >> shamt;
 
     //
@@ -99,10 +100,14 @@ void execu()
     lsu_cmd_valid = (dec_aluload_clked& (!lif_loadfull)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
     lsu_cmd_read = dec_aluload_clked;
     lsu_cmd_adr = exe_res;
-    lsu_cmd_data = dec_rs2v_clked;
+    lsu_cmd_data =  dec_rs2v_clked ;
     lsu_cmd_rwbyte = dec_aluop_lw_clked | dec_aluop_sw_clked ? 0xf :
-                         dec_aluop_lh_clked | dec_aluop_lhu_clked | dec_aluop_sh_clked ? 0x3 : 0x1;
-
+                     dec_aluop_sh_clked ? 0x3 :
+                     dec_aluop_sb_clked ? 0x1 :
+                     dec_aluop_lh_clked ? 0x13 :
+                     dec_aluop_lb_clked ? 0x11 :
+                     dec_aluop_lhu_clked ? 0x3 : 
+                                    0x1;  //dec_aluop_lbu_clked
     //
     //when lsu load command, the rsp will be sent to regfile
     //so rsp_ready is from lsu2regfile_cmd_ready
@@ -123,7 +128,8 @@ void execu()
     //
     lsu_stall = lsu_cmd_valid & (!lsu_cmd_ready);        
     lsu_load_misaligned = (dec_aluload_clked ) & (
-                     (((lsu_cmd_adr&0x03)!=0) & lsu_cmd_rwbyte==0xf) | (((lsu_cmd_adr&0x03)==3) & lsu_cmd_rwbyte!=0x1)
+                     (((lsu_cmd_adr&0x03)!=0) & lsu_cmd_rwbyte==0xf) | 
+                     (((lsu_cmd_adr&0x03)==3) & ((lsu_cmd_rwbyte!=0x1) && (lsu_cmd_rwbyte!=0x11)) )
                     );
     lsu_store_misaligned = ( dec_alustore_clked) & (
                      (((lsu_cmd_adr&0x03)!=0) & lsu_cmd_rwbyte==0xf) | (((lsu_cmd_adr&0x03)==3) & lsu_cmd_rwbyte!=0x1)

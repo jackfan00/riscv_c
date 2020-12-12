@@ -48,6 +48,7 @@ REG32 rv16torv32(REG16 in16)
                         (slicebits(rv16,2,2)<<1)|slicebits(rv16,6,6);
     c1_addi16sp_nzimm94 = (c1_addi16sp_nzimm<<4);                    
     c1_lui_nzuimm =  c1_nzimm;      
+    c1_lui_nzuimm1712 =  (c1_nzimm<<12);      
     c1_shamt = c1_nzimm;
     c1_bxx_offset = (slicebits(rv16,12,12)<<7)|(slicebits(rv16,6,5)<<5)|(slicebits(rv16,2,2)<<4)|
                     (slicebits(rv16,11,10)<<2)|slicebits(rv16,4,3);
@@ -79,9 +80,9 @@ REG32 rv16torv32(REG16 in16)
     c1_instr =    ((CNOP     ? 0xffffffff : 0) & 0x13) |
                   ((CADDI    ? 0xffffffff : 0) & (((slicebits(c1_nzimm,5,5)?0x3f:0)<<26)|(c1_nzimm<<20)|(c1_rs1<<15)|(0b0<<12)|(c1_rd<<7)|0x13)) |  // addi rd, rd, nzimm[5:0]
                   ((CJAL     ? 0xffffffff : 0) & ((slicebits(c1_jalimm111,11,11)<<31)|(slicebits(c1_jalimm111,10,1)<<21)|(slicebits(c1_jalimm111,11,11)<<20)|((slicebits(c1_jalimm111,11,11)?0xff:0)<<12)|(0x1<<7)|0x6f)) |  //JAL x1, offset[11:1]
-                  ((CLI      ? 0xffffffff : 0) & (((slicebits(c1_imm,5,5)?0x3f:0)<<25)|(slicebits(c1_imm,5,0)<<20)|(0x0<<15)|(0b0<<12)|(c1_rd<<7)|0x13)) |   //addi rd, x0, imm[5:0]
+                  ((CLI      ? 0xffffffff : 0) & (((slicebits(c1_imm,5,5)?0x7f:0)<<25)|(slicebits(c1_imm,5,0)<<20)|(0x0<<15)|(0b0<<12)|(c1_rd<<7)|0x13)) |   //addi rd, x0, imm[5:0]
                   ((CADDI16SP? 0xffffffff : 0) & (((slicebits(c1_addi16sp_nzimm94,9,9)?0x3:0)<<30)|(slicebits(c1_addi16sp_nzimm94,9,4)<<24)|(0b0<<20)|(0x2<<15)|(0b0<<12)|(0x2<<7)|0x13)) |  //addi x2, x2, nzimm[9:4]
-                  ((CLUI     ? 0xffffffff : 0) & (((slicebits(c1_lui_nzuimm,17,17)?0x3fff:0)<<18)|(slicebits(c1_lui_nzuimm,17,12)<<12)|(c1_rd<<7)|0x37)) |  //lui rd,  nzuimm[17:12]
+                  ((CLUI     ? 0xffffffff : 0) & (((slicebits(c1_lui_nzuimm1712,17,17)?0x3fff:0)<<18)|(slicebits(c1_lui_nzuimm1712,17,12)<<12)|(c1_rd<<7)|0x37)) |  //lui rd,  nzuimm[17:12]
                   ((CSRLI    ? 0xffffffff : 0) & ((0x00<<26)|(slicebits(c1_shamt,5,0)<<20)|(0b1<<18)|(c1_rdprime<<15)|(0b101<<12)|(0b1<<10)|(c1_rdprime<<7)|0x13)) |  //srli rd', rd',  shamt[5:0]
                   ((CSRAI    ? 0xffffffff : 0) & ((0x10<<26)|(slicebits(c1_shamt,5,0)<<20)|(0b1<<18)|(c1_rdprime<<15)|(0b101<<12)|(0b1<<10)|(c1_rdprime<<7)|0x13)) |  //srai rd', rd',  shamt[5:0]
                   ((CANDI    ? 0xffffffff : 0) & (((slicebits(c1_imm,5,5)?0x3f:0)<<26)|(slicebits(c1_imm,5,0)<<20)|(0b1<<18)|(c1_rdprime<<15)|(0b111<<12)|(0b1<<10)|(c1_rdprime<<7)|0x13)) |  //andi rd', rd',  imm[5:0]

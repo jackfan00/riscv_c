@@ -106,19 +106,23 @@ void fetch()
     fetch_stall =  (exe_stall) | (dec_stall) | (memwb_stall) | (csr_exception_stall); // & ifu_rsp_valid;
     //codebus_connect();
 
+    //stalled_ifu_rsp_valid = !fetch_stall_clked ? ifu_rsp_valid : ifu_rsp_valid_clked;
+    stalled_ifu_rsp_valid = ifu_rsp_valid | ifu_rsp_valid_clked;
+
     //instruction from code-ram
     ifu_rsp_ready = 1; //(!fetch_stall) & (!exe_stall) & (!dec_stall) & (!memwb_stall) & (!csr_exception_stall); // & ifu_rsp_valid;
     //
     //
     buffered_rsp_rdata = ifu_rsp_valid&ifu_rsp_ready ? ifu_rsp_rdata : buffered_rsp_rdata_clked;
-    memIR = ifu_rsp_valid&ifu_rsp_ready ? ifu_rsp_rdata : buffered_rsp_rdata_clked ;
-    memIR_hi16 = ifu_rsp_valid & ifu_rsp_ready ? (ifu_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
+    //memIR = stalled_ifu_rsp_valid&ifu_rsp_ready ? ifu_rsp_rdata : buffered_rsp_rdata_clked ;
+    memIR = buffered_rsp_rdata; //ifu_rsp_rdata;
+    memIR_hi16 = stalled_ifu_rsp_valid & ifu_rsp_ready ? (buffered_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
     //
     memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
     // calculate next pc
     irlsb10 = memIR16 & 0x03; //(fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
-    fet_ir16 = (ifu_rsp_valid&ifu_rsp_ready)|(remain_ir16s_clked==2) ? irlsb10!=3 : fet_ir16_clked;
+    fet_ir16 = (stalled_ifu_rsp_valid&ifu_rsp_ready)|(remain_ir16s_clked==2) ? irlsb10!=3 : fet_ir16_clked;
     //fet_ir16 = irlsb10!=3;
     if (fet_ir16){
         memIR32 = rv16torv32(memIR16);
@@ -141,7 +145,7 @@ void fetch()
                     remain_ir16s_clked - 
                     //in negative case or flush, doesnt cousume ir. 
                     ((remain_ir16s_clked>>7)|fetch_flush ? 0 : (fet_ir16?1:2)) + 
-                    (ifu_rsp_valid & ifu_rsp_ready?2:0);
+                    (stalled_ifu_rsp_valid & ifu_rsp_ready?2:0);
     
 
     //
@@ -155,7 +159,7 @@ void fetch()
     ifu_cmd_valid = downloadstart|downloadper_clked|fetch_stall? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
     ifu_cmd_adr =   (remain_ir16s>>7) ? nxtpc :
                     (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
-
+    ifu_cmd_adr = ifu_cmd_adr & 0xfffffffc;
     
     //ddd1 = (remain_ir16s>=0);
     //ddd2 = (!(remain_ir16s_clked>>7));
@@ -167,11 +171,12 @@ void fetch()
          (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : fetpc_clked;
 
     //
-    fetch_flush =!(  ifu_rsp_valid & ifu_rsp_ready  ) & (remain_ir16s_clked!=2);  
+    fetch_flush =!(  stalled_ifu_rsp_valid & ifu_rsp_ready  ) & (remain_ir16s_clked!=2);  
     fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail | 
                                  (remain_ir16s_clked>>7); //remain_ir16s_clked is negative means jmpto address[1:0]==10
                                                           //need take 2 cycles to get full instruntion
-    fetchIR =  fetch_flush ?  NOP : memIR32;
+    fetch_flush = fetch_flush  & (!fetch_stall);                                                     
+    fetchIR =  fetch_flush  ?  NOP : memIR32;
 
     //
     ifu_cmd_read =1;
