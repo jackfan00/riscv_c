@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         // 4-pipeline stage
 
         //for settle down the combination signal
-        for (i=0;i<25;i++){
+        for (i=0;i<15;i++){
 
             ext_write_coderam();
 
@@ -158,10 +158,10 @@ int main(int argc, char *argv[])
         dumpvars(clockcnt, vcdfp);
 #endif
         //check execption
-        if (exe_dec_ilg_clked){
-            printf("STOP by detect illigal instruction\n");
-            break;
-        }
+        //if (exe_dec_ilg_clked){
+        //    printf("STOP by detect illigal instruction\n");
+        //    break;
+        //}
         //
         if (testfinishcheck()){
             break;

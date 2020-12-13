@@ -46,4 +46,8 @@ myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulh.ver
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhsu.verilog >> test_e200.report
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhu.verilog >> test_e200.report
 myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32uc-p-rvc.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-breakpoint.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-csr.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-i2c.verilog >> test_e200.report
+myProgram.exe E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-illegal.verilog >> test_e200.report
 

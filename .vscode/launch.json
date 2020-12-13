@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\bin\\myProgram.exe",
-            "args": ["E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32uc-p-rvc.verilog"],
+            "args": ["E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-soc.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

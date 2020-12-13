@@ -149,9 +149,11 @@ void fetch()
     
 
     //
-    nxtpc = exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
+    nxtpc = csr_exception_flush   ? branchjmp_pc :  //1st priority
+            exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
             exe_jalr_pdict_fail ? exe_jalr_pc :
-            branchjmp   ? branchjmp_pc : fetpc_clked + iroffset;
+            branchjmp   ? branchjmp_pc : 
+            fetpc_clked + iroffset;
             //fetch_stall ? fetpc_clked : fetpc_clked + iroffset;
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
 

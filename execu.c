@@ -53,7 +53,8 @@ void execu()
     and_res = dec_alu_opd1_clked & dec_alu_opd2_clked;
 
     set_res = or_res;
-    clr_res = and_res;
+    clr_res = (~dec_alu_opd1_clked) & dec_alu_opd2_clked;
+    //clr_res = and_res;
     csrw_res = dec_alu_opd1_clked;
 
 
