@@ -48,5 +48,6 @@ void lif_clked()
 
     lif_divrdidx_clked = lif_divrdidx;
     lif_loadrdidx_clked = lif_loadrdidx;
+    lif_loadfull_clked = lif_loadfull;
 
 }

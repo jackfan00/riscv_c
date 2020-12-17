@@ -131,6 +131,5 @@ void execu_clked();
     BIT lsu_stall;
     BIT mul_stall;
     BIT div_stall;
-    BIT lif_loadfull;
 
 #endif  //EXECU_H

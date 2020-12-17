@@ -8,6 +8,7 @@
 //#include "memwb_bus.h"
 #include "regfile.h"
 #include "csrreg.h"
+#include "regfilemerge.h"
 
 
 void decodeinit()
@@ -498,6 +499,13 @@ int s_j_imm;
        dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_loadrdidx_clked));
        dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_loadrdidx_clked));
 
+       lif_loadrdidx = aluload ? rdidx :
+                      regfile_wrload ?  0 : lif_loadrdidx_clked;
+
+       lif_divrdidx = aluop_div | aluop_divu | aluop_rem | aluop_remu ? rdidx : 
+                      regfile_wrdiv ?  0 : lif_divrdidx_clked;
+
+
        //long instuction command definition: take 2 or more clock cycles to complete
        //for now only div is long instuction command, 
        //MUL is optional , can take 1/2 or more cycles to complete depend on hardware implementation
@@ -513,9 +521,9 @@ int s_j_imm;
         // if conflict at regfile stage, dont need to stall
         // regfile read always available, dont stall
        dec_stall =  ((aluop_fence | aluop_fencei ) & (lif_loadrdidx_clked!=0 || lif_divrdidx_clked!=0)) |
-                    (dec_rwaw_lif_rs1 & (!dec_raw_memwb_rs1)) | 
-                    (dec_rwaw_lif_rs2 & (!dec_raw_memwb_rs2)) | 
-                    (dec_rwaw_lif_rd  & (!dec_waw_memwb_rd )) ? 1 :
+                    (dec_rwaw_lif_rs1 ) |         
+                    (dec_rwaw_lif_rs2 ) |         
+                    (dec_rwaw_lif_rd  ) ? 1 :     
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
                      ((dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                     0;

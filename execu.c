@@ -98,7 +98,7 @@ void execu()
     //LSU generation
     //normal itcm/dtcm load will not have lif_loadfull condition
     //only may happen at BIU bus target peripheral/flash access
-    lsu_cmd_valid = (dec_aluload_clked& (!lif_loadfull)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
+    lsu_cmd_valid = (dec_aluload_clked& (!lif_loadfull_clked)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
     lsu_cmd_read = dec_aluload_clked;
     lsu_cmd_adr = exe_res;
     lsu_cmd_data =  dec_rs2v_clked ;
@@ -192,14 +192,18 @@ void execu()
 
     //lif: long instrution flag
     //write to lif after commit load-command
-    lif_loadrdidx = lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? dec_rdidx_clked :
-                      regfile_wrload ?  0 : lif_loadrdidx_clked;
-
-    lif_divrdidx = div_cmd_valid & div_cmd_ready ? dec_rdidx_clked : 
-                      regfile_wrdiv ?  0 : lif_divrdidx_clked;
+    //move to decode
+    //lif_loadrdidx = lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? dec_rdidx_clked :
+    //                  regfile_wrload ?  0 : lif_loadrdidx_clked;
+//
+    //lif_divrdidx = div_cmd_valid & div_cmd_ready ? dec_rdidx_clked : 
+    //                  regfile_wrdiv ?  0 : lif_divrdidx_clked;
     //lif already contain value
     //div no need to do lif_divfull condition, because only 1 div target                  
-    lif_loadfull = (lif_loadrdidx_clked!=0) & (!regfile_wrload) ;
+    
+    //lif_loadfull = (lif_loadrdidx_clked!=0) & (!regfile_wrload) ;
+    lif_loadfull = lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? 1 : 
+                   regfile_wrload ?  0 : lif_loadfull_clked;
 
     exe_stall = mul_stall | div_stall | lsu_stall;
     

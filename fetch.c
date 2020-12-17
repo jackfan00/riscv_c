@@ -163,14 +163,19 @@ void fetch()
                     (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
     ifu_cmd_adr = ifu_cmd_adr & 0xfffffffc;
     
-    //ddd1 = (remain_ir16s>=0);
-    //ddd2 = (!(remain_ir16s_clked>>7));
-    //ddd =  (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) ;
-    //ddd3 = ifu_cmd_ready ;
+   
+    //for pc_keep_clked period, its pc is not changed.
+    pc_keep = (remain_ir16s==0xff) ? 1 :
+                (ifu_cmd_valid & ifu_cmd_ready) ? 0 : pc_keep_clked;
+    pc = 
+            (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc :   //1st priority
+
+            pc_keep_clked ? fetpc_clked :
     //for remain_ir16s_clked value is negative cycle, its pc is invalid dont update.
-    pc = (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
-         (remain_ir16s==2 ) |
-         (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : fetpc_clked;
+         (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
+         (remain_ir16s==2 ) ? nxtpc : 
+         //(exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : 
+         fetpc_clked;
 
     //
     fetch_flush =!(  stalled_ifu_rsp_valid & ifu_rsp_ready  ) & (remain_ir16s_clked!=2);  

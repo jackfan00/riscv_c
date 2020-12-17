@@ -17,6 +17,7 @@ void fetch_clked()
     fetpc_clked = pc;
     fet_ir16_clked =  fet_ir16;
     remain_ir16s_clked = remain_ir16s;
+    pc_keep_clked = pc_keep;
 
     //fetpc_clked corresponding to fetchIR, not fetchIR_clked
 

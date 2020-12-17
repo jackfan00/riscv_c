@@ -12,9 +12,11 @@ void lif_clked();
 
 REG8 lif_divrdidx_clked;
 REG8 lif_loadrdidx_clked;
+BIT lif_loadfull_clked;
 
 //
 REG8 lif_divrdidx;
 REG8 lif_loadrdidx;
+BIT lif_loadfull;
 
 #endif //LIF_H

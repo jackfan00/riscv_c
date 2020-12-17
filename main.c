@@ -68,12 +68,14 @@ void setup()
     dtcmmergeFIFO_clked =0xff;
     regfilemergeFIFO_clked =0xff;
     itcmmergeFIFO_ridx_clked=1;
+    signature_startaddr=0x80002000;
 
 }
 
 int main(int argc, char *argv[])
 {
     int i;
+    char * imcindi;
 
 #ifdef DUMPVCD
     printf("generate trace waveform file: riscv.vcd\n");
@@ -84,10 +86,31 @@ int main(int argc, char *argv[])
     //initilize
     setup();
     //
-    if (argc==2){
+    if (argc>=2){
         downloadCode(argv[1]);
         downloadstart=1;
         testcase = strdup(argv[1]);
+        //
+        PC_WRITE_TOHOST       =0x80000086;  //e200 test
+        HAS_REFERENCEOUT      =0;
+        if (argc>=3){
+            HAS_REFERENCEOUT      =1;
+            referenceout = strdup(argv[2]);
+            printf("referenceout=%s\n", referenceout);
+            imcindi = strstr(referenceout, "rv32imc");
+            //
+
+            if (imcindi==NULL){
+                PC_WRITE_TOHOST       =0x80000040;  //COMPLIANCE_IM_TEST
+            }
+            else{
+                PC_WRITE_TOHOST       =0x80000036;  //COMPLIANCE_IMC_TEST
+            }
+        }
+        if (argc>=4){
+            signature_startaddr = (REG32)strtoul(trimwhitespace(argv[3]), NULL, 16);
+            printf("signature_startaddr=%08x\n", signature_startaddr);
+        }
     }
     else{
         init_rom();
@@ -213,7 +236,7 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) break;
-        //if (clockcnt >= 0x7b58) {
+        //if (clockcnt >= 0x4b58) {
         //    break;
            // printf("dddd\n");
         //}

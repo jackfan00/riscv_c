@@ -1,13 +1,14 @@
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-add.verilog
 Download Code: size=1690 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-add.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17244 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14362 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17243 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14360 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,14 +23,15 @@ Download Code: size=1690 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-addi.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-addi.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16991 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14136 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16990 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14134 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,14 +46,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-and.verilog
 Download Code: size=1754 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-and.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17257 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14385 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17256 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14383 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -66,14 +69,15 @@ Download Code: size=1754 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-andi.verilog
 Download Code: size=1114 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-andi.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16948 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14092 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16947 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14090 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,14 +92,15 @@ Download Code: size=1114 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-auipc.verilog
 Download Code: size=856 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-auipc.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16793 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13952 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16792 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13950 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -110,14 +115,15 @@ Download Code: size=856 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-beq.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-beq.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17092 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14203 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17091 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14201 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,14 +138,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bge.verilog
 Download Code: size=1306 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bge.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17136 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14223 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17135 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14221 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -154,14 +161,15 @@ Download Code: size=1306 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bgeu.verilog
 Download Code: size=1434 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bgeu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17158 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14248 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17157 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14246 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -176,14 +184,15 @@ Download Code: size=1434 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-blt.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-blt.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17092 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14203 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17091 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14201 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -198,14 +207,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bltu.verilog
 Download Code: size=1370 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bltu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17120 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14228 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17119 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14226 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -220,14 +230,15 @@ Download Code: size=1370 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bne.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-bne.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17093 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14204 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17092 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14202 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -242,14 +253,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-fence_i.verilog
 Download Code: size=888 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-fence_i.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17011 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14163 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17010 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14161 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -264,14 +276,15 @@ Download Code: size=888 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-jal.verilog
 Download Code: size=794 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-jal.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16787 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13946 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16786 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13944 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -286,14 +299,15 @@ Download Code: size=794 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-jalr.verilog
 Download Code: size=922 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-jalr.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16869 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14009 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16868 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14007 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -308,14 +322,15 @@ Download Code: size=922 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lb.verilog
 Download Code: size=1258 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lb.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17014 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14138 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17026 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14136 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -330,14 +345,15 @@ Download Code: size=1258 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lbu.verilog
 Download Code: size=1258 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lbu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17010 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14139 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17022 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14137 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -352,14 +368,15 @@ Download Code: size=1258 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lh.verilog
 Download Code: size=1322 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lh.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17026 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14151 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17033 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14149 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -374,14 +391,15 @@ Download Code: size=1322 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lhu.verilog
 Download Code: size=1322 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lhu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17033 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14158 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17038 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14156 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -396,14 +414,15 @@ Download Code: size=1322 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lui.verilog
 Download Code: size=858 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lui.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16796 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13956 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16795 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13954 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -418,14 +437,15 @@ Download Code: size=858 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lw.verilog
 Download Code: size=1322 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-lw.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17038 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14161 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17043 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14159 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -440,14 +460,15 @@ Download Code: size=1322 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-or.verilog
 Download Code: size=1818 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-or.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17260 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14388 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17259 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14386 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -462,14 +483,15 @@ Download Code: size=1818 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-ori.verilog
 Download Code: size=1178 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-ori.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16954 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14099 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16953 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14097 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -484,14 +506,15 @@ Download Code: size=1178 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sb.verilog
 Download Code: size=1578 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sb.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17251 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14329 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17256 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14327 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -506,14 +529,15 @@ Download Code: size=1578 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sh.verilog
 Download Code: size=1786 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sh.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17313 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14382 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17314 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14380 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -528,14 +552,15 @@ Download Code: size=1786 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-simple.verilog
 Download Code: size=730 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-simple.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16770 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13931 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16769 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13929 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -550,14 +575,15 @@ Download Code: size=730 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sll.verilog
 Download Code: size=1818 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sll.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17267 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14393 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17266 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14391 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -572,14 +598,15 @@ Download Code: size=1818 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slli.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slli.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16990 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14135 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16989 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14133 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -594,14 +621,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slt.verilog
 Download Code: size=1626 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slt.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17233 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14359 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17232 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14357 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -616,14 +644,15 @@ Download Code: size=1626 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slti.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-slti.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16986 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14131 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16985 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14129 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -638,14 +667,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sltiu.verilog
 Download Code: size=1242 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sltiu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16986 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14131 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16985 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14129 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -660,14 +690,15 @@ Download Code: size=1242 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sltu.verilog
 Download Code: size=1626 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sltu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17233 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14359 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17232 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14357 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -682,14 +713,15 @@ Download Code: size=1626 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sra.verilog
 Download Code: size=1946 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sra.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17288 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14409 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17287 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14407 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -704,14 +736,15 @@ Download Code: size=1946 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srai.verilog
 Download Code: size=1370 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srai.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17006 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14150 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17005 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14148 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -726,14 +759,15 @@ Download Code: size=1370 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srl.verilog
 Download Code: size=1882 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srl.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17284 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14406 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17283 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14404 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -748,14 +782,15 @@ Download Code: size=1882 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srli.verilog
 Download Code: size=1306 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-srli.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17000 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14143 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16999 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14141 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -770,14 +805,15 @@ Download Code: size=1306 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sub.verilog
 Download Code: size=1626 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sub.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17232 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14356 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17231 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14354 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -792,14 +828,15 @@ Download Code: size=1626 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sw.verilog
 Download Code: size=1738 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-sw.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17322 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14389 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17321 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14387 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -814,14 +851,15 @@ Download Code: size=1738 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xor.verilog
 Download Code: size=1818 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xor.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17268 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14384 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17267 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14382 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -836,14 +874,15 @@ Download Code: size=1818 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xori.verilog
 Download Code: size=1178 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32ui-p-xori.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16956 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14101 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16955 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14099 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -858,14 +897,15 @@ Download Code: size=1178 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-div.verilog
 Download Code: size=922 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-div.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17008 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13987 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17013 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13985 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -880,14 +920,15 @@ Download Code: size=922 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-divu.verilog
 Download Code: size=922 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-divu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16923 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13988 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16925 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13986 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -902,14 +943,15 @@ Download Code: size=922 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-rem.verilog
 Download Code: size=922 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-rem.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17009 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13987 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17014 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13985 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -924,14 +966,15 @@ Download Code: size=922 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-remu.verilog
 Download Code: size=922 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-remu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16922 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13987 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16924 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13985 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -946,14 +989,15 @@ Download Code: size=922 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mul.verilog
 Download Code: size=1690 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mul.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17241 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14356 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17240 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14354 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -968,14 +1012,15 @@ Download Code: size=1690 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulh.verilog
 Download Code: size=1754 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulh.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17242 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14356 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17241 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14354 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -990,14 +1035,15 @@ Download Code: size=1754 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhsu.verilog
 Download Code: size=1754 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhsu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17233 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14359 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17232 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14357 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1012,14 +1058,15 @@ Download Code: size=1754 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhu.verilog
 Download Code: size=1754 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32um-p-mulhu.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 17242 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14356 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 17241 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14354 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1034,14 +1081,15 @@ Download Code: size=1754 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32uc-p-rvc.verilog
 Download Code: size=11668 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32uc-p-rvc.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16958 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 14101 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16959 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 14099 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1056,14 +1104,15 @@ Download Code: size=11668 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-breakpoint.verilog
 Download Code: size=1062 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-breakpoint.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16784 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13943 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16783 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13941 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1078,14 +1127,15 @@ Download Code: size=1062 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-csr.verilog
 Download Code: size=1128 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-csr.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16829 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13987 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16828 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13985 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1100,14 +1150,15 @@ Download Code: size=1128 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-i2c.verilog
 Download Code: size=874 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-i2c.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16800 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13960 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16799 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13958 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1122,14 +1173,15 @@ Download Code: size=874 bytes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-illegal.verilog
 Download Code: size=1430 bytes
+Intercept write_tohost.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\e200_generated\\rv32mi-p-illegal.verilog ~~~~~~~~~~~~~~~~~~~~~
-~~~~~~~~~~~~~~Total cycle_count value: 16825 ~~~~~~~~~~~~~
-~~~~~~~~~~The valid Instruction Count: 13979 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 16824 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 13977 ~~~~~~~~~~~~~
 ~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
