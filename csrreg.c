@@ -290,7 +290,8 @@ void csrreg()
                         (minstret_clked==0xffffffff) ? minstreth_clked+1 : minstreth_clked;
 
     csr_cmd_exception_valid = csr_inthappen|memwb_excephappen|memwb_mret;
-    csr_cmd_exception_ready = ((lif_divrdidx_clked==0) & (lif_loadrdidx_clked==0)) & csr_cmd_exception_valid;
+    //make sure all instruction complete and next instruction is commit (ifu_cmd_ready)
+    csr_cmd_exception_ready = ((lif_divrdidx_clked==0) & (lif_loadrdidx_clked==0) ) & csr_cmd_exception_valid;
     csr_exception_stall = csr_cmd_exception_valid & (!csr_cmd_exception_ready);
     csr_exception_flush = csr_cmd_exception_valid & ( csr_cmd_exception_ready);
 

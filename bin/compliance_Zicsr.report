@@ -1,0 +1,194 @@
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRC-01.elf.verilog
+Download Code: size=1488 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRC-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002060
+Generate signature file
+00000000-fffffffe-ffffffff-800f0000-
+7fffffff-00000000-ffffffff-fffffffe-
+fffffffe-800f0000-000f0000-00000000-
+edcba987-ffffffff-00000000-ffffffff-
+ffffffff-00000000-42726e6f-00000000-
+f7ff8818-ffffffff-69c7ad8b-49c1a903-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRC-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 200 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 165 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRCI-01.elf.verilog
+Download Code: size=1296 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRCI-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002040
+Generate signature file
+00000000-fffffffe-ffffffff-ffffffe0-
+ffffffef-fffffff0-ffffffff-ffffffff-
+fffffffe-fffffffe-ffffffe0-ffffffe0-
+ffffffe0-ffffffff-00000000-32165490-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRCI-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 145 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 118 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRS-01.elf.verilog
+Download Code: size=1488 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRS-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002060
+Generate signature file
+00000000-00000001-00000000-7ff0ffff-
+80000000-ffffffff-00000000-00000001-
+00000001-7ff0ffff-fff0ffff-ffffffff-
+12345678-00000000-12345678-00000000-
+12345678-00000000-42726e6f-00000000-
+f7ff8818-00000000-96385274-b63e56fc-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRS-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 198 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 163 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRSI-01.elf.verilog
+Download Code: size=1296 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRSI-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002040
+Generate signature file
+00000000-00000001-00000000-0000001f-
+00000010-0000000f-00000000-00000000-
+00000001-00000001-0000001f-0000001f-
+0000001f-00000000-3216549f-32165498-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRSI-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 143 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 116 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRW-01.elf.verilog
+Download Code: size=1360 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRW-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002040
+Generate signature file
+00000000-00000001-00000000-ffffffff-
+7fffffff-80000000-12345678-9abcdef0-
+12345678-9abcdef0-00000000-00000000-
+00000000-14725836-96385274-32165498-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRW-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 166 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 139 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+init coderam via hex file E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRWI-01.elf.verilog
+Download Code: size=1168 bytes
+referenceout=E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRWI-01.reference_output
+Intercept write_tohost.
+begin_signature at 80002000
+end_signature at 80002020
+Generate signature file
+00000000-00000000-00000001-00000000-
+0000001f-0000000f-00000010-00000000-
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~ Test Result Summary ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~TESTCASE: E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRWI-01.elf.verilog ~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~Total cycle_count value: 111 ~~~~~~~~~~~~~
+~~~~~~~~~~The valid Instruction Count: 92 ~~~~~~~~~~~~~
+~~~~~The test ending reached at cycle: 8 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~The final x3 Reg value: 1 ~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~ TEST_PASS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####     ##     ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #   #  #   #       #     ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #    #  #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~ #####   ######       #       #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #  #    #  #    #~~~~~~~~~~~~~~~~
+~~~~~~~~~ #       #    #   ####    #### ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

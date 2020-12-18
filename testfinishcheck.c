@@ -125,7 +125,7 @@ int testfinishcheck()
             testpass = checksignature(signature_ref, index);
         }
         else{
-            testpass = regfileffs_clked[3];
+            testpass = (regfileffs_clked[3]==1);
         }
         //
         print_testresult();

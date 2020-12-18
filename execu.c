@@ -4,6 +4,7 @@
 #include "lsubussplit.h"
 #include "lif.h"
 #include "regfilemerge.h"
+#include "csrreg.h"
 
 void execu()
 {
@@ -98,7 +99,8 @@ void execu()
     //LSU generation
     //normal itcm/dtcm load will not have lif_loadfull condition
     //only may happen at BIU bus target peripheral/flash access
-    lsu_cmd_valid = (dec_aluload_clked& (!lif_loadfull_clked)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
+    lsu_cmd_valid = csr_exception_flush ? 0 :  
+                    (dec_aluload_clked& ((!lif_loadfull_clked) | regfile_wrload)) | dec_alustore_clked; // & exe_res_valid & (!lsu_misaligned); 
     lsu_cmd_read = dec_aluload_clked;
     lsu_cmd_adr = exe_res;
     lsu_cmd_data =  dec_rs2v_clked ;
@@ -202,8 +204,10 @@ void execu()
     //div no need to do lif_divfull condition, because only 1 div target                  
     
     //lif_loadfull = (lif_loadrdidx_clked!=0) & (!regfile_wrload) ;
-    lif_loadfull = lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? 1 : 
-                   regfile_wrload ?  0 : lif_loadfull_clked;
+    lif_loadfull = 
+                   regfile_wrload ?  0 :
+                   lsu_cmd_valid & lsu_cmd_ready & lsu_cmd_read ? 1 : 
+                   lif_loadfull_clked;
 
     exe_stall = mul_stall | div_stall | lsu_stall;
     

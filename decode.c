@@ -467,9 +467,9 @@ int s_j_imm;
        //    printf("err dec_ilg\n");
        //}
 
-       //
-       dec_raw_exe_csr =   (dec_csr_wen_clked & (dec_csridx_clked==csridx && dec_csr_ren));
-       dec_raw_memwb_csr = (exe_csr_wen_clked & (exe_csridx_clked==csridx && dec_csr_ren));   //memwb
+       //dont qualify dec_csr_ren
+       dec_raw_exe_csr =   (dec_csr_wen_clked & (dec_csridx_clked==csridx));// && dec_csr_ren));
+       dec_raw_memwb_csr = (exe_csr_wen_clked & (exe_csridx_clked==csridx));// && dec_csr_ren));   //memwb
 
 
        dec_raw_exe_rs1 =   (dec_rden_clked & (dec_rdidx_clked==rs1idx && rs1en) );
@@ -529,7 +529,8 @@ int s_j_imm;
                     0;
                     //                 (rs1en & (!rs1en_ack))  |  (rs2en & (!rs2en_ack));
 
-       real_csrv = !dec_csr_ren ? 0 :
+       //dont qualify dec_csr_ren
+       real_csrv = //!dec_csr_ren ? 0 :
                     dec_raw_exe_csr  ? csr_res :
                     dec_raw_memwb_csr ? exe_csr_res_clked : csrv;
 

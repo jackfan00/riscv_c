@@ -236,7 +236,7 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) break;
-        //if (clockcnt >= 0x4b58) {
+        //if (clockcnt >= 0x1b58) {
         //    break;
            // printf("dddd\n");
         //}
