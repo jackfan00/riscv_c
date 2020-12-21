@@ -9,6 +9,7 @@ REG8 biumergeFIFO_widx_clked;
 REG8 biumergeFIFO_ridx_clked;
 REG8 biumergeFIFO_clked[BIUMERGEFIFODEPTH];
 BIT biumerge_ifupri_clked;
+BIT biumergeFIFOempty_clked;
 
 BIT biumerge_o_cmd_valid;
 BIT biumerge_o_cmd_ready;

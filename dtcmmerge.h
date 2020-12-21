@@ -7,8 +7,9 @@ void dtcmmerge_clked();
 
 REG8 dtcmmergeFIFO_widx_clked;
 REG8 dtcmmergeFIFO_ridx_clked;
-REG8 dtcmmergeFIFO_clked;//[DTCMMERGEFIFODEPTH];
+REG8 dtcmmergeFIFO_clked[DTCMMERGEFIFODEPTH];
 BIT dtcmmerge_extpri_clked;
+BIT dtcmmergeFIFOempty_clked;
 
 BIT dtcmmerge_o_cmd_valid;
 BIT dtcmmerge_o_cmd_ready;

@@ -31,6 +31,7 @@
 #include "dtcmmerge.h"
 #include "regfilemerge.h"
 #include "testfinishcheck.h"
+#include "exitcheck.h"
 
 void debug_cpuinfo(){
     int i;
@@ -65,9 +66,10 @@ void setup()
     clint_mtimecmp_clked=0xffffffff;
     clint_mtimecmph_clked=0xffffffff;
     //itcmmergeFIFO_clked =0xff;
-    dtcmmergeFIFO_clked =0xff;
-    regfilemergeFIFO_clked =0xff;
+    biumergeFIFO_ridx_clked=1;
+    dtcmmergeFIFO_ridx_clked =1;
     itcmmergeFIFO_ridx_clked=1;
+    regfilemergeFIFO_clked =0xff;
     signature_startaddr=0x80002000;
 
 }
@@ -189,7 +191,10 @@ int main(int argc, char *argv[])
         if (testfinishcheck()){
             break;
         }
-
+        if (exitcheck()){
+            printf("exitcheck break\n");
+            break;
+        }
         // flipflop
 
        // memwb_clked();
@@ -225,6 +230,7 @@ int main(int argc, char *argv[])
         //
         ext_write_coderam_clked();
         testfinishcheck_clked();
+        exitcheck_clked();
         
         //
         clockcnt++;
@@ -236,7 +242,7 @@ int main(int argc, char *argv[])
         //    printf("stop\n");
         //}
         //if (clockcnt >= 0x63f) break;
-        //if (clockcnt >= 0x1b58) {
+        //if (clockcnt >= 0xab58) {
         //    break;
            // printf("dddd\n");
         //}

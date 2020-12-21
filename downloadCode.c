@@ -40,8 +40,8 @@ char *trimwhitespace(char *str)
 void downloadCode(char * filename)
 {
     REG32 linecode[16];
-    int at_address, addrindex;
-    int lineaddr, index, ii, codesize;
+    REG32 at_address, addrindex;
+    int lineaddr, index, ii, codesize, codesize_padding;
     FILE * fp;
     char str[200];
     char *token1s, *token2s, *tmp, *tmpcp, *tmp2;
@@ -51,6 +51,7 @@ void downloadCode(char * filename)
     fp = fopen(filename,"r");
     index=0;
     codesize=0;
+    codesize_padding=0;
     while (fgets(str,200,fp)!=NULL)
     {
         char * strp = strdup(trimwhitespace(str));
@@ -66,7 +67,7 @@ void downloadCode(char * filename)
         //
         if (token1s[0]=='@'){  //code start address
             token2s = strsep(&token1s, "@");
-            at_address = (int)strtol(trimwhitespace(token1s), NULL, 16);
+            at_address = (REG32)strtoul(trimwhitespace(token1s), NULL, 16);
             addrindex=0;
         }
         else{  // code body
@@ -101,6 +102,7 @@ void downloadCode(char * filename)
                 index++;
                 addrindex+=4;
             }
+            codesize_padding += ii;
             
         }
     }
@@ -110,7 +112,10 @@ void downloadCode(char * filename)
         return;
     }
     printf("Download Code: size=%d bytes\n", codesize);
-    download_codesize=(codesize>>2) + (codesize&0x03 ? 1 : 0);  // add reminder
+    printf("Padding Download Code: size=%d bytes\n", codesize_padding);
+    
+    //download_codesize=(codesize>>2) + (codesize&0x03 ? 1 : 0);  // add reminder
+    download_codesize = (codesize_padding>>2);
 
 }
 

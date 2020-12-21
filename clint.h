@@ -18,7 +18,11 @@ REG32 clint_mtimecmph_clked;
 REG32 clint_mtime_clked;
 REG32 clint_mtimeh_clked;
 BIT clint_read_clked;
-REG32 clint_regradr_clked;
+//REG32 clint_regradr_clked;
+BIT clint_write_clked;
+BIT clint_read1st_clked;
+REG32 read_clint_rdat_clked;
+REG32 clint_csadr_clked;
 
 //output
 BIT clint_msip;
@@ -42,5 +46,9 @@ BIT clint_rsp_ready;
 BIT clint_rsp_read;
 REG32 clint_rsp_rdata;
 BIT clint_read;
+REG32 clint_rdat;
+BIT clint_write;
+BIT clint_read1st;
+REG32 read_clint_rdat;
 
 #endif //CLINT_H

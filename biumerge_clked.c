@@ -4,7 +4,7 @@ void biumerge_clked()
 {
     //FIFO
     //write first
-    biumergeFIFO_clked[biumergeFIFO_widx_clked] = biumergeFIFO ;
+    biumergeFIFO_clked[biumergeFIFO_widx] = biumergeFIFO ;
     biumergeFIFO_widx_clked = biumergeFIFO_widx;
 
     //read second
@@ -12,5 +12,7 @@ void biumerge_clked()
 
     //roundrobin arbitor
     biumerge_ifupri_clked = biumerge_ifupri;
+
+    biumergeFIFOempty_clked = biumergeFIFOempty;
 
 }

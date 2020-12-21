@@ -499,10 +499,13 @@ int s_j_imm;
        dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_loadrdidx_clked));
        dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_loadrdidx_clked));
 
-       lif_loadrdidx = aluload ? rdidx :
-                      regfile_wrload ?  0 : lif_loadrdidx_clked;
+       lif_loadrdidx = 
+                        regfile_wrload ?  0 :
+                        aluload ? rdidx :
+                      //regfile_wrload ?  0 : 
+                      lif_loadrdidx_clked;
 
-       lif_divrdidx = aluop_div | aluop_divu | aluop_rem | aluop_remu ? rdidx : 
+       lif_divrdidx = (aluop_div | aluop_divu | aluop_rem | aluop_remu) & (lif_divrdidx_clked==0) ? rdidx : 
                       regfile_wrdiv ?  0 : lif_divrdidx_clked;
 
 

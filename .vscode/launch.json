@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\bin\\myProgram.exe",
-            "args": ["E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\I-CSRRCI-01.elf.verilog","E:\\vb_share\\riscv-wind\\tests\\compliance\\rv32Zicsr\\references\\I-CSRRCI-01.reference_output"],
+            "args": ["E:\\vb_share\\riscv-wind\\tests\\software\\coremark4sim\\coremark4sim.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

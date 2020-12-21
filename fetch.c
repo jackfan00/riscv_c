@@ -119,7 +119,8 @@ void fetch()
     memIR_hi16 = stalled_ifu_rsp_valid & ifu_rsp_ready ? (buffered_rsp_rdata>>16) & 0x0ffff : memIR_hi16_clked;
 
     //
-    memIR16 = (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
+    memIR16 =   //branchjmp ? ((fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : (memIR>>16) & 0x0ffff) :
+                (fetpc_clked&0x02) == 0 ? memIR & 0x0ffff : memIR_hi16_clked; // (memIR>>16) & 0x0ffff;
     // calculate next pc
     irlsb10 = memIR16 & 0x03; //(fetpc_clked&0x02) == 0 ? memIR & 0x03 :  (memIR>>16) & 0x03;
     fet_ir16 = (stalled_ifu_rsp_valid&ifu_rsp_ready)|(remain_ir16s_clked==2) ? irlsb10!=3 : fet_ir16_clked;

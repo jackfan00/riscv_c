@@ -28,7 +28,7 @@ void biubussplit()
     biusplit_i_bus_rsp_ready = biumerge_o_rsp_ready ;
 
     //dont accept command if fifo is full
-    real_biusplit_i_bus_cmd_valid = !biutransacFIFOfull & biusplit_i_bus_cmd_valid;
+    real_biusplit_i_bus_cmd_valid = (!biutransacFIFOfull) & biusplit_i_bus_cmd_valid;
     //find matching base address except last biusplit_o_bus_cmd_valid
     for (i=0;i<BIUSPLITTARGETNUM-1;i++)
     {
@@ -54,7 +54,7 @@ void biubussplit()
     biusplit_o_bus_cmd_rwbyte[BIUSPLITTARGETNUM-1] = biusplit_o_bus_cmd_valid[BIUSPLITTARGETNUM-1] ? biusplit_i_bus_cmd_rwbyte : 0;
 
     //
-    biutransacFIFO_wen=biusplit_i_bus_cmd_valid & biusplit_i_bus_cmd_ready & biusplit_i_bus_cmd_read;
+    biutransacFIFO_wen=biusplit_i_bus_cmd_valid & biusplit_i_bus_cmd_ready;// & biusplit_i_bus_cmd_read;
     biutransacFIFO_wid=0;
     for (i=0;i<BIUSPLITTARGETNUM;i++)
     {
@@ -75,8 +75,9 @@ void biubussplit()
 
     //fifo empty definition : if current write-idx equal to current read-idx
     biutransacFIFOempty = (biutransacFIFO_widx_clked==biutransacFIFO_ridx_clked);
-    biutransacFIFO_rid = biusplit_i_bus_cmd_valid & (!biusplit_i_bus_cmd_read) ? biutransacFIFO_wid : //for write bypass 
-                        biutransacFIFOempty ? biutransacFIFO_wid : biutransacFIFO_clked[biutransacFIFO_ridx_clked];
+    biutransacFIFO_rid = biusplit_i_bus_cmd_valid & (!biusplit_i_bus_cmd_read) & biutransacFIFOempty ? biutransacFIFO_wid : //for write bypass 
+                        //biutransacFIFOempty ? biutransacFIFO_wid : 
+                        biutransacFIFO_clked[biutransacFIFO_ridx_clked];
     
     biusplit_i_bus_rsp_read =0;
     biusplit_i_bus_rsp_valid=0;
@@ -90,7 +91,7 @@ void biubussplit()
     }
 
     //rsp accept and move biutransacFIFO_ridx to next item
-    biutransacFIFO_ren = biusplit_i_bus_rsp_valid & biusplit_i_bus_rsp_ready & biusplit_i_bus_rsp_read;
+    biutransacFIFO_ren = biusplit_i_bus_rsp_valid & biusplit_i_bus_rsp_ready;// & biusplit_i_bus_rsp_read;
     biutransacFIFO_ridx = biutransacFIFO_ren ? ((biutransacFIFO_ridx_clked==(BIUSPLIFIFODEPTH-1)) ? 0 :  biutransacFIFO_ridx_clked+1) : 
                             biutransacFIFO_ridx_clked;
 

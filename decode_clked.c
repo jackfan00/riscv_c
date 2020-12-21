@@ -17,7 +17,7 @@ void decode_clked()
 
 
 if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
- decpc_clked = fetpc_clked;
+ //decpc_clked = fetpc_clked;
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
     //
