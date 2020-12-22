@@ -167,6 +167,7 @@ BIT dec_flush;
 //BIT dec_branch_pdict_fail_pc;
 REG32 cti_pc;
 BIT dec_jalr_pdict_fail;
+BIT dec_jalr_pdict_success;
 BIT dec_mulh_fuse;
 BIT dec_raw_exe_rs1;
 BIT dec_raw_exe_rs2;

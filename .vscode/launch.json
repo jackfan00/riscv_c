@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}\\bin\\myProgram.exe",
-            "args": ["E:\\vb_share\\riscv-wind\\tests\\software\\coremark4sim\\coremark4sim.verilog"],
+            "args": ["E:\\vb_share\\riscv-wind\\tests\\software\\dhrystone4sim\\dhrystone4sim.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

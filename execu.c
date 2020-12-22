@@ -143,6 +143,7 @@ void execu()
                        ((dec_aluop_blt_clked | dec_aluop_bltu_clked) & slt_res) |
                        ((dec_aluop_bge_clked | dec_aluop_bgeu_clked) & (!slt_res));
     exe_branch_pdict_fail = dec_alubranch_clked & (exe_branch_taken ^ dec_predict_jmp_clked);  
+    exe_branch_pdict_success = dec_alubranch_clked & (!(exe_branch_taken ^ dec_predict_jmp_clked));  
     exe_branch_pdict_fail_pc = cti_pc_clked ;
     exe_jalr_pc = cti_pc_clked;
     exe_jalr_pdict_fail = dec_jalr_pdict_fail_clked;        

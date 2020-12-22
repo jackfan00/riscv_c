@@ -32,6 +32,7 @@
 #include "regfilemerge.h"
 #include "testfinishcheck.h"
 #include "exitcheck.h"
+#include "perfcheck.h"
 
 void debug_cpuinfo(){
     int i;
@@ -81,7 +82,7 @@ int main(int argc, char *argv[])
 
 #ifdef DUMPVCD
     printf("generate trace waveform file: riscv.vcd\n");
-    FILE *vcdfp = fopen("riscv.vcd", "w");
+    FILE *vcdfp = fopen("D:/tmp/riscv.vcd", "w");
     dumpvcdheader(vcdfp);
 #endif
     //printf("Hello world!\n");
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
             regfile();
             csrreg();
 
-
+            perfcheck();
 
             /*
             regwbus();
@@ -192,6 +193,21 @@ int main(int argc, char *argv[])
             break;
         }
         if (exitcheck()){
+            //
+            printf("=====performance check=======\n");
+            printf("ifu_2cyc_counter=%d\n", ifu_2cyc_counter_clked);
+            printf("branchjmp_counter=%d\n", branchjmp_counter_clked);
+            printf("branch_fail_counter=%d\n", branch_fail_counter_clked);
+            printf("branch_success_counter=%d\n", branch_success_counter_clked);
+            printf("jalr_fail_counter=%d\n", jalr_fail_counter_clked);
+            printf("jalr_success_counter=%d\n", jalr_success_counter_clked);
+            printf("lsu2itcm_counter=%d\n", lsu2itcm_counter_clked);
+            printf("div_rwaw_counter=%d\n", div_rwaw_counter_clked);
+            printf("load_rwaw_counter=%d\n", load_rwaw_counter_clked);
+            printf("lsu_load_counter=%d\n", lsu_load_counter_clked);
+            printf("dec_stall_counter=%d\n", dec_stall_counter_clked);
+            printf("=============================\n");
+            //
             printf("exitcheck break\n");
             break;
         }
@@ -231,6 +247,7 @@ int main(int argc, char *argv[])
         ext_write_coderam_clked();
         testfinishcheck_clked();
         exitcheck_clked();
+        perfcheck_clked();
         
         //
         clockcnt++;

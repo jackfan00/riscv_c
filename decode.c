@@ -574,6 +574,7 @@ int s_j_imm;
 
     //current-inst is JALR at decode stage, JALR target address is fetpc_clked at fetch stage
        dec_jalr_pdict_fail = alujalr & (cti_pc!=fetpc_clked);
+       dec_jalr_pdict_success = alujalr & (cti_pc==fetpc_clked);
 
     //mulh fuse condition:
     //MULH[S][U] rdh, rs1, rs2; MUL rdl, rs1, rs2

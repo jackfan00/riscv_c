@@ -60,6 +60,7 @@ void execu_clked();
     REG8 lsu_cmd_regidx;
     BIT lsu_cmd_rden;
     BIT exe_branch_pdict_fail;
+    BIT exe_branch_pdict_success;
     BIT exe_rden;
     REG32 exe_branch_pdict_fail_pc;
     BIT exe_jalr_pdict_fail;
