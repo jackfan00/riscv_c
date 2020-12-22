@@ -22,6 +22,10 @@ REG8 priority_clked[PLIC_INTNUMBER];
 BIT gateway_enable_clked[PLIC_INTNUMBER];
 BIT plic_read_clked;
 REG32 plic_regradr_clked;
+BIT plic_write_clked;
+BIT plic_read1st_clked;
+REG32 read_plic_rdat_clked;
+REG32 plic_csadr_clked;
 
 //output
 BIT ccw;
@@ -52,5 +56,9 @@ REG32 plic_rsp_rdata;
 BIT plic_read;
 REG32 plic_regwadr;
 REG32 plic_regradr;
+REG32 plic_rdat;
+BIT plic_write;
+BIT plic_read1st;
+REG32 read_plic_rdat;
 
 #endif //PLIC_H

@@ -52,42 +52,51 @@ void plic()
 
     //plic bus read/write
     //plic_cmd_ready = plic_cmd_valid & (!plic_rsp_valid | (plic_rsp_valid & plic_rsp_ready));
-    plic_cmd_ready = plic_cmd_valid & plic_rsp_ready;
+    //plic_cmd_ready = plic_cmd_valid & plic_rsp_ready;
+    plic_cmd_ready = (!plic_rsp_read) | (plic_rsp_read&plic_rsp_ready);
 
 
-    plic_regcs = plic_cmd_valid & plic_cmd_ready ? 1 : 0;
-    plic_regw = plic_cmd_valid & plic_cmd_ready ? !plic_cmd_read : 0;
-    plic_regwdata = plic_cmd_valid & plic_cmd_ready ? plic_cmd_data : 0;
-    plic_regwadr = plic_cmd_valid & plic_cmd_ready ? plic_cmd_adr : 0;
-    plic_regradr = plic_regcs & (!plic_regw) ? plic_cmd_adr : plic_regradr_clked;
+    plic_regcs = plic_cmd_valid & plic_cmd_ready;// ? 1 : 0;
+    plic_regw =  !plic_cmd_read ;
+    plic_regwdata =  plic_cmd_data ;
+    plic_regwadr =  plic_cmd_adr ;
+    //plic_regradr = plic_regcs & (!plic_regw) ? plic_cmd_adr : plic_csadr_clked;
     //claim/complete pulse
     ccw = plic_regcs & plic_regw & (plic_regwadr==(PLIC_CLAIMCOMPLETE)) ;
     //ccr = plic_regcs & !plic_regw & (plic_regwadr==(PLIC_CLAIMCOMPLETE)) ;
-    ccr = (plic_regradr_clked==(PLIC_CLAIMCOMPLETE));
+    ccr = (plic_csadr_clked==(PLIC_CLAIMCOMPLETE)) & (plic_rsp_read&plic_rsp_ready);
 
     //regrdata
-    plic_regrdata=0;
+    plic_rdat=0;
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
-        plic_regrdata = plic_regrdata | ((plic_regradr_clked==(PLIC_PRIORITY_BASE+i*4)) ? priority_clked[i]:0);
-        plic_regrdata = plic_regrdata | ((plic_regradr_clked==(PLIC_IE_BASE+i*4))       ? IE_clked[i]:0      );
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_PRIORITY_BASE+i*4)) ? priority_clked[i]:0);
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_IE_BASE+i*4))       ? IE_clked[i]:0      );
     }
 
     for (i=0;i<(PLIC_INTNUMBER>>5);i++)
     {
-        plic_regrdata = plic_regrdata | ((plic_regradr_clked==(PLIC_IP_BASE+i*4))       ? IP_clked[i] : 0    );
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_IP_BASE+i*4))       ? IP_clked[i] : 0    );
     }
-        plic_regrdata = plic_regrdata | (ccr                                            ? INTID_clked : 0    );
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_CLAIMCOMPLETE))     ? INTID_clked : 0    );
     //
     plic_read =     plic_regcs     & (!plic_regw) ? 1 : 
-                    plic_rsp_valid &   plic_rsp_ready & (plic_cmd_valid ? plic_cmd_read:1) ? 0 : //eliminate write case
+                    plic_rsp_read&plic_rsp_ready ? 0 :
+                    //plic_rsp_valid &   plic_rsp_ready & (plic_cmd_valid ? plic_cmd_read:1) ? 0 : //eliminate write case
                     plic_read_clked;
+    plic_write = plic_regcs  & (plic_regw) ? 1: 0;
 
-    plic_rsp_valid = plic_regcs & plic_regw? 1 :  //combinational loop issue
-                        plic_read_clked;
+    plic_rsp_valid = //plic_regcs & plic_regw? 1 :  //combinational loop issue
+                            plic_read_clked | plic_write_clked ? 1 : 0;
+                     //   plic_read_clked;
+
+    plic_read1st = plic_regcs & (!plic_regw) ? 1: 0;
+    read_plic_rdat = plic_read1st_clked ? plic_rdat : read_plic_rdat_clked;
+
+    plic_rsp_rdata =  (plic_read1st_clked ? plic_rdat : read_plic_rdat_clked)  ;
 
     plic_rsp_read = plic_read_clked;
 
-    plic_rsp_rdata = plic_regrdata;
+    //plic_rsp_rdata = plic_rdat;
 
 }

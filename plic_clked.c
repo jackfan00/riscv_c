@@ -22,7 +22,7 @@ void plic_clked()
         IP_clked[i>>5] = IP_clked[i>>5] | ((IP[i])<<i);
     }
 
-    IP_clked[plic_regwdata] = ccr ? IP_clked[plic_regwdata>>5] & (~(1<<plic_regwdata)) : IP_clked[plic_regwdata];
+    IP_clked[plic_rsp_rdata>>5] = ccr ? IP_clked[plic_rsp_rdata>>5] & (~(1<<plic_rsp_rdata)) : IP_clked[plic_rsp_rdata>>5];
 
     //IE register
     for (i=1;i<PLIC_INTNUMBER;i++)
@@ -36,9 +36,16 @@ void plic_clked()
     //gateway control
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
-        gateway_enable_clked[i] = IP[i] ? 1 : gateway_enable_clked[i];
+        gateway_enable_clked[i] = IP[i] ? 0 : gateway_enable_clked[i];
     }
     gateway_enable_clked[plic_regwdata] = ccw ? 1 : gateway_enable_clked[plic_regwdata];
 
+
+    plic_read_clked = plic_read;
+
+    plic_write_clked = plic_write;
+    plic_read1st_clked = plic_read1st;
+    read_plic_rdat_clked = read_plic_rdat;
+    plic_csadr_clked = plic_regcs ? plic_regwadr : plic_csadr_clked;
 
 }
