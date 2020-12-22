@@ -60,9 +60,12 @@ void decodeinit()
  aluop_divu=0;
  aluop_rem=0;
  aluop_remu=0;
- dec_rwaw_lif_rs1=0;
- dec_rwaw_lif_rs2=0;
- dec_rwaw_lif_rd=0;
+ dec_rwaw_lifdiv_rs1=0;
+ dec_rwaw_lifdiv_rs2=0;
+ dec_rwaw_lifdiv_rd=0;
+ dec_rwaw_lifload_rs1=0;
+ dec_rwaw_lifload_rs2=0;
+ dec_rwaw_lifload_rd=0;
  //aluop_csrrw=0;
  //aluop_csrrs=0;
  //aluop_csrrc=0;
@@ -482,22 +485,25 @@ int s_j_imm;
        dec_waw_memwb_rd =      (regfileffs_cs & regfileffs_wr & (regfileffs_adr==rdidx  && rden ));   //regfile
 
        //lif:long command flag rwaw(read/write-after-write) check      
-       dec_rwaw_lif_rs1 =0; 
-       dec_rwaw_lif_rs2 =0; 
-       dec_rwaw_lif_rd =0; 
+       dec_rwaw_lifdiv_rs1 =0; 
+       dec_rwaw_lifdiv_rs2 =0; 
+       dec_rwaw_lifdiv_rd =0; 
+       dec_rwaw_lifload_rs1 =0; 
+       dec_rwaw_lifload_rs2 =0; 
+       dec_rwaw_lifload_rd =0; 
        //for (i=0;i<LIFSIZE;i++){
        //     dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (lifvalid_clked[i] & (rs1idx==lifrdidx_clked[i]));
        //     dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (lifvalid_clked[i] & (rs2idx==lifrdidx_clked[i]));
        //     dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (lifvalid_clked[i] & (rdidx ==lifrdidx_clked[i]));
        //}                        
        //div
-       dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (rs1en & (rs1idx==lif_divrdidx_clked));
-       dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_divrdidx_clked));
-       dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_divrdidx_clked));
+       dec_rwaw_lifdiv_rs1 = dec_rwaw_lifdiv_rs1 | (rs1en & (rs1idx==lif_divrdidx_clked));
+       dec_rwaw_lifdiv_rs2 = dec_rwaw_lifdiv_rs2 | (rs2en & (rs2idx==lif_divrdidx_clked));
+       dec_rwaw_lifdiv_rd  = dec_rwaw_lifdiv_rd  | (rden  & (rdidx ==lif_divrdidx_clked));
        //load
-       dec_rwaw_lif_rs1 = dec_rwaw_lif_rs1 | (rs1en & (rs1idx==lif_loadrdidx_clked));
-       dec_rwaw_lif_rs2 = dec_rwaw_lif_rs2 | (rs2en & (rs2idx==lif_loadrdidx_clked));
-       dec_rwaw_lif_rd  = dec_rwaw_lif_rd  | (rden  & (rdidx ==lif_loadrdidx_clked));
+       dec_rwaw_lifload_rs1 = dec_rwaw_lifload_rs1 | (rs1en & (rs1idx==lif_loadrdidx_clked));
+       dec_rwaw_lifload_rs2 = dec_rwaw_lifload_rs2 | (rs2en & (rs2idx==lif_loadrdidx_clked));
+       dec_rwaw_lifload_rd  = dec_rwaw_lifload_rd  | (rden  & (rdidx ==lif_loadrdidx_clked));
 
        lif_loadrdidx = 
                         regfile_wrload ?  0 :
@@ -505,7 +511,8 @@ int s_j_imm;
                       //regfile_wrload ?  0 : 
                       lif_loadrdidx_clked;
 
-       lif_divrdidx = (aluop_div | aluop_divu | aluop_rem | aluop_remu) & (lif_divrdidx_clked==0) ? rdidx : 
+       lif_divrdidx = (aluop_div | aluop_divu | aluop_rem | aluop_remu) & (lif_divrdidx_clked==0) ? rdidx :  //solve continue case
+                      (aluop_div | aluop_divu | aluop_rem | aluop_remu) &  regfile_wrdiv ? rdidx :   //solve continue case
                       regfile_wrdiv ?  0 : lif_divrdidx_clked;
 
 
@@ -524,9 +531,13 @@ int s_j_imm;
         // if conflict at regfile stage, dont need to stall
         // regfile read always available, dont stall
        dec_stall =  ((aluop_fence | aluop_fencei ) & (lif_loadrdidx_clked!=0 || lif_divrdidx_clked!=0)) |
-                    (dec_rwaw_lif_rs1 ) |         
-                    (dec_rwaw_lif_rs2 ) |         
-                    (dec_rwaw_lif_rd  ) ? 1 :     
+                    (dec_rwaw_lifload_rs1 & (!regfile_wrload)) |         
+                    (dec_rwaw_lifload_rs2 & (!regfile_wrload)) |         
+                    (dec_rwaw_lifload_rd  & (!regfile_wrload)) |
+                    (dec_rwaw_lifdiv_rs1  & (!regfile_wrdiv )) |         
+                    (dec_rwaw_lifdiv_rs2  & (!regfile_wrdiv )) |         
+                    (dec_rwaw_lifdiv_rd   & (!regfile_wrdiv )) 
+                    ? 1 :     
                     dec_raw_exe_rs1 | dec_raw_exe_rs2 ?  dec_aluload_clked | 
                      ((dec_aluop_mul_clked | dec_aluop_mulh_clked | dec_aluop_mulhsu_clked | dec_aluop_mulhu_clked) & (MUL_RSPVALID_CYCLES==1)) : //same as aluload case
                     0;
