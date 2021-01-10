@@ -8,14 +8,14 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\bin\\myProgram.exe",
-            "args": ["E:\\vb_share\\riscv-wind\\tests\\software\\dhrystone4sim\\dhrystone4sim.verilog"],
+            "program": "${workspaceFolder}/bin/myProgram.elf",
+            "args": ["~/hbird-e-sdk/software/dhrystone4sim/dhrystone4sim.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gdb.exe",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
                     "description": "啟用 gdb 的美化顯示",

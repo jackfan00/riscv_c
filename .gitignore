@@ -1,3 +1,5 @@
 bin/myProgram.exe
+bin/myProgram.elf
+dumpvcd/dumpvcd.elf
 *.exe
 *.vcd

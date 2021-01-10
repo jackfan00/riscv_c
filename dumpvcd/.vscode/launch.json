@@ -9,14 +9,14 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\dumpvcd.exe",
+            "program": "${workspaceFolder}/dumpvcd.elf",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "gdb",
-            "miDebuggerPath": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gdb.exe",
+            "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
                 {
                     "description": "啟用 gdb 的美化顯示",

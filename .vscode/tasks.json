@@ -2,17 +2,17 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: gcc.exe build active file",
-			"command": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gcc.exe",
+			"type": "shell",
+			"label": "C/C++: gcc.exe build riscv active file",
+			"command": "gcc",
 			"args": [
 				"-g",
-				"${workspaceFolder}\\*.c",
+				"${workspaceFolder}/*.c",
 				"-o",
-				"${workspaceFolder}\\bin\\myProgram.exe"
+				"${workspaceFolder}/bin/myProgram.elf"
 			],
 			"options": {
-				"cwd": "C:\\Program Files\\CodeBlocks\\MinGW\\bin"
+				"cwd": "/usr/bin"
 			},
 			"problemMatcher": [
 				"$gcc"
@@ -21,7 +21,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "compiler: \"C:\\Program Files\\CodeBlocks\\MinGW\\bin\\gcc.exe\""
+			"detail": "compiler: \"/usr/bin/gcc\""
 		}
 	]
 }
