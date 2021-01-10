@@ -75,7 +75,11 @@ REG32 ras_stack[RASDEPTH];
 REG8 ras_sp;
 
 
-//BIT firstclk;
+//UART
+#define MYKEY_UART0 25
+#define BUFSIZE_UART0 16  //tx, rx
+//REG32 * txuart0_shmptr;
+//REG32 * rxuart0_shmptr;
 
 #endif // REG_H
 

@@ -148,6 +148,7 @@ void parsevars(char * filename)
 {
 
     //local
+    char * strp;
     int i,arraysize,bitnumber,j;
     char str[100];
     FILE *fp;
@@ -174,7 +175,8 @@ void parsevars(char * filename)
     fp = fopen(filename,"r");
     while (fgets(str,100,fp)!=NULL)
     {
-        char * strp = strdup(trimwhitespace(str));
+        trimwhitespace(str);
+        strp = str;//strdup(str);
 
         //
         if (varindex>=MAXVARSIZE){
@@ -196,14 +198,18 @@ void parsevars(char * filename)
                 tmp2 = strsep(&token1s, "]");
                 arraysize = getdefinevalue(tmp2, filename);
                 for (i=0;i<arraysize;i++){
-                    tmpcp = strdup(tmp);
+                    tmpcp = calloc(strlen(tmp)+5,sizeof(char));
+                    strcpy(tmpcp, tmp);
+                    //tmpcp = strdup(tmp);
                     varreferences[varindex] = strcat(tmpcp,iend[i]);
                     varsize[varindex] =bitnumber;
                     varindex++;
                 }
             }
             else{
-                varreferences[varindex] = tmp;
+                tmpcp = calloc(strlen(tmp)+1,sizeof(char));
+                strcpy(tmpcp, tmp);
+                varreferences[varindex] = tmpcp;
                 varsize[varindex] =bitnumber;
                 varindex++;
             }
@@ -258,6 +264,9 @@ void dumpcmdfile()
     fprintf(dc, "#include \"regfile.h\"\n");
     fprintf(dc, "#include \"csrreg.h\"\n");
     fprintf(dc, "#include \"testfinishcheck.h\"\n");
+    fprintf(dc, "#include \"exitcheck.h\"\n");
+    fprintf(dc, "#include \"perfcheck.h\"\n");
+    fprintf(dc, "#include \"uart.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -323,6 +332,9 @@ int main()
     parsevars("../regfile.h");
     parsevars("../csrreg.h");
     parsevars("../testfinishcheck.h");
+    parsevars("../exitcheck.h");
+    parsevars("../perfcheck.h");
+    parsevars("../uart.h");
     
     //
     dumpcmdfile();

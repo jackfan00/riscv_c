@@ -33,6 +33,8 @@
 #include "testfinishcheck.h"
 #include "exitcheck.h"
 #include "perfcheck.h"
+#include "uart.h"
+#include "simhw/simuart.h"
 
 void debug_cpuinfo(){
     int i;
@@ -73,6 +75,10 @@ void setup()
     regfilemergeFIFO_clked =0xff;
     signature_startaddr=0x80002000;
 
+    //UART0
+    txuart0_shmptr = simuart(MYKEY_UART0, BUFSIZE_UART0);
+    rxuart0_shmptr = txuart0_shmptr + sizeof(txuart0_shmptr);
+
 }
 
 int main(int argc, char *argv[])
@@ -82,7 +88,7 @@ int main(int argc, char *argv[])
 
 #ifdef DUMPVCD
     printf("generate trace waveform file: riscv.vcd\n");
-    FILE *vcdfp = fopen("D:/tmp/riscv.vcd", "w");
+    FILE *vcdfp = fopen("/home/jack/tmp/riscv.vcd", "w");
     dumpvcdheader(vcdfp);
 #endif
     //printf("Hello world!\n");
@@ -161,6 +167,8 @@ int main(int argc, char *argv[])
             csrreg();
 
             perfcheck();
+
+            uart();
 
             /*
             regwbus();
@@ -248,6 +256,8 @@ int main(int argc, char *argv[])
         testfinishcheck_clked();
         exitcheck_clked();
         perfcheck_clked();
+
+        uart_clked();
         
         //
         clockcnt++;

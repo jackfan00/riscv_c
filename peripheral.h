@@ -5,7 +5,11 @@ void peripheral_clked();
 
 #include "reg.h"
 
-#define TXUARTADDR 0x10013000
+#define UART0BASE 0x10013000
+#define UART0_TXDATA_ADR 0x10013000
+#define UART0_RXDATA_ADR 0x10013004
+#define UART0(x) ((x&0xfffff000)==UART0BASE)
+#define UART0_TXDATA(x) (x==UART0_TXDATA_ADR)
 
 //input
 REG32 device_reg_clked;
@@ -39,6 +43,6 @@ REG32 read_peripheral_rdat;
 REG32 peripheral_rdat;
 
 //uart
-BIT txuart_wr;
-REG8 txuart_char;
+BIT txuart0_wr;
+REG8 txuart0_char;
 #endif //PERIPHERAL_H

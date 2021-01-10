@@ -11,8 +11,15 @@ void peripheral_clked()
 
     device_reg_clked = device_reg;
     //
-    if (txuart_wr){
-        printf("%c",txuart_char);
+    if (txuart0_wr){
+        printf("%c",txuart0_char);
+        //*shm_txuart = (char) txuart_char;
+    }
+
+    if (peripheral_regcs){
+        if (!UART0(peripheral_regwadr)){
+            printf("peripheral address is not uart0: %x\n",peripheral_regwadr);
+        }
     }
 
 }

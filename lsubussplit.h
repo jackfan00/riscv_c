@@ -7,14 +7,13 @@ void lsubussplit_clked();
 
 
 //last target dont need to compare targetbase
+REG32 lsusplit_o_bus_cmd_data[LSUSPLITTARGETNUM];
 REG8 lsusplit_TARGETBASE[LSUSPLITTARGETNUM];  //MSB
-
 BIT lsusplit_o_bus_cmd_valid[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_cmd_ready[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_cmd_read[LSUSPLITTARGETNUM];
 REG8 lsusplit_o_bus_cmd_rwbyte[LSUSPLITTARGETNUM];
 REG32 lsusplit_o_bus_cmd_adr[LSUSPLITTARGETNUM];
-REG32 lsusplit_o_bus_cmd_data[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_rsp_valid[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_rsp_ready[LSUSPLITTARGETNUM];
 BIT lsusplit_o_bus_rsp_read[LSUSPLITTARGETNUM];
