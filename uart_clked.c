@@ -7,10 +7,11 @@ void uart_clked()
 {
     // communcate with fakerxuart via IPC share memory
     //check uart rxbuffer
-    if (rxuart_done){
+    if (rxuart_done & ((uart_rxdata_clked&0x80000000)==0)){
             //uart_rxdata_clked = (*rxuart0_shmptr) | (1<<31);
             *rxuart0_shmptr=(1<<31);
     }
+    uart_rxdata_clked = *rxuart0_shmptr;
 
     uart_read_clked = uart_read;
     uart_write_clked = uart_write;

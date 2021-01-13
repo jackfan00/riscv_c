@@ -20,7 +20,7 @@ void uart()
     //regrdata
     uart_rdat = 
                 (uart_csadr_clked==UART_TXDATA) ? uart_txdata_clked :
-                (uart_csadr_clked==UART_RXDATA) ? *rxuart0_shmptr :
+                (uart_csadr_clked==UART_RXDATA) ? uart_rxdata_clked : //*rxuart0_shmptr :
                  0;
     rxuart_done = (uart_csadr_clked==UART_RXDATA) & uart_rsp_valid & uart_rsp_ready;
 

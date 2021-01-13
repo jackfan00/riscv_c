@@ -20,7 +20,7 @@ void memwb()
     memwb_excephappen = memwb_dec_ilg|memwb_load_misaligned|memwb_store_misaligned|memwb_ecall|memwb_break;
     memwb_mret = exe_mret_clked;
     memwb_pc = exe_pc_d1_clked;  //correct pc at this stage
-    memwb_ir16 = exe_ir16_clked;
+    memwb_ir16 = exe_ir16_d1_clked;
 
     csrreg_adr = exe_csridx_clked;
     csrreg_wen = exe_csr_wen_clked;

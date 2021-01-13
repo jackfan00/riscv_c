@@ -15,4 +15,7 @@ void csrreg_clked()
     minstret_clked = minstret;
     minstreth_clked = minstreth;
 
+    csr_inthappen_st_p_clked = csr_inthappen_st_p ? 1 :
+                               csr_cmd_exception_ready ? 0 : csr_inthappen_st_p_clked;
+
 }

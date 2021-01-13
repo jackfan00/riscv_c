@@ -18,6 +18,8 @@ void decode_clked()
 
 if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  //decpc_clked = fetpc_clked;
+ exe_pc_clked               = decpc_clked;
+ exe_ir16_clked             = dec_ir16_clked;
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
     //
@@ -90,8 +92,7 @@ if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  //use for mtval
  dec_IR_clked = fet_ir16_clked ? (dec_stall ? NOP : fetchIR16_clked ) : 
                                  (dec_stall ? NOP : fetchIR_clked   ) ;
- dec_ir16_clked = fet_ir16_clked;
-
+ //dec_ir16_clked = fet_ir16_clked;
 }
 
 }

@@ -25,6 +25,7 @@ REG32 mcycle_clked;
 REG32 mcycleh_clked;
 REG32 minstret_clked;
 REG32 minstreth_clked;
+BIT csr_inthappen_st_p_clked;
 
 REG32 mtval;
 REG32 mscratch;
@@ -54,5 +55,6 @@ BIT csr_cmd_exception_valid;
 BIT csr_cmd_exception_ready;
 BIT csr_exception_stall;
 BIT csr_exception_flush;
+BIT csr_inthappen_st_p;
 
 #endif //CSRREG_H

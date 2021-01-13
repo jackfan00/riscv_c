@@ -14,6 +14,7 @@ void fetch_clked()
     if ((!exe_stall) && (!dec_stall) && (!memwb_stall) && (!csr_exception_stall)){
 
  decpc_clked = fetpc_clked;
+ dec_ir16_clked = fet_ir16;
 
     memIR_hi16_clked = memIR_hi16;
     fetpc_clked = pc;

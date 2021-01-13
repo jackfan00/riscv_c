@@ -77,7 +77,9 @@ void setup()
 
     //UART0
     txuart0_shmptr = simuart(MYKEY_UART0, BUFSIZE_UART0);
-    rxuart0_shmptr = txuart0_shmptr + sizeof(txuart0_shmptr);
+    rxuart0_shmptr = txuart0_shmptr + 1;
+    *rxuart0_shmptr=(1<<31);  //initialize empty
+    //printf("%d--%d\n", (unsigned int)txuart0_shmptr, (unsigned int)rxuart0_shmptr);
 
 }
 
@@ -135,7 +137,7 @@ int main(int argc, char *argv[])
         // 4-pipeline stage
 
         //for settle down the combination signal
-        for (i=0;i<15;i++){
+        for (i=0;i<20;i++){
 
             ext_write_coderam();
 
@@ -189,7 +191,9 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
+if (clockcnt >=344400) {
         dumpvars(clockcnt, vcdfp);
+}
 #endif
         //check execption
         //if (exe_dec_ilg_clked){
@@ -216,7 +220,7 @@ int main(int argc, char *argv[])
             printf("dec_stall_counter=%d\n", dec_stall_counter_clked);
             printf("=============================\n");
             //
-            printf("exitcheck break\n");
+            printf("exitcheck break, clockcnt=%d\n", clockcnt);
             break;
         }
         // flipflop
@@ -268,12 +272,12 @@ int main(int argc, char *argv[])
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 0x63f) break;
-        //if (clockcnt >= 0xab58) {
+        //if (clockcnt >= 348400) break;
+        //if (clockcnt >= 0x416d) {
         //    break;
-           // printf("dddd\n");
+        //    printf("dddd\n");
         //}
-        //if (fetpc_clked == 0x800020b0){
+        //if (fetpc_clked == 0x80000d40){
         //    printf("dddd %x\n",clockcnt);
         //    break;
         //} 

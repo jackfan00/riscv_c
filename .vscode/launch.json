@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/myProgram.elf",
-            "args": ["~/hbird-e-sdk/software/dhrystone4sim/dhrystone4sim.verilog"],
+            "args": ["~/hbird-e-sdk/software/int_hello_world/int_hello_world.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

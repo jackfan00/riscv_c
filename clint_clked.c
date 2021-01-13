@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "clint.h"
 
 void clint_clked()
@@ -9,6 +10,9 @@ void clint_clked()
     clint_mtimeh_clked = clint_mtimeh;
     //not reg
     clint_mtip_clked = clint_mtip;
+    //if (clint_mtip_clked){
+    //    printf("clint timer interrupt happen\n");
+    //}
 
     clint_read_clked = clint_read;
 

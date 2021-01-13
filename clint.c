@@ -7,7 +7,8 @@ void clint()
     //
     //clint_cmd_ready = clint_cmd_valid & (!clint_rsp_valid | (clint_rsp_valid & clint_rsp_ready));
     //clint_cmd_ready = clint_cmd_valid & clint_rsp_ready;
-    clint_cmd_ready = (!clint_rsp_read) | (clint_rsp_read&clint_rsp_ready);
+    //clint_cmd_ready = (!clint_rsp_read) | (clint_rsp_read&clint_rsp_ready);
+    clint_cmd_ready = (!clint_rsp_valid) | (clint_rsp_valid&clint_rsp_ready);
 
     clint_regcs = clint_cmd_valid & clint_cmd_ready;// ? 1 : 0;
     clint_regw = !clint_cmd_read;
@@ -40,11 +41,14 @@ void clint()
                 (clint_csadr_clked==CLINT_MTIMEH) ? clint_mtimeh_clked : 0;
 
     clint_read =    clint_regcs & (!clint_regw) ? 1 : 
-                    clint_rsp_read&clint_rsp_ready ? 0 :
+                    clint_read_clked&clint_rsp_ready ? 0 :
                     //clint_rsp_valid & clint_rsp_ready & (clint_cmd_valid ? clint_cmd_read:1)? 0 :
                     clint_read_clked;
 
-    clint_write = clint_regcs  & (clint_regw) ? 1: 0;
+    //clint_write = clint_regcs  & (clint_regw) ? 1: 0;
+    clint_write = clint_regcs  & (clint_regw) ? 1: 
+                       clint_write_clked& clint_rsp_ready ? 0 :
+                       clint_write_clked;
 
     clint_rsp_valid = 
                             clint_read_clked | clint_write_clked ? 1 : 0;

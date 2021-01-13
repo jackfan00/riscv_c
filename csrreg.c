@@ -256,11 +256,11 @@ void csrreg()
            csrreg_wen_mepc ? csrreg_wdata : mepc_clked;
 
     //mstatus
-    mstatusmie =    (csr_inthappen|memwb_excephappen)   ? 0 : 
+    mstatusmie =    (csr_inthappen_st_p|memwb_excephappen)   ? 0 : 
                     memwb_mret                          ? mstatusmpie_clked     : 
                     csrreg_wen_mstatus                  ? (csrreg_wdata>>3)&0x1 : 
                                                             mstatusmie_clked;
-    mstatusmpie = (csr_inthappen|memwb_excephappen) ? mstatusmie_clked :
+    mstatusmpie = (csr_inthappen_st_p|memwb_excephappen) ? mstatusmie_clked :
                     memwb_mret                      ? 1 : 
                     csrreg_wen_mstatus              ? (csrreg_wdata>>7)&0x1 : 
                                                         mstatusmpie_clked;
@@ -275,7 +275,10 @@ void csrreg()
     mip = (EIP_clked<<11) | (clint_mtip_clked<<7) | (clint_msip_clked<<3);
 
     //interrupt mask
-    csr_inthappen = (mie_meie&EIP_clked) | (mie_mtie&clint_mtip_clked) | (mie_msie&clint_msip_clked);
+    csr_inthappen_st_p = mstatusmie_clked & 
+                ((mie_meie&EIP_clked) | (mie_mtie&clint_mtip_clked) | (mie_msie&clint_msip_clked));
+
+    csr_inthappen = csr_inthappen_st_p | csr_inthappen_st_p_clked; 
 
     mcycle =  csrreg_wen_mcycle  ? csrreg_wdata : mcycle_clked+1;
     mcycleh = csrreg_wen_mcycleh ? csrreg_wdata : 
