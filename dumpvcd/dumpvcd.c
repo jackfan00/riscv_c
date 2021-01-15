@@ -3,18 +3,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include "dumpvcd.h"
 
-char *strsep(char **stringp, const char *delim);
-char *trimwhitespace(char *str);
 
-#define MAXVARSIZE 9999
-#define DEFINESIZE 100
 
-int varindex;
-char *varreferences[MAXVARSIZE], *varids[MAXVARSIZE];
-int varsize[MAXVARSIZE];
-int defnum[DEFINESIZE];
-char *defstr[DEFINESIZE];
 
 char *strsep(char **stringp, const char *delim) {
     char *rv = *stringp;
@@ -58,6 +50,7 @@ void initvars()
     for (i=0;i<MAXVARSIZE;i++)
     { 
         varsize[i]=-1;
+        vararraysize[i]=-1;
         //
         idx3 = i/1000;
         idx2 = (i-idx3*1000)/100;
@@ -194,6 +187,7 @@ void parsevars(char * filename)
         if (bitnumber!=-1){  //valid
             token1s = strsep(&token1s, ";");
             tmp = strsep(&token1s, "[");
+            tmp = trimwhitespace(tmp);
             if (token1s!=0 && (*token1s)!= '\0'){//NULL){
                 tmp2 = strsep(&token1s, "]");
                 arraysize = getdefinevalue(tmp2, filename);
@@ -203,6 +197,7 @@ void parsevars(char * filename)
                     //tmpcp = strdup(tmp);
                     varreferences[varindex] = strcat(tmpcp,iend[i]);
                     varsize[varindex] =bitnumber;
+                    vararraysize[varindex] =i;
                     varindex++;
                 }
             }
@@ -339,6 +334,8 @@ int main()
     //
     dumpcmdfile();
     //
+    isconverge_h();
+    isconverge_c();
 
 }
 

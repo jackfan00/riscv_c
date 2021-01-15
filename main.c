@@ -35,6 +35,7 @@
 #include "perfcheck.h"
 #include "uart.h"
 #include "simhw/simuart.h"
+#include "isconverge.h"
 
 void debug_cpuinfo(){
     int i;
@@ -85,8 +86,10 @@ void setup()
 
 int main(int argc, char *argv[])
 {
-    int i;
+    int i, maxconverge_iter;
     char * imcindi;
+
+    maxconverge_iter=0;
 
 #ifdef DUMPVCD
     printf("generate trace waveform file: riscv.vcd\n");
@@ -185,7 +188,18 @@ int main(int argc, char *argv[])
 
             rs2bus();
             */
+            
+            if (isconverge()){
+                if (maxconverge_iter<i)
+                    maxconverge_iter =  i;
+                break;
+            };
+            
+        }
 
+        if (i==20){
+            printf("Error:not converge\n");
+            exit(2);
         }
 
 
@@ -220,7 +234,7 @@ if (clockcnt >=344400) {
             printf("dec_stall_counter=%d\n", dec_stall_counter_clked);
             printf("=============================\n");
             //
-            printf("exitcheck break, clockcnt=%d\n", clockcnt);
+            printf("exitcheck break, clockcnt=%d, maxconverge_iter=%d\n", clockcnt, maxconverge_iter);
             break;
         }
         // flipflop
