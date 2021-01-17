@@ -42,5 +42,16 @@ BIT uart_read1st;
 REG32 read_uart_rdat;
 BIT rxuart_done;
 BIT uart_wr_txdata;
+//
+//simulate
+BIT uarttx_per_end_p;
+REG32 uarttx_per_cnt_clked;
+BIT uarttx_per_clked;
+BIT txuartPIN;
+REG32 uartrx_per_cnt_clked;
+BIT uartrx_per_end_p;
+BIT uartrx_per_clked;
+REG32 uart_rxdata_tmp;
+BIT rxuartPIN;
 
 #endif //UART_H

@@ -16,10 +16,6 @@ void peripheral_clked()
         //*shm_txuart = (char) txuart_char;
     }
 
-    if (peripheral_regcs){
-        if (!UART0(peripheral_regwadr)){
-            printf("peripheral address is not uart0: %x\n",peripheral_regwadr);
-        }
-    }
+
 
 }

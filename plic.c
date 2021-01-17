@@ -53,7 +53,8 @@ void plic()
     //plic bus read/write
     //plic_cmd_ready = plic_cmd_valid & (!plic_rsp_valid | (plic_rsp_valid & plic_rsp_ready));
     //plic_cmd_ready = plic_cmd_valid & plic_rsp_ready;
-    plic_cmd_ready = (!plic_rsp_read) | (plic_rsp_read&plic_rsp_ready);
+    //plic_cmd_ready = (!plic_rsp_read) | (plic_rsp_read&plic_rsp_ready);
+    plic_cmd_ready = (!plic_rsp_valid) | (plic_rsp_valid&plic_rsp_ready);
 
 
     plic_regcs = plic_cmd_valid & plic_cmd_ready;// ? 1 : 0;
@@ -81,10 +82,13 @@ void plic()
         plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_CLAIMCOMPLETE))     ? INTID_clked : 0    );
     //
     plic_read =     plic_regcs     & (!plic_regw) ? 1 : 
-                    plic_rsp_read&plic_rsp_ready ? 0 :
+                    plic_read_clked&plic_rsp_ready ? 0 :
                     //plic_rsp_valid &   plic_rsp_ready & (plic_cmd_valid ? plic_cmd_read:1) ? 0 : //eliminate write case
                     plic_read_clked;
-    plic_write = plic_regcs  & (plic_regw) ? 1: 0;
+    //plic_write = plic_regcs  & (plic_regw) ? 1: 0;
+    plic_write = plic_regcs  & (plic_regw) ? 1: 
+                       plic_write_clked& plic_rsp_ready ? 0 :
+                       plic_write_clked;
 
     plic_rsp_valid = //plic_regcs & plic_regw? 1 :  //combinational loop issue
                             plic_read_clked | plic_write_clked ? 1 : 0;

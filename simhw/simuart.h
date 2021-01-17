@@ -12,5 +12,6 @@ REG32 * simuart(key_t mykey, size_t mysize);
 
 REG32 * txuart0_shmptr;
 REG32 * rxuart0_shmptr;
+REG32 * gpio_shmptr;
 
 #endif //SIMUART_H

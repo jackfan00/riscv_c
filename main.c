@@ -34,6 +34,7 @@
 #include "exitcheck.h"
 #include "perfcheck.h"
 #include "uart.h"
+#include "gpio.h"
 #include "simhw/simuart.h"
 #include "isconverge.h"
 
@@ -80,6 +81,9 @@ void setup()
     txuart0_shmptr = simuart(MYKEY_UART0, BUFSIZE_UART0);
     rxuart0_shmptr = txuart0_shmptr + 1;
     *rxuart0_shmptr=(1<<31);  //initialize empty
+    //GPIO
+    gpio_shmptr = txuart0_shmptr + 2;
+    *gpio_shmptr = 0xffffffff;
     //printf("%d--%d\n", (unsigned int)txuart0_shmptr, (unsigned int)rxuart0_shmptr);
 
 }
@@ -174,6 +178,7 @@ int main(int argc, char *argv[])
             perfcheck();
 
             uart();
+            gpio();
 
             /*
             regwbus();
@@ -276,6 +281,7 @@ if (clockcnt >=344400) {
         perfcheck_clked();
 
         uart_clked();
+        gpio_clked();
         
         //
         clockcnt++;

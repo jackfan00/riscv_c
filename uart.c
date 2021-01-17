@@ -15,7 +15,8 @@ void uart()
     uart_wr_txdata = uart_regcs & uart_regw & (uart_regwadr==UART_TXDATA);
     uart_txdata = uart_wr_txdata ? 
                 (1<<31)|(uart_regwdata&0x0ff) : 
-                uart_txdata_clked; //*txuart0_shmptr;
+                uarttx_per_end_p ? 0 :   //simulate uart tx done
+                uart_txdata_clked; 
 
     //regrdata
     uart_rdat = 

@@ -1,5 +1,6 @@
 #include "peripheral.h"
 #include "uart.h"
+#include "gpio.h"
 
 //this is FAKED peripheral device
 void peripheral()
@@ -51,6 +52,14 @@ void peripheral()
     uart_cmd_adr   = uart_cmd_valid ? peripheral_cmd_adr  :0;
     uart_cmd_data  = uart_cmd_valid ? peripheral_cmd_data :0;
     uart_rsp_ready = 1;
+
+    //gpio
+    gpio_cmd_valid = peripheral_cmd_valid & GPIO(peripheral_cmd_adr);
+    gpio_cmd_read  = gpio_cmd_valid ? peripheral_cmd_read :0;
+    gpio_cmd_adr   = gpio_cmd_valid ? peripheral_cmd_adr  :0;
+    gpio_cmd_data  = gpio_cmd_valid ? peripheral_cmd_data :0;
+    gpio_rsp_ready = 1;
+
 
 }
 
