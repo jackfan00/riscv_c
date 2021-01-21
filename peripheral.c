@@ -18,6 +18,7 @@ void peripheral()
     //
     device_reg = peripheral_regcs & peripheral_regwr ? peripheral_regwdata : device_reg_clked;
     peripheral_rdat = uart_rsp_valid ? uart_rsp_rdata :
+                        gpio_rsp_valid ? gpio_rsp_rdata :
                     device_reg;
 
 

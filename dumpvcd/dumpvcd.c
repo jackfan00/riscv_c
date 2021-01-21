@@ -262,6 +262,7 @@ void dumpcmdfile()
     fprintf(dc, "#include \"exitcheck.h\"\n");
     fprintf(dc, "#include \"perfcheck.h\"\n");
     fprintf(dc, "#include \"uart.h\"\n");
+    fprintf(dc, "#include \"gpio.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -330,6 +331,7 @@ int main()
     parsevars("../exitcheck.h");
     parsevars("../perfcheck.h");
     parsevars("../uart.h");
+    parsevars("../gpio.h");
     
     //
     dumpcmdfile();

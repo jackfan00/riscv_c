@@ -9,15 +9,20 @@ void execu_clked()
     int i;
 
 if ((!memwb_stall) && (!csr_exception_stall)){
+    exe_validir_d1_clked       = exe_validir_clked & (!exe_stall) & (!csr_exception_flush);
  exe_pc_d1_clked            = exe_pc_clked;
- exe_ir16_d1_clked             = exe_ir16_clked        ;
+ exe_ir16_d1_clked             = exe_ir16_clked;
  //exe_pc_clked               = decpc_clked;
 //
  exe_res_clked              = exe_res;
  exe_csr_res_clked          = csr_res;
  exe_rdidx_clked            = dec_rdidx_clked;
  exe_csridx_clked           = dec_csridx_clked;
- exe_IR_clked               = exe_stall|csr_exception_flush ? NOP : dec_IR_clked       ;
+ //exe_IR_clked               = exe_stall|csr_exception_flush ? NOP : raw_dec_IR;//dec_IR_clked       ;
+ exe_IR_d1_clked            = exe_IR_clked;
+ exe_IR_clked               = raw_dec_IR;
+ exe_bjir_d1_clked          = exe_bjir_clked;
+ exe_bjir_clked             = (alubranch|alujalr|alujal);
 //
 // exe_ir16_clked             = dec_ir16_clked        & (!exe_stall) & (!csr_exception_flush);
  exe_dec_ilg_clked          = dec_dec_ilg_clked     & (!exe_stall) & (!csr_exception_flush);

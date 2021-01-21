@@ -276,7 +276,10 @@ void csrreg()
 
     //interrupt mask
     csr_inthappen_st_p = mstatusmie_clked & 
+                            memwb_validir &  //must contain valid instr
+                            (!memwb_bjir) &   // and avoid interrupt at branch/jmp instr
                 ((mie_meie&EIP_clked) | (mie_mtie&clint_mtip_clked) | (mie_msie&clint_msip_clked));
+
 
     csr_inthappen = csr_inthappen_st_p | csr_inthappen_st_p_clked; 
 

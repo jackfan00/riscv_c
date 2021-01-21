@@ -27,6 +27,7 @@ void gpio_clked()
 
     //
     *gpio_shmptr = GPIOPINS;
+    GPIOPINS = *(gpio_shmptr+1);
 
 
 

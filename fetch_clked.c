@@ -15,6 +15,7 @@ void fetch_clked()
 
  decpc_clked = fetpc_clked;
  dec_ir16_clked = fet_ir16;
+ dec_validir_clked = !fetch_flush;
 
     memIR_hi16_clked = memIR_hi16;
     fetpc_clked = pc;

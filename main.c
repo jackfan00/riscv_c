@@ -59,22 +59,30 @@ void debug_cpuinfo(){
 
 void setup()
 {
+    int i;
     //init_rom();
     //
     //rspid_fifo_wadr_clked = RSPFIFOSIZE-1;
     //code_rspid_fifo_empty_clked =1;
     fetchIR_clked = NOP;
     fetpc_clked = 0x12345678;  //ensure different address from BOOTADDR
-    fetch_flush =0;
+    //fetch_flush =0;
     firstinst_clked=1;
     clockcnt=0;
     clint_mtimecmp_clked=0xffffffff;
     clint_mtimecmph_clked=0xffffffff;
+    //plic 
+    for (i=1;i<PLIC_INTNUMBER;i++){
+        gateway_enable_clked[i]=1;
+    }
+    
     //itcmmergeFIFO_clked =0xff;
     biumergeFIFO_ridx_clked=1;
     dtcmmergeFIFO_ridx_clked =1;
     itcmmergeFIFO_ridx_clked=1;
     regfilemergeFIFO_clked =0xff;
+
+    //tests
     signature_startaddr=0x80002000;
 
     //UART0
@@ -84,6 +92,7 @@ void setup()
     //GPIO
     gpio_shmptr = txuart0_shmptr + 2;
     *gpio_shmptr = 0xffffffff;
+    *(gpio_shmptr+1) = 0xffffffff;
     //printf("%d--%d\n", (unsigned int)txuart0_shmptr, (unsigned int)rxuart0_shmptr);
 
 }
@@ -144,7 +153,7 @@ int main(int argc, char *argv[])
         // 4-pipeline stage
 
         //for settle down the combination signal
-        for (i=0;i<20;i++){
+        for (i=0;i<30;i++){
 
             ext_write_coderam();
 
@@ -202,7 +211,7 @@ int main(int argc, char *argv[])
             
         }
 
-        if (i==20){
+        if (i>=30){
             printf("Error:not converge\n");
             exit(2);
         }
@@ -210,7 +219,7 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
-if (clockcnt >=344400) {
+if (clockcnt >=70000 && clockcnt<=100000) {
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -292,7 +301,7 @@ if (clockcnt >=344400) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 348400) break;
+        //if (clockcnt >= 100000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");

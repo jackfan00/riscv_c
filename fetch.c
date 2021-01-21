@@ -183,7 +183,7 @@ void fetch()
     fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail | 
                                  (remain_ir16s_clked>>7); //remain_ir16s_clked is negative means jmpto address[1:0]==10
                                                           //need take 2 cycles to get full instruntion
-    fetch_flush = fetch_flush  & (!fetch_stall);                                                     
+    //fetch_flush = fetch_flush  & (!fetch_stall);                                                     
     fetchIR =  fetch_flush  ?  NOP : memIR32;
 
     //

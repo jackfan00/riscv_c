@@ -18,8 +18,8 @@ typedef unsigned char BIT;
 #define PLIC_ADDR_BASE   0x0C000000
 #define FIO_ADDR_BASE    0xf0000000
 
-#define PLIC_INTNUMBER  32  //only support 32
-#define PLIC_INTNUMBER_REG32  1  // PLIC_INTNUMBER>>5
+#define PLIC_INTNUMBER  64  //
+#define PLIC_INTNUMBER_REG32  2  // PLIC_INTNUMBER>>5
 
 
 //#define DEPFIFOSIZE 4

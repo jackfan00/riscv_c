@@ -15,13 +15,16 @@ BIT *IP, REG8 *priorityout, REG8 *maxid
     //         and masked next intsource until intreq is processed completely.
 
     //interrupt pending register from 0 -> 1
-    if (!(intsource_clked) & intsource)
-    {
-        *IP = gateway_enable;
-    }
-    else{
-        *IP =0;
-    }
+    //if (!(intsource_clked) & intsource)
+    //{
+    //    *IP = gateway_enable;
+    //}
+    //else{
+    //    *IP =0;
+    //}
+
+    // intsource 1 means interrupt
+    *IP = gateway_enable & intsource;
     ippriority = (*IP) ? priority : 0 ; 
     //
     iepriproty = IE ? ippriority : 0;
@@ -72,14 +75,15 @@ void plic()
     for (i=1;i<PLIC_INTNUMBER;i++)
     {
         plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_PRIORITY_BASE+i*4)) ? priority_clked[i]:0);
-        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_IE_BASE+i*4))       ? IE_clked[i]:0      );
     }
 
     for (i=0;i<(PLIC_INTNUMBER>>5);i++)
     {
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_IE_BASE+i*4))       ? IE_clked[i]:0      );
         plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_IP_BASE+i*4))       ? IP_clked[i] : 0    );
     }
         plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_CLAIMCOMPLETE))     ? INTID_clked : 0    );
+        plic_rdat = plic_rdat | ((plic_csadr_clked==(PLIC_PRI_THRESHOLD))     ? prioritythreshold_clked : 0    );
     //
     plic_read =     plic_regcs     & (!plic_regw) ? 1 : 
                     plic_read_clked&plic_rsp_ready ? 0 :

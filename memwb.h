@@ -4,6 +4,8 @@ void memwb();
 
 #include "reg.h"
 
+BIT memwb_bjir;
+BIT memwb_validir;
 REG32 memwb_pc;
 BIT memwb_ir16;
 REG8 memwb_idx;

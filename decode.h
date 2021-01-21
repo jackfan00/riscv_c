@@ -6,6 +6,7 @@ void decode_clked();
 #include "reg.h"
 
 //input
+BIT dec_validir_clked;
 BIT dec_ir16_clked;
 REG32 dec_rs2v_clked;
 REG32 rs1v;
@@ -84,6 +85,8 @@ REG32 dec_IR_clked;
 BIT dec_aluop_mret_clked;
 
 //output
+REG32 dec_IR;
+REG32 raw_dec_IR;
 REG32 real_rs1v;
 REG32 real_rs2v;
 REG32 real_csrv;
