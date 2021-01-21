@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define DUMPVCD
+#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
-if (clockcnt >=70000 && clockcnt<=100000) {
+if (clockcnt >=450000 && clockcnt<=500000) {
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -301,7 +301,7 @@ if (clockcnt >=70000 && clockcnt<=100000) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 100000) break;
+        if (clockcnt >= 500000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");

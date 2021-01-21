@@ -251,7 +251,7 @@ void csrreg()
     csrtrappc = csr_inthappen ? intpc :
            memwb_excephappen ? exceppc : 
            memwb_mret ? exe_res_clked : 0;
-    mepc = csr_inthappen ? memwb_pc + (memwb_ir16 ? 2 : 4) :
+    mepc = csr_inthappen_st_p ? memwb_pc + (memwb_ir16 ? 2 : 4) :
            memwb_excephappen ? memwb_pc :
            csrreg_wen_mepc ? csrreg_wdata : mepc_clked;
 

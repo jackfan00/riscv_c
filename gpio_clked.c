@@ -1,8 +1,11 @@
+#include <stdio.h>
+
 #include "gpio.h"
 #include "simhw/simuart.h"
 
 void gpio_clked()
 {
+    gpio_csadr_clked = gpio_regcs ? gpio_regwadr : gpio_csadr_clked;
     gpio_reg_oval_clked = gpio_reg_oval;
     gpio_reg_xor_clked = gpio_reg_xor;
     gpio_reg_oe_clked = gpio_reg_oe;
@@ -29,6 +32,9 @@ void gpio_clked()
     *gpio_shmptr = GPIOPINS;
     GPIOPINS = *(gpio_shmptr+1);
 
-
+    //if (gpio_reg_oe_clked==0xffffffff){
+    //    printf("%d\n",clockcnt);
+    //    exit(9);
+    //}
 
 }
