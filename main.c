@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DUMPVCD
+//#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -204,8 +204,10 @@ int main(int argc, char *argv[])
             */
             
             if (isconverge()){
-                if (maxconverge_iter<i)
+                if (maxconverge_iter<i){
                     maxconverge_iter =  i;
+                    printf("INFO:maxconverge_iter=%d\n", maxconverge_iter);
+                }    
                 break;
             };
             
@@ -219,7 +221,7 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
-if (clockcnt >=450000 && clockcnt<=500000) {
+if (clockcnt >=5000 && clockcnt<=15000) {
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -301,7 +303,7 @@ if (clockcnt >=450000 && clockcnt<=500000) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        if (clockcnt >= 500000) break;
+        //if (clockcnt >= 15000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");

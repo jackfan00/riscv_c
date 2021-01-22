@@ -22,6 +22,7 @@ void gpio_clked();
 #define GPIO_IOF_SEL   (GPIOBASE+0x3c)
 #define GPIO_OUT_XOR   (GPIOBASE+0x40)
 
+REG32 wGPIOPINS;
 REG32 GPIOPINS;
 REG32 gpio_oval_muxout;
 REG32 gpio_oe_muxout;
@@ -73,6 +74,7 @@ REG32 gpio_rise_ie_clked;
 REG32 gpio_fall_ie;
 REG32 gpio_fall_ie_clked;
 REG32 gpio_intr;
+REG32 gpio_intr_clked;
 
 //
 BIT gpio_regcs;

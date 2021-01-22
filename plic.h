@@ -12,6 +12,7 @@ void plic_clked();
 #define PLIC_CLAIMCOMPLETE  0x0c200004
 
 //input
+BIT dbgie[PLIC_INTNUMBER];
 BIT intsource_clked[PLIC_INTNUMBER];
 REG32 IE_clked[PLIC_INTNUMBER_REG32];
 REG32 IP_clked[PLIC_INTNUMBER_REG32];

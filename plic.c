@@ -1,7 +1,8 @@
 #include "plic.h"
 #include "execu.h"
+#include "gpio.h"
 
-void plicunit(BIT intsource, BIT intsource_clked, BIT gateway_enable, REG8 priority, BIT IE, REG8 ID, REG8 prepriorityout,  REG8 premaxid,
+void plicunit(BIT intsource, BIT loIP_clked, BIT gateway_enable, REG8 priority, BIT loIE, REG8 ID, REG8 prepriorityout,  REG8 premaxid,
 BIT *IP, REG8 *priorityout, REG8 *maxid
 )
 
@@ -25,19 +26,32 @@ BIT *IP, REG8 *priorityout, REG8 *maxid
 
     // intsource 1 means interrupt
     *IP = gateway_enable & intsource;
-    ippriority = (*IP) ? priority : 0 ; 
+    ippriority = (loIP_clked) ? priority : 0 ; 
     //
-    iepriproty = IE ? ippriority : 0;
+    iepriproty = loIE ? ippriority : 0;
     ishighpriority = (iepriproty > prepriorityout);
     *priorityout = ishighpriority ? ippriority : prepriorityout;
     *maxid = ishighpriority ? ID : premaxid;
+
+    //if (loIE>0 && priority>0 && loIP_clked>0){
+    //    printf("%d-%d-%d\n",loIE, ippriority, ID);
+    //}
+
 }
 
 void plic()
 {
     int i;
+    REG8 IE_idx;
     REG8 prepriorityout[PLIC_INTNUMBER];
     REG8 premaxid[PLIC_INTNUMBER];
+
+    //plic intsource connection : same as SiFive
+    for (i=0;i<32;i++){
+        intsource[8+i] = (gpio_intr_clked>>i) & 0x01;
+    }
+
+
     
     //plic function block
     for (i=1;i<PLIC_INTNUMBER;i++)
@@ -45,7 +59,9 @@ void plic()
         prepriorityout[i] = (i==1) ? 0 : priorityout[i-1];
         premaxid[i] = (i==1) ? 0 : maxid[i-1];
         //
-        plicunit(intsource[i], intsource_clked[i], gateway_enable_clked[i], priority_clked[i], IE_clked[i], i, prepriorityout[i],  premaxid[i],
+        IE_idx = (i>>5);
+        dbgie[i] = (IE_clked[IE_idx]>>(i&0x1f))&0x01;
+        plicunit(intsource[i], (IP_clked[IE_idx]>>(i&0x1f))&0x01, gateway_enable_clked[i], priority_clked[i], (IE_clked[IE_idx]>>(i&0x1f))&0x01 , i, prepriorityout[i],  premaxid[i],
         &IP[i], &priorityout[i], &maxid[i]);
         //
     }

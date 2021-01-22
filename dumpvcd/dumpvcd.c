@@ -5,7 +5,7 @@
 #include <time.h>
 #include "dumpvcd.h"
 
-
+#define MAXBUSDEFINENUM 64
 
 
 char *strsep(char **stringp, const char *delim) {
@@ -87,13 +87,13 @@ void initdefinevar(char * ff)
             token2s = strsep(&token1s, " ");
             if (token1s!=NULL){
                 tmpi= atoi(trimwhitespace(token1s));
-                if (tmpi<=32){
+                if (tmpi<=MAXBUSDEFINENUM){
                     defnum[index] = tmpi;
                     defstr[index] = strdup(token2s);
                     index++;
                 }
                 else{
-                    printf("define %s > 32, skip it\n",token2s);
+                    printf("define %s > %d, skip it\n",token2s, MAXBUSDEFINENUM);
                 }
             }
         }
@@ -146,9 +146,9 @@ void parsevars(char * filename)
     char str[100];
     FILE *fp;
     char *token1s, *token2s, *tmp, *tmpcp, *tmp2;
-    char iend[32][5];
+    char iend[MAXBUSDEFINENUM][5];
 
-    for (i=0;i<32;i++){
+    for (i=0;i<MAXBUSDEFINENUM;i++){
         j = i/10;
         iend[i][0]='[';
         if (j==0){

@@ -5,6 +5,8 @@
 
 void gpio_clked()
 {
+    gpio_ival_sync1_clked = gpio_ival_sync1;
+    gpio_ival_sync2_clked = gpio_ival_sync2;
     gpio_csadr_clked = gpio_regcs ? gpio_regwadr : gpio_csadr_clked;
     gpio_reg_oval_clked = gpio_reg_oval;
     gpio_reg_xor_clked = gpio_reg_xor;
@@ -21,6 +23,7 @@ void gpio_clked()
     rise_ip_clked = rise_ip;
     fall_ip_clked = fall_ip;
     iof_ival_clked = iof_ival;
+    gpio_intr_clked = gpio_intr;
 
     //
     gpio_read_clked = gpio_read;
@@ -30,10 +33,10 @@ void gpio_clked()
 
     //
     *gpio_shmptr = GPIOPINS;
-    GPIOPINS = *(gpio_shmptr+1);
+    wGPIOPINS = *(gpio_shmptr+1);
 
-    //if (gpio_reg_oe_clked==0xffffffff){
-    //    printf("%d\n",clockcnt);
+    //if (GPIOPINS!=0xffffffff){
+    //    printf("%x\n",wGPIOPINS);
     //    exit(9);
     //}
 

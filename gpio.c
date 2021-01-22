@@ -27,7 +27,8 @@ void gpio()
     //IOF mapping
     iof0_oe=0;
     iof0_oval=0;
-    GPIOPINS &=0xffffffff;
+    GPIOPINS =0xffffffff;
+    GPIOPINS &= wGPIOPINS;
     iof0_oval |= (txuartPIN<<17); 
     iof0_oe |= (1<<17);
     GPIOPINS &= ((rxuartPIN<<16) | (~(1<<16)));   //simulate rxuart pin toggle
@@ -57,15 +58,15 @@ void gpio()
         iof_ival |= gpio_ival_sync2_clked&(1<<i);
         //interrupt
         high_ip_t |= //gpio_regcs & gpio_regw & (gpio_regwadr==GPIO_HIGH_IP) & (gpio_regwdata&(1<<i)) ? 0:
-                        high_ip_clked&(1<<i) | iof_ival_clked&(1<<i);
+                        (high_ip_clked&(1<<i)) | (iof_ival_clked&(1<<i));
         low_ip_t |= //gpio_regcs & gpio_regw & (gpio_regwadr==GPIO_LOW_IP) & (gpio_regwdata&(1<<i)) ? 0:
-                        low_ip_clked&(1<<i) | (!iof_ival_clked&(1<<i));
+                        (low_ip_clked&(1<<i)) |  ((~iof_ival_clked)&(1<<i));
         rise_ip_t |= //gpio_regcs & gpio_regw & (gpio_regwadr==GPIO_RISE_IP) & (gpio_regwdata&(1<<i)) ? 0:
-                        rise_ip_clked&(1<<i) | ((!iof_ival_clked&(1<<i)) & iof_ival&(1<<i));
+                        (rise_ip_clked&(1<<i)) | (((~iof_ival_clked)&(1<<i)) & (iof_ival&(1<<i)));
         fall_ip_t |= //gpio_regcs & gpio_regw & (gpio_regwadr==GPIO_FALL_IP) & (gpio_regwdata&(1<<i)) ? 0:
-                        fall_ip_clked&(1<<i) | (iof_ival_clked&(1<<i) & (!iof_ival&(1<<i)));
-        gpio_intr |=  (gpio_high_ie_clked&(1<<i)&high_ip_clked&(1<<i)) |
-                        (gpio_low_ie_clked&(1<<i) &low_ip_clked&(1<<i) ) |
+                        (fall_ip_clked&(1<<i)) | ((iof_ival_clked&(1<<i)) & ((~iof_ival)&(1<<i)));
+        gpio_intr |=    (gpio_high_ie_clked&(1<<i)&high_ip_clked&(1<<i)) |
+                        (gpio_low_ie_clked &(1<<i)&low_ip_clked &(1<<i)) |
                         (gpio_rise_ie_clked&(1<<i)&rise_ip_clked&(1<<i)) |
                         (gpio_fall_ie_clked&(1<<i)&fall_ip_clked&(1<<i)) ;
     }

@@ -12,7 +12,9 @@ void peripheral_clked()
     device_reg_clked = device_reg;
     //
     if (txuart0_wr){
-        printf("%c",txuart0_char);
+        printf("%c",txuart0_char); 
+        printf("--%d\n",clockcnt); 
+        //exit(2);
         //*shm_txuart = (char) txuart_char;
     }
 
