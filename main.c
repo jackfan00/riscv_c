@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
             if (isconverge()){
                 if (maxconverge_iter<i){
                     maxconverge_iter =  i;
-                    printf("INFO:maxconverge_iter=%d\n", maxconverge_iter);
+                    //printf("INFO:maxconverge_iter=%d\n", maxconverge_iter);
                 }    
                 break;
             };
