@@ -577,6 +577,8 @@ int s_j_imm;
        dec_jalr_pdict_fail = alujalr & (cti_pc!=fetpc_clked);
        dec_jalr_pdict_success = alujalr & (cti_pc==fetpc_clked);
 
+    branch_taken_pc = decpc_clked + s_b_imm;
+
     //mulh fuse condition:
     //MULH[S][U] rdh, rs1, rs2; MUL rdl, rs1, rs2
     //rdh can not be the same as rs1 or rs2   

@@ -71,6 +71,7 @@ BIT exe_rden;
 REG32 exe_branch_pdict_fail_pc;
 BIT exe_jalr_pdict_fail;
 REG32 exe_jalr_pc;
+REG32 exe_nxt_instr_pc;
 
 BIT mul_cmd_valid;
 BIT mul_cmd_ready;

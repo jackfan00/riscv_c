@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/myProgram.elf",
-            "args": ["~/hbird-e-sdk/software/demo_gpio/demo_gpio.verilog"],
+            "args": ["~/hbird-e-sdk/software/hello_world/hello_world.verilog"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

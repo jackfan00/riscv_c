@@ -251,7 +251,10 @@ void csrreg()
     csrtrappc = csr_inthappen ? intpc :
            memwb_excephappen ? exceppc : 
            memwb_mret ? exe_res_clked : 0;
-    mepc = csr_inthappen_st_p ? memwb_pc + (memwb_ir16 ? 2 : 4) :
+
+    //consider interrupt happen at branch/jal/jalr instr    
+    //memwb_pc already check at exe stage for these case
+    mepc = csr_inthappen_st_p ? (memwb_bjir ? memwb_pc : memwb_pc + (memwb_ir16 ? 2 : 4) ):
            memwb_excephappen ? memwb_pc :
            csrreg_wen_mepc ? csrreg_wdata : mepc_clked;
 
@@ -277,7 +280,7 @@ void csrreg()
     //interrupt mask
     csr_inthappen_st_p = mstatusmie_clked & 
                             memwb_validir &  //must contain valid instr
-                            (!memwb_bjir) &   // and avoid interrupt at branch/jmp instr
+                        //    (!memwb_bjir) &   // and avoid interrupt at branch/jmp instr
                 ((mie_meie&EIP_clked) | (mie_mtie&clint_mtip_clked) | (mie_msie&clint_msip_clked));
 
 

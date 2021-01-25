@@ -10,7 +10,7 @@ void execu_clked()
 
 if ((!memwb_stall) && (!csr_exception_stall)){
     exe_validir_d1_clked       = exe_validir_clked & (!exe_stall) & (!csr_exception_flush);
- exe_pc_d1_clked            = exe_pc_clked;
+ exe_pc_d1_clked            = exe_nxt_instr_pc; //exe_pc_clked;
  exe_ir16_d1_clked             = exe_ir16_clked;
  //exe_pc_clked               = decpc_clked;
 //

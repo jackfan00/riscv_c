@@ -148,6 +148,12 @@ void execu()
     exe_jalr_pc = cti_pc_clked;
     exe_jalr_pdict_fail = dec_jalr_pdict_fail_clked;        
 
+    //for interrupt return address: mepc
+    //next instr pc
+    exe_nxt_instr_pc = dec_alujal_clked ?  decpc_clked :
+                       dec_alujalr_clked ? exe_jalr_pc :
+                       exe_branch_taken ? branch_taken_pc_clked : exe_pc_clked;
+
     
 
     //RV32M

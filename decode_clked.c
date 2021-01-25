@@ -90,6 +90,7 @@ if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  dec_predict_jmp_clked = fet_predict_jmp_clked   & (!dec_stall) &(!csr_exception_flush);
  dec_csridx_clked = csridx;
  cti_pc_clked          = cti_pc;
+ branch_taken_pc_clked = branch_taken_pc;
  //use for mtval
  //dec_IR_clked = fet_ir16_clked ? (dec_stall ? NOP : fetchIR16_clked ) : 
  //                                (dec_stall ? NOP : fetchIR_clked   ) ;

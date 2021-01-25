@@ -79,6 +79,7 @@ BIT   dec_ras_push_clked;
 BIT   dec_predict_jmp_clked;
 //BIT   dec_branch_pdict_fail_pc_clked;
 REG32 cti_pc_clked;
+REG32 branch_taken_pc_clked;
 BIT dec_jalr_pdict_fail_clked;
 BIT dec_mulh_fuse_clked;
 REG32 dec_IR_clked;
@@ -168,6 +169,7 @@ BIT aluop_fencei;
 BIT dec_flush;
 
 //BIT dec_branch_pdict_fail_pc;
+REG32 branch_taken_pc;
 REG32 cti_pc;
 BIT dec_jalr_pdict_fail;
 BIT dec_jalr_pdict_success;
