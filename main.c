@@ -16,6 +16,7 @@
 #include "divrem.h"
 #include "memwb.h"
 #include "ext_write_coderam.h"
+#include "extbussplit.h"
 #include "regfile.h"
 #include "csrreg.h"
 #include "clint.h"
@@ -156,6 +157,7 @@ int main(int argc, char *argv[])
         for (i=0;i<30;i++){
 
             ext_write_coderam();
+            extbussplit();
 
             fetch();
 
@@ -221,7 +223,7 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
-if (clockcnt >=5000 && clockcnt<=15000) {
+if ((clockcnt >=70000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -286,6 +288,7 @@ if (clockcnt >=5000 && clockcnt<=15000) {
         regfilemerge_clked();
 
         //
+        extbussplit_clked();
         ext_write_coderam_clked();
         testfinishcheck_clked();
         exitcheck_clked();
@@ -303,13 +306,13 @@ if (clockcnt >=5000 && clockcnt<=15000) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 15000) break;
+        //if (clockcnt >= 75000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");
         //}
-        //if (fetpc_clked == 0x80000d40){
-        //    printf("dddd %x\n",clockcnt);
+        //if (fetpc_clked == 0x800000a0){
+        //    printf("dddd %d\n",clockcnt);
         //    break;
         //} 
         //if (downloadcomplete) break;

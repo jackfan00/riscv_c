@@ -27,6 +27,8 @@ REG32 buffered_rsp_rdata_clked;
 BIT ifu_rsp_valid_clked;
 BIT fetch_stall_clked;
 BIT pc_keep_clked;
+BIT ifu_stall_clked;
+BIT pcjmpconi_clked;
 
 //output
 BIT stalled_ifu_rsp_valid;
@@ -61,6 +63,8 @@ REG8 iroffset;
 REG32 nxtpc;
 REG32 buffered_rsp_rdata;
 BIT pc_keep;
+BIT ifu_stall;
+BIT pcjmpconi;
 //BIT ddd;
 //BIT ddd1;
 //BIT ddd2;

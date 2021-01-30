@@ -11,11 +11,14 @@ void fetch_clked()
 
     // 
 
+//    if ((!ifu_stall)&&(!exe_stall) && (!dec_stall) && (!memwb_stall) && (!csr_exception_stall)){
     if ((!exe_stall) && (!dec_stall) && (!memwb_stall) && (!csr_exception_stall)){
 
  decpc_clked = fetpc_clked;
  dec_ir16_clked = fet_ir16;
- dec_validir_clked = !fetch_flush;
+
+ //!fetch_flush is equal fetch_validir
+ dec_validir_clked = !fetch_flush &(!csr_exception_flush);
 
     memIR_hi16_clked = memIR_hi16;
     fetpc_clked = pc;
@@ -55,6 +58,8 @@ void fetch_clked()
 
     firstinst_clked = ifu_cmd_valid & ifu_cmd_ready ? 0 : firstinst_clked;
 
+    pcjmpconi_clked = pcjmpconi;
+
     }
 
 buffered_rsp_rdata_clked = buffered_rsp_rdata;
@@ -63,5 +68,5 @@ ifu_rsp_valid_clked = ifu_rsp_valid & fetch_stall ? 1 :
                           !fetch_stall ? 0 :  ifu_rsp_valid_clked ;
 
 fetch_stall_clked = fetch_stall;
-
+//ifu_stall_clked = ifu_stall;
 }

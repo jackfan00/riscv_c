@@ -82,6 +82,7 @@ void isconverge_c()
     fprintf(dc, "#include \"dumpvars.h\"\n");
     fprintf(dc, "#include \"rv16torv32.h\"\n");
     fprintf(dc, "#include \"ext_write_coderam.h\"\n");
+    fprintf(dc, "#include \"extbussplit.h\"\n");
     fprintf(dc, "#include \"lsubussplit.h\"\n");
     fprintf(dc, "#include \"ifubussplit.h\"\n");
     fprintf(dc, "#include \"biubussplit.h\"\n");

@@ -13,19 +13,22 @@ void ext_write_coderam()
         ext_cmd_read =0;
         ext_cmd_addr = HEXcodeaddr[codeindex_clked];
         ext_cmd_wdata = HEXcodedata[codeindex_clked];
+        ext_cmd_rwbyte = 0xf;
     }
     else{
         ext_cmd_valid =0;
     }
 
+    ext_rsp_ready = 1;
+
     //
     //
-    ext2itcm_cmd_valid  = ext_cmd_valid;
-    ext2itcm_cmd_read   = ext_cmd_read;
-    ext2itcm_cmd_adr    = ext_cmd_addr;
-    ext2itcm_cmd_data   = ext_cmd_wdata;
-    ext2itcm_cmd_rwbyte = 0xf;
-    ext_cmd_ready      = ext2itcm_cmd_ready;
-    ext2itcm_rsp_ready  = 1;
+    //ext2itcm_cmd_valid  = ext_cmd_valid;
+    //ext2itcm_cmd_read   = ext_cmd_read;
+    //ext2itcm_cmd_adr    = ext_cmd_addr;
+    //ext2itcm_cmd_data   = ext_cmd_wdata;
+    //ext2itcm_cmd_rwbyte = ext_cmd_rwbyte; //0xf;
+    //ext_cmd_ready      = ext2itcm_cmd_ready;
+    //ext2itcm_rsp_ready  = 1;
 
 }

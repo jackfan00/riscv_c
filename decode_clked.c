@@ -20,7 +20,7 @@ if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  //decpc_clked = fetpc_clked;
  exe_pc_clked               = decpc_clked;
  exe_ir16_clked             = dec_ir16_clked;
- exe_validir_clked          = dec_validir_clked & (!dec_stall) &(!csr_exception_flush);
+ exe_validir_clked          = dec_validir_clked & (!dec_stall) &(!csr_exception_flush);// & (!ifu_stall);
     // for store command, need
  dec_rs2v_clked       = real_rs2v;
     //

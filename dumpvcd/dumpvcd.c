@@ -244,6 +244,7 @@ void dumpcmdfile()
     fprintf(dc, "#include \"dumpvars.h\"\n");
     fprintf(dc, "#include \"rv16torv32.h\"\n");
     fprintf(dc, "#include \"ext_write_coderam.h\"\n");
+    fprintf(dc, "#include \"extbussplit.h\"\n");
     fprintf(dc, "#include \"lsubussplit.h\"\n");
     fprintf(dc, "#include \"ifubussplit.h\"\n");
     fprintf(dc, "#include \"biubussplit.h\"\n");
@@ -313,6 +314,7 @@ int main()
     parsevars("../lif.h");
     parsevars("../rv16torv32.h");
     parsevars("../ext_write_coderam.h");
+    parsevars("../extbussplit.h");
     parsevars("../lsubussplit.h");
     parsevars("../ifubussplit.h");
     parsevars("../biubussplit.h");

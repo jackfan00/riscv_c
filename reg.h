@@ -58,6 +58,8 @@ typedef unsigned char BIT;
 #define LSUSPLITTARGETNUM 3
 #define LSUSPLIFIFODEPTH 3
 #define ITCMMERGEFIFODEPTH 3
+#define EXTSPLITTARGETNUM 3
+#define EXTSPLIFIFODEPTH 3
 
 
 //REG8 code_rspid_fifo[RSPFIFOSIZE];

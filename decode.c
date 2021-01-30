@@ -115,7 +115,7 @@ int s_j_imm;
     decodeinit();
     //
     dec_flush = exe_branch_pdict_fail | exe_jalr_pdict_fail | csr_exception_flush;
-    dec_IR = dec_flush ? NOP : fetchIR_clked;
+    dec_IR = dec_flush  ? NOP : fetchIR_clked; //| ifu_stall
      //use for mtval
     raw_dec_IR = dec_ir16_clked ? fetchIR16_clked : dec_IR;
 

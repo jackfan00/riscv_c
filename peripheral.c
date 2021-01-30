@@ -19,7 +19,9 @@ void peripheral()
     device_reg = peripheral_regcs & peripheral_regwr ? peripheral_regwdata : device_reg_clked;
     peripheral_rdat = uart_rsp_valid ? uart_rsp_rdata :
                         gpio_rsp_valid ? gpio_rsp_rdata :
-                    device_reg;
+                    //just for hack hclkgen-pll lock status
+                    //to pass select_clock(hw/mcu/sifive/fe310/src/sys_clock.c) while-loop check  
+                    (device_reg | (1<<31));
 
 
     peripheral_read =    peripheral_regcs & (!peripheral_regwr) ? 1 : 

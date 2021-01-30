@@ -18,5 +18,14 @@ BIT ext_cmd_valid;
 BIT ext_cmd_read;
 REG32 ext_cmd_addr;
 REG32 ext_cmd_wdata;
+REG8 ext_cmd_rwbyte;
+BIT ext_rsp_valid;
+BIT ext_rsp_ready;
+REG32 ext_rsp_rdata;
+BIT ext_rsp_read;
+BIT ext_rsp_rden;
+REG8 ext_rsp_regidx;
+REG8 ext_cmd_regidx;
+BIT ext_cmd_rden;
 
 #endif //EXT_WRITE_CODERAM_H

@@ -147,39 +147,55 @@ void fetch()
                     //in negative case or flush, doesnt cousume ir. 
                     ((remain_ir16s_clked>>7)|fetch_flush ? 0 : (fet_ir16?1:2)) + 
                     (stalled_ifu_rsp_valid & ifu_rsp_ready?2:0);
-    
-
+    //jmp instr & ifu fetch instr stall condition
+    //in the next cycle need to hold nxtpc no change
+    pcjmpconi = (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp) & ifu_stall;
+    pcjmpconi = pcjmpconi ? 1 : 
+                !ifu_stall ? 0 : pcjmpconi_clked;
     //
     nxtpc = csr_exception_flush   ? branchjmp_pc :  //1st priority
             exe_branch_pdict_fail ? exe_branch_pdict_fail_pc :
             exe_jalr_pdict_fail ? exe_jalr_pc :
             branchjmp   ? branchjmp_pc : 
-            fetpc_clked + iroffset;
+            fetpc_clked + (pcjmpconi_clked ? 0 :iroffset);
             //fetch_stall ? fetpc_clked : fetpc_clked + iroffset;
             //ifu2mem_cmd_ready ? fetpc_clked + iroffset : fetpc_clked;
 
     //req new instr when remain ir16 count less than 2
     ifu_cmd_valid = downloadstart|downloadper_clked|fetch_stall? 0: ((remain_ir16s<=1)|(remain_ir16s>>7));
+
+    //ifu_cmd_adr change
     ifu_cmd_adr =   (remain_ir16s>>7) ? nxtpc :
                     (ifu_cmd_adr_clked&0xfffffffc) == (nxtpc&0xfffffffc) ? nxtpc+2 : nxtpc;
     ifu_cmd_adr = ifu_cmd_adr & 0xfffffffc;
     
+    //ifu_stall use to keep fetch stage instr not change
+    //but need to flush some instr, doing flush at decode stage
+    //to avoid converge issue(combinational loop)
+    ifu_stall = ifu_cmd_valid & (!ifu_cmd_ready);
    
     //for pc_keep_clked period, its pc is not changed.
     pc_keep = (remain_ir16s==0xff) ? 1 :
                 (ifu_cmd_valid & ifu_cmd_ready) ? 0 : pc_keep_clked;
-    pc = 
-            (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc :   //1st priority
+    pc =    // these conditions is always update new pc , 1st priority
+            (exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc :   
 
-            pc_keep_clked ? fetpc_clked :
+    //to keep ifu_cmd_adr no change because of ifu_cmd_ready not ready (ifu_stall condition) 
+            pc_keep_clked|ifu_stall ? fetpc_clked :
     //for remain_ir16s_clked value is negative cycle, its pc is invalid dont update.
          (ifu_cmd_valid & (remain_ir16s>=0) & ifu_cmd_ready & (!(remain_ir16s_clked>>7)) ) | 
          (remain_ir16s==2 ) ? nxtpc : 
          //(exe_branch_pdict_fail|exe_jalr_pdict_fail|branchjmp)           ? nxtpc : 
          fetpc_clked;
 
+    //to keep ifu_cmd_adr no change because of ifu_cmd_ready not ready 
+    //pc = ifu_stall ?     fetpc_clked : pc;
+
     //
-    fetch_flush =!(  stalled_ifu_rsp_valid & ifu_rsp_ready  ) & (remain_ir16s_clked!=2);  
+    fetch_flush =(!(  stalled_ifu_rsp_valid & ifu_rsp_ready  )) & (remain_ir16s_clked!=2);  
+    //to avoid flush at ifu_stall period, 
+    fetch_flush = fetch_flush | csr_exception_flush;  
+
     fetch_flush = fetch_flush | exe_branch_pdict_fail | exe_jalr_pdict_fail | 
                                  (remain_ir16s_clked>>7); //remain_ir16s_clked is negative means jmpto address[1:0]==10
                                                           //need take 2 cycles to get full instruntion

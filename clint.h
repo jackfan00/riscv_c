@@ -4,6 +4,8 @@
 void clint();
 void clint_clked();
 
+#define HCLKMHZ         16
+#define HCLK32768NUMBER 32*HCLKMHZ
 #define CLINT_MSIP      0x02000000
 #define CLINT_MTIMECMP  0x02004000
 #define CLINT_MTIMECMPH 0x02004004
@@ -23,6 +25,7 @@ BIT clint_write_clked;
 BIT clint_read1st_clked;
 REG32 read_clint_rdat_clked;
 REG32 clint_csadr_clked;
+REG32 hclk_cnt_clked;
 
 //output
 BIT clint_msip;
@@ -50,5 +53,6 @@ REG32 clint_rdat;
 BIT clint_write;
 BIT clint_read1st;
 REG32 read_clint_rdat;
+BIT clk32768_p;
 
 #endif //CLINT_H
