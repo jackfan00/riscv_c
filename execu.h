@@ -6,6 +6,8 @@ void execu_clked();
 #include "reg.h"
 
 //input
+BIT exe_load_clked;
+BIT exe_div_clked;
 BIT exe_bjir_clked;
 BIT exe_bjir_d1_clked;
 BIT exe_validir_clked;

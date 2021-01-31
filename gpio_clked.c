@@ -36,7 +36,7 @@ void gpio_clked()
     wGPIOPINS = *(gpio_shmptr+1);
 
     if (gpio_write){
-        printf("gpio_adr:0x%x, gpio_wdat:0x%x\n",gpio_regwadr, gpio_regwdata);
+        printf("clockcnt:%d, gpio_adr:0x%x, gpio_wdat:0x%x\n",clockcnt,gpio_regwadr, gpio_regwdata);
     //    exit(9);
     }
 

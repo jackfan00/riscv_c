@@ -13,7 +13,7 @@ void peripheral_clked()
     //
     if (txuart0_wr){
         printf("%c",txuart0_char); 
-        //printf("--%d\n",clockcnt); 
+        printf("--%d\n",clockcnt); 
         //exit(2);
         //*shm_txuart = (char) txuart_char;
     }

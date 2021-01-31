@@ -6,6 +6,7 @@
 #include "fetch.h"
 #include "memwb.h"
 #include "lif.h"
+#include "regfilemerge.h"
 
 //case1:
 // EXT interrupt(which is not precisely exception) affect the memwb stage immediately, it jump to interrupt handler address
@@ -300,7 +301,11 @@ void csrreg()
 
     csr_cmd_exception_valid = csr_inthappen|memwb_excephappen|memwb_mret;
     //make sure all instruction complete and next instruction is commit (ifu_cmd_ready)
-    csr_cmd_exception_ready = ((lif_divrdidx_clked==0) & (lif_loadrdidx_clked==0) ) & csr_cmd_exception_valid;
+    csr_cmd_exception_ready = memwb_load & (!regfile_wrload) ? (lif_loadrdidx_clked==0) & csr_cmd_exception_valid :
+                              memwb_div  & (!regfile_wrdiv) ? (lif_divrdidx_clked==0) & csr_cmd_exception_valid :
+                              csr_cmd_exception_valid;
+                    //((lif_divrdidx_clked==0) & (lif_loadrdidx_clked==0) ) & csr_cmd_exception_valid;
+
     csr_exception_stall = csr_cmd_exception_valid & (!csr_cmd_exception_ready);
     csr_exception_flush = csr_cmd_exception_valid & ( csr_cmd_exception_ready);
 

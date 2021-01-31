@@ -3,6 +3,7 @@
 #include "execu.h"
 #include "memwb.h"
 #include "csrreg.h"
+#include "lif.h"
 #include "opcode_define.h"
 
 void decode_clked()
@@ -31,6 +32,10 @@ if ((!exe_stall) && (!memwb_stall) && (!csr_exception_stall)){
  dec_rdidx_clked      = rdidx;
  dec_aluop_add_clked  = aluop_add; 
  dec_aluopimm_clked   = aluopimm;
+
+ lif_divrdidx_clked   = lif_divrdidx ;// & (!dec_stall) &(!csr_exception_flush);
+ lif_loadrdidx_clked  = lif_loadrdidx;// & (!dec_stall) &(!csr_exception_flush);
+
  dec_rs1en_clked      = rs1en                    & (!dec_stall) &(!csr_exception_flush);
  dec_rs2en_clked      = rs2en                    & (!dec_stall) &(!csr_exception_flush);
  dec_rden_clked       = rden                     & (!dec_stall) &(!csr_exception_flush);

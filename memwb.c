@@ -10,6 +10,8 @@ void memwb()
     int i;
 
     //CSR
+    memwb_load = exe_load_clked;
+    memwb_div = exe_div_clked;
     memwb_dec_ilg = exe_dec_ilg_clked;
     memwb_load_misaligned = lsu_load_misaligned_clked;
     memwb_store_misaligned = lsu_store_misaligned_clked;
