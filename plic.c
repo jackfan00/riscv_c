@@ -1,6 +1,7 @@
 #include "plic.h"
 #include "execu.h"
 #include "gpio.h"
+#include "uart.h"
 
 void plicunit(BIT intsource, BIT loIP_clked, BIT gateway_enable, REG8 priority, BIT loIE, REG8 ID, REG8 prepriorityout,  REG8 premaxid,
 BIT *IP, REG8 *priorityout, REG8 *maxid
@@ -50,6 +51,8 @@ void plic()
     for (i=0;i<32;i++){
         intsource[8+i] = (gpio_intr_clked>>i) & 0x01;
     }
+    //uart
+    intsource[3] = uart_intr_clked;
 
 
     

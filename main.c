@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DUMPVCD
+//#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -87,6 +87,7 @@ void setup()
     signature_startaddr=0x80002000;
 
     //UART0
+    uart_rxdata_clked = 0x80000000; //empty
     txuart0_shmptr = simuart(MYKEY_UART0, BUFSIZE_UART0);
     rxuart0_shmptr = txuart0_shmptr + 1;
     *rxuart0_shmptr=(1<<31);  //initialize empty
@@ -223,7 +224,8 @@ int main(int argc, char *argv[])
 
         //
 #ifdef DUMPVCD
-if ((clockcnt >=174000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
+//if ((clockcnt >=39000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
+if ((clockcnt >=959000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -306,12 +308,12 @@ if ((clockcnt >=174000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        if (clockcnt >= 175000) break;
+        //if (clockcnt >= 960000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");
         //}
-        if (fetpc_clked == 0x800013c6){
+        if (fetpc_clked == 0x800013ca){
             printf("%d:console_out_nolock\n",clockcnt);
         //    break;
         } 

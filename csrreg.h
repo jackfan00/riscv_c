@@ -56,5 +56,7 @@ BIT csr_cmd_exception_ready;
 BIT csr_exception_stall;
 BIT csr_exception_flush;
 BIT csr_inthappen_st_p;
+BIT lif_loadrdidx_flush;
+BIT lif_divrdidx_flush;
 
 #endif //CSRREG_H

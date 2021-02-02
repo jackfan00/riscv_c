@@ -279,7 +279,9 @@ void csrreg()
     mip = (EIP_clked<<11) | (clint_mtip_clked<<7) | (clint_msip_clked<<3);
 
     //interrupt mask
-    csr_inthappen_st_p = mstatusmie_clked & 
+    //eliminate clear mstatusmie cycle which means mie not enable
+    //because this is valid cycle, mstatusmie_clked will be clear in next cycle
+    csr_inthappen_st_p = mstatusmie_clked & (!((!mstatusmie) & csrreg_ren)) & 
                             memwb_validir &  //must contain valid instr
                         //    (!memwb_bjir) &   // and avoid interrupt at branch/jmp instr
                 ((mie_meie&EIP_clked) | (mie_mtie&clint_mtip_clked) | (mie_msie&clint_msip_clked));
@@ -308,6 +310,9 @@ void csrreg()
 
     csr_exception_stall = csr_cmd_exception_valid & (!csr_cmd_exception_ready);
     csr_exception_flush = csr_cmd_exception_valid & ( csr_cmd_exception_ready);
+
+    lif_loadrdidx_flush = csr_exception_flush & (!(memwb_load & (!regfile_wrload)));
+    lif_divrdidx_flush = csr_exception_flush & (!(memwb_div  & (!regfile_wrdiv)));
 
 
 }
