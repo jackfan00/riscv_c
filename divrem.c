@@ -24,7 +24,7 @@ void divrem()
     divisor_undivsigned  = divisor_signed  ? ~(divisor)+1  : divisor;
     dividend_undivsigned = dividend_signed ?~(dividend)+1 : dividend;
 //
-    diven_p =1;
+    diven_p =1 ;//& (!div_end_p_clked);
     divorrem = (div_cmd_opmode==1) | (div_cmd_opmode==2);  //div/divu
 //
   if (((divisor_undivsigned>>31)&0x01) | div0 | ovflow)  //div0 

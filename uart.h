@@ -73,6 +73,7 @@ BIT uart_intr;
 REG8 txcnt;
 REG8 rxcnt;
 BIT txdata_empty;
+REG8 nxt_txdata_tail;
 
 //
 //simulate

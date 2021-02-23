@@ -9,6 +9,7 @@
 #include "regfile.h"
 #include "csrreg.h"
 #include "regfilemerge.h"
+#include "divrem.h"
 
 
 void decodeinit()
@@ -514,7 +515,7 @@ int s_j_imm;
 
        lif_divrdidx = (aluop_div | aluop_divu | aluop_rem | aluop_remu) & (lif_divrdidx_clked==0) ? rdidx :  //solve continue case
                       (aluop_div | aluop_divu | aluop_rem | aluop_remu) &  regfile_wrdiv ? rdidx :   //solve continue case
-                      regfile_wrdiv ?  0 : lif_divrdidx_clked;
+                      regfile_wrdiv & (!diven_p) ?  0 : lif_divrdidx_clked;
 
 
        //long instuction command definition: take 2 or more clock cycles to complete

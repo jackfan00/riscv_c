@@ -225,7 +225,7 @@ int main(int argc, char *argv[])
         //
 #ifdef DUMPVCD
 //if ((clockcnt >=39000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
-if ((clockcnt >=959000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
+if ((clockcnt >=22000)){
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -308,12 +308,12 @@ if ((clockcnt >=959000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 960000) break;
+        //if (clockcnt >= 25000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");
         //}
-        if (fetpc_clked == 0x800013ca){
+        if (fetpc_clked == 0x80002ca6){
             printf("%d:console_out_nolock\n",clockcnt);
         //    break;
         } 

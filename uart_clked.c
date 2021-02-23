@@ -72,9 +72,11 @@ void uart_clked()
     //txuartPIN = uarttx_per_clked ? (uart_txdata_clked >> (uarttx_per_cnt_clked>>SIM_UART_BIT_PER)) & 0x01 : 1;
 
     // communcate with faketxuart via IPC share memory
+    nxt_txdata_tail = (txdata_tail_clked==7 ? 0 : txdata_tail_clked+1 );
     if (uarttx_per_end_p){ //simulate uart tx done
-        *txuart0_shmptr = uart_txbuf_clked[txdata_head_clked] | (1<<31);//uart_txdata_clked;
-        printf("uarttxdone:%d, head:%d, tail:%d\n",clockcnt,txdata_head_clked, txdata_tail_clked);
+        //*txuart0_shmptr = uart_txbuf_clked[txdata_head_clked] | (1<<31);//uart_txdata_clked;
+        *txuart0_shmptr = uart_txbuf_clked[nxt_txdata_tail] | (1<<31);//uart_txdata_clked;
+        printf("uarttxdone:%d, head:%d, tail:%d\n",clockcnt,txdata_head_clked, nxt_txdata_tail);
     }
     uart_txdata_clked = uart_txdata; //
     uart_txbuf_clked[txdata_head] = uart_wr_txdata ? uart_regwdata : uart_txbuf_clked[txdata_head];
