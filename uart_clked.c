@@ -19,13 +19,13 @@ void uart_clked()
     // communcate with fakerxuart via IPC share memory
     //simulate uart rx
     uart_rxdata_tmp = *rxuart0_shmptr;
-    uartrx_per_end_p = (uartrx_per_cnt_clked==((uart_div_clked+1)*10));//SIM_UART_TX_PER);
+    //uartrx_per_end_p = (uartrx_per_cnt_clked==((uart_div_clked+1)*10));//SIM_UART_TX_PER);
     if (uartrx_per_end_p){  //simulate rx uart done
         *rxuart0_shmptr=(1<<31);
         uartrx_per_clked =0;
         uartrx_per_cnt_clked =0;
     }
-    else if ((uart_rxdata_tmp&0x80000000)==0){  //rxuart receive data
+    else if ((uart_rxdata_tmp&0x80000000)==0){  //simu rxuart receive data period
         uartrx_per_cnt_clked++;
         uartrx_per_clked =1;
     }
@@ -52,7 +52,7 @@ void uart_clked()
 
     //
     //simulate uart tx , 8N1 (startbit,8bit,stopbit)
-    uarttx_per_end_p = (uarttx_per_cnt_clked==((uart_div_clked+1)*10)); //SIM_UART_TX_PER);
+    //uarttx_per_end_p = (uarttx_per_cnt_clked==((uart_div_clked+1)*10)); //SIM_UART_TX_PER);
     txdata_empty = (txdata_head_clked==txdata_tail_clked) & (uart_txdata_clked==0);
     uarttx_per_cnt_clked = //uart_wr_txdata ? 0:
                             (uart_txctrl_clked&0x1) &(!txdata_empty) ? (uarttx_per_end_p ? 0 : uarttx_per_cnt_clked+1) :
@@ -76,10 +76,14 @@ void uart_clked()
     if (uarttx_per_end_p){ //simulate uart tx done
         //*txuart0_shmptr = uart_txbuf_clked[txdata_head_clked] | (1<<31);//uart_txdata_clked;
         *txuart0_shmptr = uart_txbuf_clked[nxt_txdata_tail] | (1<<31);//uart_txdata_clked;
-        printf("uarttxdone:%d, head:%d, tail:%d\n",clockcnt,txdata_head_clked, nxt_txdata_tail);
+        //printf("uarttxdone:%d, head:%d, tail:%d\n",clockcnt,txdata_head_clked, nxt_txdata_tail);
     }
     uart_txdata_clked = uart_txdata; //
     uart_txbuf_clked[txdata_head] = uart_wr_txdata ? uart_regwdata : uart_txbuf_clked[txdata_head];
+
+    if (uart_wr_txdata){
+        //printf("uarttx_write:%d, head:%d, tail:%d\n",clockcnt,txdata_head, txdata_tail_clked);
+    }
     
     uart_txip_clked = uart_txip;
     uart_rxip_clked = uart_rxip;

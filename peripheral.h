@@ -4,6 +4,7 @@ void peripheral();
 void peripheral_clked();
 
 #include "reg.h"
+#include "pwm.h"
 
 #define GPIOBASE 0x10012000
 #define UART0BASE 0x10013000
@@ -12,6 +13,7 @@ void peripheral_clked();
 #define UART0(x) ((x&0xfffff000)==UART0BASE)
 #define UART0_TXDATA(x) (x==UART0_TXDATA_ADR)
 #define GPIO(x) ((x&0xfffff000)==GPIOBASE)
+#define PWM2(x) ((x&0xfffff000)==PWM2_BASE)
 
 //input
 REG32 device_reg_clked;

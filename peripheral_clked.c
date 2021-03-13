@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "peripheral.h"
+#include "fetch.h"
 
 void peripheral_clked()
 {
@@ -13,7 +14,7 @@ void peripheral_clked()
     //
     if (txuart0_wr){
         printf("%c",txuart0_char); 
-        printf("--%d\n",clockcnt); 
+        //printf("--pc=%08x,--%d\n",fetpc_clked, clockcnt); 
         //exit(2);
         //*shm_txuart = (char) txuart_char;
     }

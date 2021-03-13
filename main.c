@@ -36,6 +36,7 @@
 #include "perfcheck.h"
 #include "uart.h"
 #include "gpio.h"
+#include "pwm.h"
 #include "simhw/simuart.h"
 #include "isconverge.h"
 
@@ -191,6 +192,7 @@ int main(int argc, char *argv[])
 
             uart();
             gpio();
+            pwm();
 
             /*
             regwbus();
@@ -225,7 +227,10 @@ int main(int argc, char *argv[])
         //
 #ifdef DUMPVCD
 //if ((clockcnt >=39000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
-if ((clockcnt >=22000)){
+if ((clockcnt >=197000)&&(clockcnt <=200000)){
+        dumpvars(clockcnt, vcdfp);
+}
+if ((clockcnt >=7523000)&&(clockcnt <=7526000)){
         dumpvars(clockcnt, vcdfp);
 }
 #endif
@@ -298,6 +303,7 @@ if ((clockcnt >=22000)){
 
         uart_clked();
         gpio_clked();
+        pwm_clked();
         
         //
         clockcnt++;
@@ -308,15 +314,116 @@ if ((clockcnt >=22000)){
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 25000) break;
+        if (clockcnt >= 7526000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");
         //}
-        if (fetpc_clked == 0x80002ca6){
-            printf("%d:console_out_nolock\n",clockcnt);
+        if (fetpc_clked == 0x80003400){
+            printf("%d:hal_timer_start_at\n",clockcnt);
         //    break;
         } 
+        if (fetpc_clked == 0x800032ec){
+            printf("%d:hal_timer_config\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003250){
+            printf("%d:fe310_pwm_cmp0_handler\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003290){
+            printf("%d:fe310_pwm_cmp1_handler\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x800031c8){
+            printf("%d:fe310_tmr_check_first\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x800034da){
+            printf("%d:plic_enable_interrupt\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003500){
+            printf("%d:plic_disable_interrupt\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000320e){
+            printf("%d:fe310_tmr_cbs\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x800034b6){
+            printf("%d:plic_set_handler\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x800031a4){
+            printf("%d:hal_timer_cnt\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000ceaa){
+            printf("%d:ble_ll_xcvr_rfclk_timer_start\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003588){
+            printf("%d:os_cputime_timer_start\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000358c){
+            printf("%d:os_cputime_timer_stop\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000c680){
+            printf("%d:ble_ll_sched_adv_new\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x800060c4){
+            printf("%d:ble_ll_adv_set_enable\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80005896){
+            printf("%d:ble_ll_adv_set_sched\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003590){
+            printf("%d:os_cputime_get32\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80003596){
+            printf("%d:os_cputime_usecs_to_ticks\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80005b86){
+            printf("%d:ble_ll_adv_sm_stop\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000c990){
+            printf("%d:ble_ll_sched_rmv_elem\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000ca40){
+            printf("%d:ble_ll_sched_rfclk_chk_restart\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000d078){
+            printf("%d:ble_phy_disable\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000d8da){
+            printf("%d:ble_gap_adv_start\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x80009dfa){
+            printf("%d:ble_ll_hci_cmd_proc\n",clockcnt);
+        //    break;
+        } 
+        if (fetpc_clked == 0x8000545a){
+            printf("%d:ble_ll_reset\n",clockcnt);
+        //    break;
+        } 
+        
+        //if (fetpc_clked == 0x80002ca6){
+        //    printf("%d:console_out_nolock\n",clockcnt);
+        //    break;
+        //} 
         //if (downloadcomplete) break;
 
     }

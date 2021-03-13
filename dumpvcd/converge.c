@@ -102,6 +102,7 @@ void isconverge_c()
     fprintf(dc, "#include \"perfcheck.h\"\n");
     fprintf(dc, "#include \"uart.h\"\n");
     fprintf(dc, "#include \"gpio.h\"\n");
+    fprintf(dc, "#include \"pwm.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "BIT isconverge(){\n");
     fprintf(dc, "BIT converge;\n");

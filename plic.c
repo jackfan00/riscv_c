@@ -2,6 +2,7 @@
 #include "execu.h"
 #include "gpio.h"
 #include "uart.h"
+#include "pwm.h"
 
 void plicunit(BIT intsource, BIT loIP_clked, BIT gateway_enable, REG8 priority, BIT loIE, REG8 ID, REG8 prepriorityout,  REG8 premaxid,
 BIT *IP, REG8 *priorityout, REG8 *maxid
@@ -53,6 +54,11 @@ void plic()
     }
     //uart
     intsource[3] = uart_intr_clked;
+    //pwm2
+    intsource[48] = pwm2_cmp0ip_clked;
+    intsource[49] = pwm2_cmp1ip_clked;
+    intsource[50] = pwm2_cmp2ip_clked;
+    intsource[51] = pwm2_cmp3ip_clked;
 
 
     

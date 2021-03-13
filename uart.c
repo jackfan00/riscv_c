@@ -20,6 +20,7 @@ void uart()
     txdata_head = uart_wr_txdata ? (txdata_head_clked==7 ? 0 : txdata_head_clked+1) : 
                     txdata_head_clked;
     //simulate uart tx done            
+    uarttx_per_end_p = (uarttx_per_cnt_clked==((uart_div_clked+1)*10)); //SIM_UART_TX_PER);
     txdata_tail = uarttx_per_end_p ? (txdata_tail_clked==7 ? 0 : txdata_tail_clked+1 ) : 
                     txdata_tail_clked;
 
@@ -31,9 +32,11 @@ void uart()
                 //uart_txdata_clked; 
 
     //simulate uart rx done            
+    uartrx_per_end_p = (uartrx_per_cnt_clked==((uart_div_clked+1)*10));//SIM_UART_TX_PER);
     rxdata_head = uartrx_per_end_p ? (rxdata_head_clked==7 ? 0 : rxdata_head_clked+1) : 
                     rxdata_head_clked;
-    rxdata_tail = rxuart_done ? (rxdata_tail_clked==7 ? 0 : rxdata_tail_clked+1 ) : 
+    //incr tail when not empty                
+    rxdata_tail = rxuart_done & (uart_rxdata_clked==0) ? (rxdata_tail_clked==7 ? 0 : rxdata_tail_clked+1 ) : 
                     rxdata_tail_clked;
 
     uart_rxdata = rxuart_done & (rxdata_tail==rxdata_head_clked) ? (1<<31) : //empty
@@ -58,7 +61,7 @@ void uart()
                 (uart_csadr_clked==UART_IP) ? (uart_txip_clked|(uart_rxip_clked<<1)) :
                 (uart_csadr_clked==UART_DIV) ? uart_div_clked :
                 (uart_csadr_clked==UART_TXDATA) ? uart_txdata_clked :
-                (uart_csadr_clked==UART_RXDATA) ? uart_rxdata_clked|uart_rxbuf_clked[rxdata_head_clked] : //*rxuart0_shmptr :
+                (uart_csadr_clked==UART_RXDATA) ? uart_rxdata_clked|uart_rxbuf_clked[rxdata_tail] : //*rxuart0_shmptr :
                  0;
     //been readout
     rxuart_done = (uart_csadr_clked==UART_RXDATA) & uart_rsp_valid & uart_rsp_ready;

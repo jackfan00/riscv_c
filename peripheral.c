@@ -19,6 +19,7 @@ void peripheral()
     device_reg = peripheral_regcs & peripheral_regwr ? peripheral_regwdata : device_reg_clked;
     peripheral_rdat = uart_rsp_valid ? uart_rsp_rdata :
                         gpio_rsp_valid ? gpio_rsp_rdata :
+                        pwm_rsp_valid ? pwm_rsp_rdata :
                     //just for hack hclkgen-pll lock status
                     //to pass select_clock(hw/mcu/sifive/fe310/src/sys_clock.c) while-loop check  
                     (device_reg | (1<<31));
@@ -63,6 +64,12 @@ void peripheral()
     gpio_cmd_data  = gpio_cmd_valid ? peripheral_cmd_data :0;
     gpio_rsp_ready = 1;
 
+    //pwm
+    pwm_cmd_valid = peripheral_cmd_valid & PWM2(peripheral_cmd_adr);
+    pwm_cmd_read  = pwm_cmd_valid ? peripheral_cmd_read :0;
+    pwm_cmd_adr   = pwm_cmd_valid ? peripheral_cmd_adr  :0;
+    pwm_cmd_data  = pwm_cmd_valid ? peripheral_cmd_data :0;
+    pwm_rsp_ready = 1;
 
 }
 

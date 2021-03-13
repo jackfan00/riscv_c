@@ -21,6 +21,6 @@ void csrreg_clked()
                                 csr_inthappen_st_p_clked;
 
     if (csr_inthappen_st_p){
-        printf("csrint:%d, mcause:0x%x\n", clockcnt, mcause);
+        //printf("csrint:%d, mcause:0x%x\n", clockcnt, mcause);
     }
 }
