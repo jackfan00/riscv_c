@@ -14,7 +14,7 @@ void isconverge_h()
     fprintf(dc, "#ifndef ISCONVERGE_H\n");
     fprintf(dc, "#define ISCONVERGE_H\n");
     fprintf(dc, "#include \"reg.h\"\n");
-    fprintf(dc, "BIT isconverge();\n");
+    fprintf(dc, "BIT isconverge(BIT debug);\n");
     //
     //
     for (i=0;i<MAXVARSIZE;i++)
@@ -104,9 +104,11 @@ void isconverge_c()
     fprintf(dc, "#include \"gpio.h\"\n");
     fprintf(dc, "#include \"pwm.h\"\n");
     fprintf(dc, "\n");
-    fprintf(dc, "BIT isconverge(){\n");
+    fprintf(dc, "BIT isconverge(BIT debug){\n");
     fprintf(dc, "BIT converge;\n");
+    fprintf(dc, "REG32 converge_index;\n");
     fprintf(dc, "converge=1;\n");
+    fprintf(dc, "converge_index=0;\n");
 
     for (i=0;i<MAXVARSIZE;i++)
     {
@@ -117,11 +119,14 @@ void isconverge_c()
             else{
                 fprintf(dc, "converge = converge & (pre_%s__%d__==%s[%d]);\n",varreferences[i],vararraysize[i], varreferences[i],vararraysize[i]);
             }
+            fprintf(dc, "converge_index= converge ? %d : converge_index;\n", i);
         }
         else{
             break;
         }
     }
+    fprintf(dc, "if (debug) {printf(\"converge_index=%%d\\n\",converge_index);}\n");
+
     // update variables
     fprintf(dc, "//update variables\n");
     for (i=0;i<MAXVARSIZE;i++)

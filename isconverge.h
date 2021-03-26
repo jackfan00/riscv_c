@@ -4,7 +4,7 @@
 #ifndef ISCONVERGE_H
 #define ISCONVERGE_H
 #include "reg.h"
-BIT isconverge();
+BIT isconverge(BIT debug);
 REG32 pre_clockcnt;
 REG32 pre_ras_stack__0__;
 REG32 pre_ras_stack__1__;

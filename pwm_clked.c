@@ -44,7 +44,7 @@ void pwm_clked()
 
     //debug
     if (pwm_regcs  & pwm_regw){
-        printf("write pwmreg %x, %x, clockcnt=%d\n",pwm_regwadr, pwm_regwdata, clockcnt);
+        printf("write pwmreg %x, %x, pwms=%x, clockcnt=%d\n",pwm_regwadr, pwm_regwdata, pwm2_s, clockcnt);
     }
 
 }
