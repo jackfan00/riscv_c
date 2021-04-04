@@ -22,7 +22,7 @@ void pwm()
                  pwm2_enalways|pwm2_oneshot ? pwm2_count_clked+1 : pwm2_count_clked;
     pwm2_s_cmp = pwm2_cmp0center & (pwm2_s>>15)  ? ~pwm2_s : pwm2_s; 
     pwm2_cmp0_res = (pwm2_s_cmp >= pwm2_cmp0_clked);
-    pwm2_s_carry = ((1<<(pwm2_scale+PWM2_CMPWIDTH)-1)==pwm2_count_clked);
+    pwm2_s_carry = ((1<<(pwm2_scale+PWM2_CMPWIDTH))-1)==pwm2_count_clked;
     pwm2_reset = (pwm2_cmp0_res & pwm2_zerocmp) | pwm2_s_carry | 
             (pwm2_count_clked== ((unsigned int)(1<<PWM2_COUNTWIDTH)-1) );
     pwm2_sticky_deglich = (pwm2_deglitch & (!pwm2_reset)) | pwm2_stickyip;

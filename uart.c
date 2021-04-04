@@ -42,9 +42,9 @@ void uart()
     uart_rxdata = rxuart_done & (rxdata_tail==rxdata_head_clked) ? (1<<31) : //empty
                     uartrx_per_end_p ? 0 : uart_rxdata_clked;
 
-    txcnt = txdata_head_clked>=txdata_tail_clked ? txdata_head_clked-txdata_tail_clked :
+    txcnt = txdata_head_clked>txdata_tail_clked ? txdata_head_clked-txdata_tail_clked :
                 8+txdata_head_clked-txdata_tail_clked;
-    uart_txip =  txcnt < ((uart_txctrl_clked>>16)&0x7)  ? 1 : 0;        
+    uart_txip =  (txcnt < ((uart_txctrl_clked>>16)&0x7)) | txdata_empty  ? 1 : 0;        
 
     rxcnt = rxdata_head_clked>=rxdata_tail_clked ? rxdata_head_clked-rxdata_tail_clked :
                 8+rxdata_head_clked-rxdata_tail_clked;

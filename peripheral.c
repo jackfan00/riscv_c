@@ -1,6 +1,7 @@
 #include "peripheral.h"
 #include "uart.h"
 #include "gpio.h"
+#include "ctradio.h"
 
 //this is FAKED peripheral device
 void peripheral()
@@ -20,6 +21,7 @@ void peripheral()
     peripheral_rdat = uart_rsp_valid ? uart_rsp_rdata :
                         gpio_rsp_valid ? gpio_rsp_rdata :
                         pwm_rsp_valid ? pwm_rsp_rdata :
+                        radio_rsp_valid ? radio_rsp_rdata :
                     //just for hack hclkgen-pll lock status
                     //to pass select_clock(hw/mcu/sifive/fe310/src/sys_clock.c) while-loop check  
                     (device_reg | (1<<31));
@@ -70,6 +72,13 @@ void peripheral()
     pwm_cmd_adr   = pwm_cmd_valid ? peripheral_cmd_adr  :0;
     pwm_cmd_data  = pwm_cmd_valid ? peripheral_cmd_data :0;
     pwm_rsp_ready = 1;
+
+    //radio
+    radio_cmd_valid = peripheral_cmd_valid & CTRADIO(peripheral_cmd_adr);
+    radio_cmd_read  = radio_cmd_valid ? peripheral_cmd_read :0;
+    radio_cmd_adr   = radio_cmd_valid ? peripheral_cmd_adr  :0;
+    radio_cmd_data  = radio_cmd_valid ? peripheral_cmd_data :0;
+    radio_rsp_ready = 1;
 
 }
 

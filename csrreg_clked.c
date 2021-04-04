@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "csrreg.h"
+#include "plic.h"
 
 void csrreg_clked()
 {
@@ -20,7 +21,7 @@ void csrreg_clked()
                                 csr_inthappen_st_p ? 1 :
                                 csr_inthappen_st_p_clked;
 
-    if (csr_inthappen_st_p){
-        //printf("csrint:%d, mcause:0x%x\n", clockcnt, mcause);
-    }
+    //if (csr_inthappen_st_p & EIP_clked & (clockcnt >=5300147)){
+    //    printf("csrint:%d, mcause:0x%x\n", clockcnt, mcause);
+    //}
 }

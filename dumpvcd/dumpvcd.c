@@ -265,6 +265,7 @@ void dumpcmdfile()
     fprintf(dc, "#include \"uart.h\"\n");
     fprintf(dc, "#include \"gpio.h\"\n");
     fprintf(dc, "#include \"pwm.h\"\n");
+    fprintf(dc, "#include \"ctradio.h\"\n");
     fprintf(dc, "\n");
     fprintf(dc, "void printtrace(FILE * fp){\n");
     for (i=0;i<MAXVARSIZE;i++)
@@ -336,6 +337,7 @@ int main()
     parsevars("../uart.h");
     parsevars("../gpio.h");
     parsevars("../pwm.h");
+    parsevars("../ctradio.h");
     
     //
     dumpcmdfile();

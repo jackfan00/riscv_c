@@ -37,6 +37,7 @@
 #include "uart.h"
 #include "gpio.h"
 #include "pwm.h"
+#include "ctradio.h"
 #include "simhw/simuart.h"
 #include "isconverge.h"
 
@@ -194,6 +195,7 @@ int main(int argc, char *argv[])
             uart();
             gpio();
             pwm();
+            ctradio();
 
             /*
             regwbus();
@@ -228,13 +230,14 @@ int main(int argc, char *argv[])
         //
 #ifdef DUMPVCD
 //if ((clockcnt >=39000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
-if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
+if ((clockcnt >=12012052)){//&&(clockcnt <=2318800)){
         dumpvars(clockcnt, vcdfp);
 }
 //if ((clockcnt >=7782815)&&(clockcnt <=7784815)){
 //        dumpvars(clockcnt, vcdfp);
 //}
 #endif
+//if (clockcnt >= 12016588) break;
         //check execption
         //if (exe_dec_ilg_clked){
         //    printf("STOP by detect illigal instruction\n");
@@ -305,6 +308,7 @@ if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
         uart_clked();
         gpio_clked();
         pwm_clked();
+        ctradio_clked();
         
         //
         clockcnt++;
@@ -315,7 +319,6 @@ if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
         //if (clockcnt >= 0x627){
         //    printf("stop\n");
         //}
-        //if (clockcnt >= 2457000) break;
         //if (clockcnt >= 0x416d) {
         //    break;
         //    printf("dddd\n");
@@ -326,50 +329,54 @@ if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
         //    break;
         } */
 
-        if (exe_validir_clked&(exe_pc_clked == 0x8001a0f6)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8001b87e)){
             printf("%d:ble_hs_dbg_event_disp\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000b424)){
-            printf("%d:ble_ll_scan_timer_cb\n",clockcnt);
+        if (exe_validir_clked&(exe_pc_clked == 0x80006620)){
+            printf("%d:ble_ll_adv_set_adv_data\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000ce70)){
-            printf("%d:ble_ll_xcvr_rfclk_timer_exp\n",clockcnt);
-        //    break;
-        }
-        if (exe_validir_clked&(exe_pc_clked == 0x8000c2a4)){
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000b424)){
+        //    printf("%d:ble_ll_scan_timer_cb\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000ce70)){
+        //    printf("%d:ble_ll_xcvr_rfclk_timer_exp\n",clockcnt);
+        ////    break;
+        //}
+        if (exe_validir_clked&(exe_pc_clked == 0x8000d50e)){
             printf("%d:ble_ll_sched_run\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80005798)){
-            printf("%d:ble_ll_adv_flags_clear\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000d0ae)){
-            printf("%d:ble_phy_rfclk_enable\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80005b94)){
+        //if (exe_validir_clked&(exe_pc_clked == 0x80005798)){
+        //    printf("%d:ble_ll_adv_flags_clear\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000d0ae)){
+        //    printf("%d:ble_phy_rfclk_enable\n",clockcnt);
+        ////    break;
+        //} 
+        if (exe_validir_clked&(exe_pc_clked == 0x80005eb4)){
             printf("%d:ble_ll_adv_sm_stop\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80003576)){
+        if (exe_validir_clked&(exe_pc_clked == 0x800035ac)){
             printf("%d:os_cputime_timer_init\n",clockcnt);
         //    break;
         } 
         
         
-        if (exe_validir_clked&(exe_pc_clked == 0x8000b63a)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000c51a)){
             printf("%d:ble_ll_scan_common_init\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80005568)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000581a)){
             printf("%d:ble_ll_init\n",clockcnt);
         //    break;
         } 
         
-        if (exe_validir_clked&(exe_pc_clked == 0x8000caae)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000dea2)){
             printf("%d:ble_ll_sched_init\n",clockcnt);
         //    break;
         } 
@@ -394,78 +401,102 @@ if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
             printf("%d:hal_timer_config\n",clockcnt);
         //    break;
         } */
-        if (exe_validir_clked&(exe_pc_clked == 0x8000340e)){
-            printf("%d:hal_timer_start_at\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000325e)){
-            printf("%d:fe310_pwm_cmp0_handler\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000329e)){
-            printf("%d:fe310_pwm_cmp1_handler\n",clockcnt);
-        //    break;
-        } 
-        
-        if (exe_validir_clked&(exe_pc_clked == 0x800031d0)){
-            printf("%d:fe310_tmr_check_first\n",clockcnt);
-        //    break;
-        }
-         
-        if (exe_validir_clked&(exe_pc_clked == 0x800034e8)){
-            printf("%d:plic_enable_interrupt\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x800058a4)){
+        //if (exe_validir_clked&(exe_pc_clked == 0x80003444)){
+        //    printf("%d:hal_timer_start_at\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x80003294)){
+        //    printf("%d:fe310_pwm_cmp0_handler\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x800032d4)){
+        //    printf("%d:fe310_pwm_cmp1_handler\n",clockcnt);
+        ////    break;
+        //} 
+        //
+        //if (exe_validir_clked&(exe_pc_clked == 0x80003206)){
+        //    printf("%d:fe310_tmr_check_first\n",clockcnt);
+        ////    break;
+        //}
+        // 
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000351e)){
+        //    printf("%d:plic_enable_interrupt\n",clockcnt);
+        ////    break;
+        //} 
+        if (exe_validir_clked&(exe_pc_clked == 0x80005b56)){
             printf("%d:ble_ll_adv_set_sched\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000c68e)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000da82)){
             printf("%d:ble_ll_sched_adv_new\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80003596)){
+        if (exe_validir_clked&(exe_pc_clked == 0x800035cc)){
             printf("%d:os_cputime_timer_start\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000ceb8)){
-            printf("%d:ble_ll_xcvr_rfclk_timer_start\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x800031a4)){
-            printf("%d:hal_timer_cnt\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80005a18)){
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000ceb8)){
+        //    printf("%d:ble_ll_xcvr_rfclk_timer_start\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x800031da)){
+        //    printf("%d:hal_timer_cnt\n",clockcnt);
+        ////    break;
+        //} 
+        if (exe_validir_clked&(exe_pc_clked == 0x80005d38)){
             printf("%d:ble_ll_adv_tx_start_cb\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x800059c4)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e6a6)){
+            printf("%d:ble_phy_tx_set_start_time\n",clockcnt);
+        //    break;
+        } 
+        if (exe_validir_clked&(exe_pc_clked == 0x80005ce4)){
             printf("%d:ble_ll_adv_tx_done\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000cf9c)){
+        if (exe_validir_clked&(exe_pc_clked == 0x80006034)){
+            printf("%d:ble_ll_adv_done\n",clockcnt);
+        //    break;
+        } 
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e63a)){
+            printf("%d:ble_phy_init\n",clockcnt);
+        //    break;
+        } 
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e706)){
             printf("%d:ble_phy_tx\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x80005434)){
-            printf("%d:ble_ll_state_set\n",clockcnt);
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e4d4)){
+            printf("%d:ble_phy_isr\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000590a)){
-            printf("%d:ble_ll_adv_legacy_pdu_make\n",clockcnt);
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e478)){
+            printf("%d:ble_phy_txstartisr\n",clockcnt);
         //    break;
         } 
+        if (exe_validir_clked&(exe_pc_clked == 0x8000e4a8)){
+            printf("%d:ble_phy_tx_end_isr\n",clockcnt);
+        //    break;
+        } 
+        //if (exe_validir_clked&(exe_pc_clked == 0x80005434)){
+        //    printf("%d:ble_ll_state_set\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000590a)){
+        //    printf("%d:ble_ll_adv_legacy_pdu_make\n",clockcnt);
+        ////    break;
+        //} 
          
-        if (exe_validir_clked&(exe_pc_clked == 0x8000350e)){
-            printf("%d:plic_disable_interrupt\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8000359e)){
-            printf("%d:os_cputime_get32\n",clockcnt);
-        //    break;
-        } 
-        if (exe_validir_clked&(exe_pc_clked == 0x800060d2)){
+        //if (exe_validir_clked&(exe_pc_clked == 0x80003544)){
+        //    printf("%d:plic_disable_interrupt\n",clockcnt);
+        ////    break;
+        //} 
+        //if (exe_validir_clked&(exe_pc_clked == 0x8000359e)){
+        //    printf("%d:os_cputime_get32\n",clockcnt);
+        ////    break;
+        //} 
+        if (exe_validir_clked&(exe_pc_clked == 0x800063f2)){
             printf("%d:ble_ll_adv_set_enable\n",clockcnt);
         //    break;
         } 
@@ -507,16 +538,16 @@ if ((clockcnt >=16974000)){//&&(clockcnt <=2318800)){
         //    break;
         } 
         */
-        if (exe_validir_clked&(exe_pc_clked == 0x80009e0e)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000aca2)){
             printf("%d:ble_ll_hci_cmd_proc\n",clockcnt);
         //    break;
         } 
-        if (exe_validir_clked&(exe_pc_clked == 0x8001b600)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8001cd82)){
             printf("%d:ble_hci_trans_ll_evt_tx\n",clockcnt);
         //    break;
         } 
         
-        if (exe_validir_clked&(exe_pc_clked == 0x8000546e)){
+        if (exe_validir_clked&(exe_pc_clked == 0x8000571a)){
             printf("%d:ble_ll_reset\n",clockcnt);
         //    break;
         } 
