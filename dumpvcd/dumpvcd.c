@@ -253,6 +253,7 @@ void dumpcmdfile()
     fprintf(dc, "#include \"dtcmmerge.h\"\n");
     fprintf(dc, "#include \"regfilemerge.h\"\n");
     fprintf(dc, "#include \"clint.h\"\n");
+    fprintf(dc, "#include \"lowclkgen.h\"\n");
     fprintf(dc, "#include \"plic.h\"\n");
     fprintf(dc, "#include \"peripheral.h\"\n");
     fprintf(dc, "#include \"itcm.h\"\n");
@@ -325,6 +326,7 @@ int main()
     parsevars("../dtcmmerge.h");
     parsevars("../regfilemerge.h");
     parsevars("../clint.h");
+    parsevars("../lowclkgen.h");
     parsevars("../plic.h");
     parsevars("../peripheral.h");
     parsevars("../itcm.h");

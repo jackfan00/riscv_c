@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "gpio.h": "c",
-        "peripheral.h": "c"
+        "peripheral.h": "c",
+        "lowclkgen.h": "c"
     }
 }

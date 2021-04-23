@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#define DUMPVCD
+#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -232,14 +232,14 @@ int main(int argc, char *argv[])
         //
 #ifdef DUMPVCD
 //if ((clockcnt >=39000)){//} && clockcnt<=17000) || (clockcnt<=1000)) {
-if ((clockcnt >=12012052)){//&&(clockcnt <=2318800)){
+if ((clockcnt >=200000)){//&&(clockcnt <=2318800)){
         dumpvars(clockcnt, vcdfp);
 }
 //if ((clockcnt >=7782815)&&(clockcnt <=7784815)){
 //        dumpvars(clockcnt, vcdfp);
 //}
 #endif
-//if (clockcnt >= 12016588) break;
+if (clockcnt >= 204000) break;
         //check execption
         //if (exe_dec_ilg_clked){
         //    printf("STOP by detect illigal instruction\n");

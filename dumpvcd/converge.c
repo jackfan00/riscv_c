@@ -91,6 +91,7 @@ void isconverge_c()
     fprintf(dc, "#include \"dtcmmerge.h\"\n");
     fprintf(dc, "#include \"regfilemerge.h\"\n");
     fprintf(dc, "#include \"clint.h\"\n");
+    fprintf(dc, "#include \"lowclkgen.h\"\n");
     fprintf(dc, "#include \"plic.h\"\n");
     fprintf(dc, "#include \"peripheral.h\"\n");
     fprintf(dc, "#include \"itcm.h\"\n");
