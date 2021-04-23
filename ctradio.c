@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "ctradio.h"
-#include "clint.h"
+#include "lowclkgen.h"
 #include "pwm.h"
 
 void ctradio()

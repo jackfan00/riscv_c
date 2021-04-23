@@ -3,7 +3,7 @@
 
 void clint_clked()
 {
-    hclk_cnt_clked = clk32768_p ? 0 : hclk_cnt_clked+1;
+    //hclk_cnt_clked = clk32768_p ? 0 : hclk_cnt_clked+1;
 
     clint_msip_clked = clint_msip;
     clint_mtimecmp_clked = clint_mtimecmp;

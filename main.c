@@ -20,6 +20,7 @@
 #include "regfile.h"
 #include "csrreg.h"
 #include "clint.h"
+#include "lowclkgen.h"
 #include "plic.h"
 #include "itcm.h"
 #include "dtcm.h"
@@ -181,6 +182,7 @@ int main(int argc, char *argv[])
             biubussplit();
             plic();
             clint();
+            lowclkgen();
             peripheral();
             itcmmerge();
             itcm();
@@ -291,6 +293,7 @@ if ((clockcnt >=12012052)){//&&(clockcnt <=2318800)){
         biubussplit_clked();
         plic_clked();
         clint_clked();
+        lowclkgen_clked();
         peripheral_clked();
         itcmmerge_clked();
         itcm_clked();

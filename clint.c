@@ -21,7 +21,8 @@ void clint()
     clint_mtimecmph = clint_regcs & clint_regw & (clint_regwadr==CLINT_MTIMECMPH) ? clint_regwdata : clint_mtimecmph_clked;
 
     // hardware implematation NOTE: count at always-on low freq clock
-    clk32768_p = (hclk_cnt_clked==HCLK32768NUMBER);
+    //clk32768_p = (hclk_cnt_clked==HCLK32768NUMBER);
+
     clint_mtime = clint_regcs & clint_regw & (clint_regwadr==CLINT_MTIME) ? clint_regwdata : 
                     clk32768_p ? clint_mtime_clked+1 : clint_mtime_clked;
     clint_mtimeh = clint_regcs & clint_regw & (clint_regwadr==CLINT_MTIMEH) ? clint_regwdata : 

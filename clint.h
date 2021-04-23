@@ -1,11 +1,12 @@
 #ifndef CLINT_H
 #define CLINT_H
 #include "reg.h"
+#include "lowclkgen.h"
+
 void clint();
 void clint_clked();
 
-#define HCLKMHZ         16
-#define HCLK32768NUMBER 32*HCLKMHZ
+//#define HCLK32768NUMBER 32*HCLKMHZ
 #define CLINT_MSIP      0x02000000
 #define CLINT_MTIMECMP  0x02004000
 #define CLINT_MTIMECMPH 0x02004004
@@ -53,6 +54,6 @@ REG32 clint_rdat;
 BIT clint_write;
 BIT clint_read1st;
 REG32 read_clint_rdat;
-BIT clk32768_p;
+//BIT clk32768_p;
 
 #endif //CLINT_H
