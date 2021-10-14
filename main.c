@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DUMPVCD
+//#define RADIOSYNC
+//#define DUMPVCD
 #include "opcode_define.h"
 #include "dumpvars.h"
 #include "downloadCode.h"
@@ -99,7 +100,8 @@ void setup()
     *gpio_shmptr = 0xffffffff;
     *(gpio_shmptr+1) = 0xffffffff;
     //printf("%d--%d\n", (unsigned int)txuart0_shmptr, (unsigned int)rxuart0_shmptr);
-
+    radiosync_shmptr = txuart0_shmptr + 3;
+    *radiosync_shmptr =0;
 }
 
 int main(int argc, char *argv[])
@@ -239,7 +241,7 @@ if ((clockcnt >=200000)){//&&(clockcnt <=2318800)){
 //        dumpvars(clockcnt, vcdfp);
 //}
 #endif
-if (clockcnt >= 204000) break;
+//if (clockcnt >= 204000) break;
         //check execption
         //if (exe_dec_ilg_clked){
         //    printf("STOP by detect illigal instruction\n");
@@ -561,6 +563,10 @@ if (clockcnt >= 204000) break;
         //} 
         //if (downloadcomplete) break;
 
+#ifdef RADIOSYNC
+        *radiosync_shmptr =1;
+        while( *radiosync_shmptr ) ;
+#endif
     }
 
 #ifdef DUMPVCD
